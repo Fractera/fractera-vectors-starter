@@ -118,6 +118,14 @@ A refused `reply` prints the rules: answer again without that content — do not
 Samples: `npm run test:a2a-guard`.
 <!-- PROOF 4 END -->
 
+## Backup — this element keeps the node's memory (node step 558)
+
+You are one of the four memory elements (data, storage, vectors, graph). The core shows you a section «Backup» below «Build»:
+«Tools» — the outside services the copies go to (`OWN-SERVICE-PROPS/SUBSCRIPTIONS.json`), «Cron events» — the calendar of copying
+(`OWN-SERVICE-PROPS/CRON.json` + `data/cron.json`), «Settings» — the person says what to copy and sends it to you as a task. Your
+server checks `data/cron.json` once a minute (`lib/cron/runner.ts`) — the only timer you have, ordered by the owner of the node for
+backup and nothing else. How to build a copy and put it on the schedule — skill `backup-schedule`.
+
 ## Protocols — how you talk and to whom
 
 Fractera has five protocols of its own (owner 2026-10-11, 2026-10-19); a native element has two: **H2A** — your person and you;

@@ -1,0 +1,4 @@
+{
+  "why": "Node step 558 (owner 2026-10-21): outside services the backup copies of this element go to (a storage, a cloud disk). The core shows them under «Backup → Tools», one page per service. Keys only by variable name; their values live in .env.local. Skill: backup-schedule. Never published in /.well-known/agent-card.json.",
+  "services": []
+}

@@ -56,6 +56,7 @@ skill itself: a `<!-- PROOF … -->` mark under its header). Vendored skills are
 | `copy-editing` | vendored, Corey Haines, MIT | edits existing copy line by line — `SOURCE.md` | — not proven |
 | `humanizer` | vendored, blader, MIT | removes the signs of AI writing from any text a person reads, the product quiz too — `SOURCE.md`, `.claude/modes/build.md` «Texts» | — not proven |
 | `self-review` | ours, `build-skills` | on the person's «review» (in their language): at most three proposals to improve the skills, nothing changed without «yes» | — not proven |
+| `backup-schedule` | ours, `build-skills` | backup of this memory element: the copying service is code, its schedule is data in `data/cron.json` (node step 558) | — not proven |
 | `add-door` | ours, `build-skills` | a door for a neighbour: `npm run door:add` writes the route, the key and the card — you write the work | the mark in its `SKILL.md` |
 | `ask-core` | ours, `own-service-props-skills` | ask the core how the node works — the last resort | the mark in its `SKILL.md` |
 

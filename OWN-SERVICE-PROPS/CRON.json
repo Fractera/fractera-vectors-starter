@@ -1,0 +1,10 @@
+{
+  "why": "Node step 558 (owner 2026-10-21): what this memory element CAN run on a schedule — its backup events (handlers written in advance, build process). The person's schedule is NOT here: it is data, `data/cron.json` (outside git). The core draws events + schedule as the calendar under «Backup → Cron events»; the element's server checks the clock once a minute (lib/cron/). A missed run (computer off) is not caught up. Skill: backup-schedule. Never published in /.well-known/agent-card.json.",
+  "events": [
+    {
+      "id": "telegram-message",
+      "name": "Message in Telegram",
+      "description": "Sends the schedule's own text (field «message») to this element's Telegram bot — for example, «the copy is done»."
+    }
+  ]
+}
