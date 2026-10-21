@@ -1,0 +1,12 @@
+{
+  "title": "Staff",
+  "description": "The staff branch: pages protected by authorization.",
+  "keywords": "",
+  "blocks": [
+    {
+      "kind": "text-p",
+      "text": "You are at the root of the staff branch. Its pages are protected by authorization.",
+      "bid": "s2ghv"
+    }
+  ]
+}

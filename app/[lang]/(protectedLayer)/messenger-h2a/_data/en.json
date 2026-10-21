@@ -1,0 +1,10 @@
+{
+  "title": "H2A Messenger",
+  "description": "Your conversations with your own agent.",
+  "blocks": [
+    {
+      "kind": "widget-dynamic-messenger-h2a",
+      "bid": "sg09e"
+    }
+  ]
+}

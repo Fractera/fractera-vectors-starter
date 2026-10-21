@@ -1,0 +1,9 @@
+{
+  "name": "own-service-props-skills",
+  "version": "1.0.0",
+  "description": "Discovery skills: who this element is, its node and neighbours, the A2A wire. On in every mode (node step 552).",
+  "author": {
+    "name": "Fractera"
+  },
+  "defaultEnabled": true
+}

@@ -1,0 +1,9 @@
+{
+  "name": "messenger-skills",
+  "version": "1.0.0",
+  "description": "Messenger skills of this element: conversations with people (H2A, H2H). On in messenger-mode sessions (node step 552).",
+  "author": {
+    "name": "Fractera"
+  },
+  "defaultEnabled": true
+}

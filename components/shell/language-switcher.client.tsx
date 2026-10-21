@@ -1,0 +1,240 @@
+"use client";
+
+import { useState, useRef, useEffect, useMemo } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { Languages, Search, X } from "lucide-react";
+import type { ShellLanguage } from "./shell-types";
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+
+// ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА ОБОЛОЧКИ (285-3): перенесён из сайта без изменения вида; языки, регионы и язык по
+// умолчанию приходят свойствами (данные оболочки), а не из конфигов сайта — так он один у всех служб.
+//
+// Language switcher button + searchable dropdown (grouped by region, with flags).
+// Ported from the Fractera marketing site and re-themed onto the workspace theme
+// tokens (foreground/background/border/primary), so it works in light AND dark.
+//
+// It renders NOTHING when only one language is configured (SINGLE_LANG_MODE) —
+// that is how "leave one language in the env and the button disappears" works.
+// To re-install this button after deleting it, an agent can use the skill
+// install-language-switcher-dropdown (.agents/skills/…), which carries the
+// template.
+type SwitcherProps = { languages: ShellLanguage[]; regions: string[]; defaultLang: string };
+
+export function LanguageSwitcher(props: SwitcherProps) {
+  if (props.languages.length <= 1) return null;
+  return <LanguageSwitcherInner {...props} />;
+}
+
+function LanguageSwitcherInner({ languages, regions, defaultLang }: SwitcherProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const [filter, setFilter] = useState("");
+  const ref = useRef<HTMLDivElement>(null);
+
+  // 🔒 НА ТЕЛЕФОНЕ ПОЛЯ ПОИСКА НЕТ ВОВСЕ (владелец, 2026-08-17). Оно открывалось
+  // с `autoFocus`, и экранная клавиатура выезжала сама, ещё до того как человек
+  // решил что-то искать: список ужимался до пары строк, а страница под ним
+  // разъезжалась. Спрятать поле классом `hidden` мало — скрытый `input` всё
+  // равно остаётся в разметке, и любая правка вёрстки вернёт клавиатуру.
+  // Поэтому на касании поле НЕ РЕНДЕРИТСЯ, а языки выбирают из списка.
+  //
+  // 🔒 ПРИЗНАК — `pointer: coarse`, А НЕ ШИРИНА ЭКРАНА. Клавиатура выезжает у
+  // касания, а не у узкого окна: на ноутбуке с узким окном есть настоящая
+  // клавиатура, и поиск по 82 языкам там как раз полезен. Ширина добавлена
+  // вторым условием ради эмуляции телефона в браузере разработчика.
+  //
+  // Проверка делается в эффекте, а не при отрисовке: на сервере `matchMedia` не
+  // существует. Расхождения гидратации это не создаёт — выпадающий список
+  // появляется только после нажатия, то есть заведомо позже.
+  const [touch, setTouch] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(pointer: coarse), (max-width: 640px)");
+    const apply = () => {
+      setTouch(mq.matches);
+      // Поле исчезло — исчезает и то, что в нём набрали. Иначе список остался бы
+      // отфильтрованным без единого способа снять фильтр.
+      if (mq.matches) setFilter("");
+    };
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
+  const allLanguages = languages;
+
+  const currentLang = useMemo(() => {
+    const seg = pathname.split("/").filter(Boolean)[0];
+    return allLanguages.find((l) => l.code === seg) ? seg : defaultLang;
+  }, [pathname, allLanguages]);
+
+  const currentMeta = allLanguages.find((l) => l.code === currentLang);
+
+  const filtered = useMemo(() => {
+    if (!filter) return allLanguages;
+    const q = filter.toLowerCase();
+    return allLanguages.filter(
+      (l) =>
+        l.nativeName.toLowerCase().startsWith(q) ||
+        l.englishName.toLowerCase().startsWith(q),
+    );
+  }, [allLanguages, filter]);
+
+  // Group by region. Languages with multiple regions appear in each of them.
+  const groupedByRegion = useMemo(() => {
+    const map = new Map<string, ShellLanguage[]>();
+    regions.forEach((region) => map.set(region, []));
+    allLanguages.forEach((lang) => {
+      lang.regions.forEach((region) => {
+        map.get(region)?.push(lang);
+      });
+    });
+    return map;
+  }, [allLanguages, regions]);
+
+  // Close on outside click
+  useEffect(() => {
+    if (!open) return;
+    function handler(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+        setFilter("");
+      }
+    }
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
+
+  function switchLang(code: string) {
+    if (code === currentLang) {
+      setOpen(false);
+      return;
+    }
+    const segments = pathname.split("/").filter(Boolean);
+    if (segments[0] === currentLang) segments.shift();
+    router.replace(`/${code}${segments.length ? "/" + segments.join("/") : ""}`);
+    setOpen(false);
+    setFilter("");
+  }
+
+  return (
+    <div ref={ref} className="relative">
+      <Button variant="bare" size="bare"
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border border-border text-foreground hover:text-foreground hover:bg-muted transition-all"
+        title={currentMeta?.englishName ?? "Switch language"}
+        aria-label="Switch language"
+      >
+        <Languages size={14} />
+        <span className="font-semibold uppercase tracking-wider text-xs">
+          {currentLang}
+        </span>
+      </Button>
+
+      {open && (
+        <div className="absolute bottom-full mb-2 right-0 w-64 rounded-xl border border-border bg-popover shadow-2xl z-50 overflow-hidden ring-1 ring-black/5 animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-1 duration-150">
+          {/* Search — только там, где есть настоящая клавиатура. */}
+          {!touch && (
+            <div className="relative p-2 border-b border-border">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+              <Input
+                autoFocus
+                type="text"
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+                placeholder="Search language…"
+                className="w-full bg-muted text-foreground text-sm rounded-md pl-8 pr-7 py-1.5 outline-none placeholder:text-muted-foreground focus:ring-1 focus:ring-primary"
+              />
+              {filter && (
+                <Button variant="bare" size="bare"
+                  type="button"
+                  onClick={() => setFilter("")}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                >
+                  <X size={12} />
+                </Button>
+              )}
+            </div>
+          )}
+
+          {/* List. Без поля поиска список — единственный способ выбрать язык,
+              поэтому на касании ему отдаётся больше высоты: те же строки, что
+              занимало поле, плюс запас под палец. */}
+          <div className={`${touch ? "max-h-[70vh]" : "max-h-60"} overflow-y-auto py-1`}>
+            {filter ? (
+              filtered.length === 0 ? (
+                <p className="px-4 py-6 text-center text-sm text-muted-foreground">
+                  No languages found
+                </p>
+              ) : (
+                filtered.map((lang) => (
+                  <LangRow
+                    key={lang.code}
+                    lang={lang}
+                    flag={lang.flag}
+                    isActive={lang.code === currentLang}
+                    onSelect={switchLang}
+                  />
+                ))
+              )
+            ) : (
+              regions.map((region, regionIdx) => {
+                const list = groupedByRegion.get(region) ?? [];
+                if (list.length === 0) return null;
+                return (
+                  <div key={region}>
+                    {regionIdx > 0 && <div className="h-px bg-border my-1" />}
+                    <p className="sticky top-0 z-[1] bg-background px-3 py-1.5 text-[10px] font-mono font-bold text-primary uppercase tracking-widest">
+                      {region}
+                    </p>
+                    {list.map((lang) => (
+                      <LangRow
+                        key={`${region}-${lang.code}`}
+                        lang={lang}
+                        flag={lang.regionFlags?.[region] ?? lang.flag}
+                        isActive={lang.code === currentLang}
+                        onSelect={switchLang}
+                      />
+                    ))}
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function LangRow({
+  lang,
+  flag,
+  isActive,
+  onSelect,
+}: {
+  lang: ShellLanguage;
+  flag: string;
+  isActive: boolean;
+  onSelect: (code: string) => void;
+}) {
+  return (
+    <Button variant="bare" size="bare"
+      type="button"
+      onClick={() => onSelect(lang.code)}
+      className={`justify-start w-full flex items-center gap-2.5 px-3 py-2 text-sm transition-colors text-left ${
+        isActive
+          ? "bg-primary/15 text-primary"
+          : "text-foreground hover:bg-muted hover:text-foreground"
+      }`}
+    >
+      <span className="text-base leading-none">{flag}</span>
+      <span>{lang.nativeName}</span>
+      <span className="ml-auto text-xs text-muted-foreground uppercase">
+        {lang.code}
+      </span>
+    </Button>
+  );
+}

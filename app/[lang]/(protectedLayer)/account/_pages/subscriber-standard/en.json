@@ -1,0 +1,17 @@
+{
+  "title": "Page for the role subscriber_standard",
+  "description": "A page protected by authorization: it grants access to the role subscriber_standard.",
+  "keywords": "",
+  "blocks": [
+    {
+      "kind": "text-p",
+      "text": "You are on a page protected by authorization. It grants access to the role **subscriber_standard**.",
+      "bid": "acwa2"
+    },
+    {
+      "kind": "text-p",
+      "text": "Roles allowed here: {roles}.",
+      "bid": "l2g89"
+    }
+  ]
+}

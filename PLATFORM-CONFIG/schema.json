@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "features": {
+      "type": "object",
+      "properties": {
+        "auth": {
+          "type": "boolean"
+        },
+        "breadcrumbs": {
+          "type": "boolean"
+        },
+        "faq": {
+          "type": "boolean"
+        },
+        "themeToggle": {
+          "type": "boolean"
+        },
+        "widthToggle": {
+          "type": "boolean"
+        },
+        "languageSwitcher": {
+          "type": "boolean"
+        },
+        "socials": {
+          "type": "boolean"
+        },
+        "topMenu": {
+          "type": "boolean"
+        },
+        "footerPages": {
+          "type": "boolean"
+        },
+        "cookieBanner": {
+          "type": "boolean"
+        },
+        "offlineCache": {
+          "type": "boolean"
+        },
+        "viewportBadge": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "routingMode": {
+      "type": "string"
+    },
+    "parallelRouting": {
+      "type": "boolean"
+    },
+    "developmentMode": {
+      "type": "string",
+      "enum": [
+        "classic",
+        "steps",
+        "cases",
+        "migration"
+      ]
+    },
+    "automationMode": {
+      "type": "string",
+      "enum": [
+        "claude",
+        "openai"
+      ]
+    },
+    "migration": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "enum": [
+            "repository",
+            "local"
+          ]
+        },
+        "repositoryUrl": {
+          "type": "string"
+        },
+        "localPath": {
+          "type": "string"
+        },
+        "declaredAt": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "slots": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "instructions": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "instructionsSnapshot": {
+      "anyOf": [
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "commands": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {}
+    }
+  },
+  "additionalProperties": {}
+}

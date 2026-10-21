@@ -1,0 +1,17 @@
+{
+  "title": "Page for the role vip_user",
+  "description": "A page protected by authorization: it grants access to the role vip_user.",
+  "keywords": "",
+  "blocks": [
+    {
+      "kind": "text-p",
+      "text": "You are on a page protected by authorization. It grants access to the role **vip_user**.",
+      "bid": "bgfpl"
+    },
+    {
+      "kind": "text-p",
+      "text": "Roles allowed here: {roles}.",
+      "bid": "clej5"
+    }
+  ]
+}

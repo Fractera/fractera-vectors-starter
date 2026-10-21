@@ -1,0 +1,14 @@
+{
+  "topMenu": true,
+  "footerPages": false,
+  "cookieBanner": false,
+  "offlineCache": true,
+  "auth": true,
+  "breadcrumbs": true,
+  "faq": true,
+  "themeToggle": true,
+  "widthToggle": true,
+  "languageSwitcher": true,
+  "socials": true,
+  "viewportBadge": true
+}

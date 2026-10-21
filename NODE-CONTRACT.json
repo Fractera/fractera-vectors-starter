@@ -1,0 +1,134 @@
+{
+  "_": "Node contract of this element (step 417): what the node needs to install, run and manage it. Read by the node core only; never served to the outside. The public description is OWN-SERVICE-PROPS/.",
+  "kind": "microservice",
+  "entry": "own",
+  "port": {
+    "desired": 24694,
+    "note": "A wish, not a decision. The node assigns the actual port from the block 24680-25679. Ask the node, never remember."
+  },
+  "env": {
+    "file": ".env.local",
+    "example": ".env.example",
+    "note": "Next reads .env.local by its own convention."
+  },
+  "health": {
+    "path": "/health",
+    "expect": 200,
+    "note": "{ ok: true } without a key — the watcher's door. /api/health of the template answers too."
+  },
+  "runtime": {
+    "stack": "next",
+    "node": ">=20",
+    "build": "npm run build",
+    "start": "node .next/standalone/<traced path>/server.js",
+    "startNote": "The standalone server reads PORT and HOSTNAME from the environment. The installer finds server.js under .next/standalone and copies .next/static next to it.",
+    "nativeModules": [
+      "better-sqlite3",
+      "sqlite-vec"
+    ],
+    "distDirEnv": "NEXT_DIST_DIR",
+    "distDirNote": "The node builds into a neighbour folder named by this variable while the old build serves, then switches: no downtime. A replacement that does not declare it is stopped for the build."
+  },
+  "settings": {
+    "door": "/api/settings/design",
+    "key": {
+      "header": "X-Settings-Key",
+      "env": "SETTINGS_SECRET"
+    },
+    "owns": [
+      "DESIGN-CONFIG"
+    ],
+    "note": "The site owns its settings; the node core reads and patches them through this door and rebuilds the site. Without the door the core leaves this site's settings alone."
+  },
+  "contract": [
+    "Takes its port from the environment; never remembers a number.",
+    "Answers GET /health and GET /api/health with 200 without a key.",
+    "Keeps the vectors of the node in its own file: the one named exception to «stored data only through the data element» — it IS the vector part of the data layer.",
+    "Its doors answer only programs of this machine: through the tunnel they answer 404 even with a key.",
+    "Uses the same lock as the database element (the node data key or a privileged session).",
+    "Never changes the model or the size of embeddings on a live store: the stored vectors would become unreadable.",
+    "Public pages stay static: no force-dynamic, no cookies() or headers() in a layout or a page.",
+    "Reads its own name from this passport at start (lib/own-id.ts); no name of the element is written in its code."
+  ],
+  "languages": {
+    "count": 2,
+    "note": "en is the base, ru the translation; the set is this site's own setting (NEXT_PUBLIC_SUPPORTED_LANGUAGES, kind own)."
+  },
+  "license": "MIT",
+  "auth": {
+    "header": "X-Data-Secret",
+    "env": "DATA_SECRET",
+    "note": "Every door but /health requires the node data key (shared by the three storage elements) or a privileged session (architect, admin, agent) through the node sign-in element. A request through the Cloudflare tunnel (cf-ray) gets 404 on every data door, with a key or without."
+  },
+  "storage": {
+    "engine": "sqlite + sqlite-vec",
+    "file": "data/vectors.db in the element folder (VECTORS_DB_PATH overrides)",
+    "schema": "executed at start, no migrations; the index is derived data and is rebuilt when it holds fewer rows than the table",
+    "inGit": false
+  },
+  "doors": [
+    {
+      "path": "/en, /ru",
+      "method": "GET",
+      "gives": "the public home page of the element"
+    },
+    {
+      "path": "/health",
+      "method": "GET",
+      "gives": "liveness — no key"
+    },
+    {
+      "path": "/capabilities",
+      "method": "GET",
+      "gives": "the doors of this element, the model and size of embeddings"
+    },
+    {
+      "path": "/vectors",
+      "method": "POST",
+      "gives": "store or replace one record { id?, collection, text, embedding?, refTable?, refId? }"
+    },
+    {
+      "path": "/vectors/search",
+      "method": "POST",
+      "gives": "the nearest records { collection?, query | embedding, k ≤ 100 } with a cosine score"
+    },
+    {
+      "path": "/vectors/:id",
+      "method": "DELETE",
+      "gives": "delete a record"
+    },
+    {
+      "path": "/vectors/status",
+      "method": "GET",
+      "gives": "whether the key is set, model, dimensions, index mode, number of records"
+    }
+  ],
+  "protocols": {
+    "api": {
+      "provided": true,
+      "doors": [
+        "/en, /ru",
+        "/health",
+        "/capabilities",
+        "/vectors",
+        "/vectors/search",
+        "/vectors/:id",
+        "/vectors/status"
+      ],
+      "format": "JSON; files as they are"
+    },
+    "mcp": {
+      "provided": false
+    },
+    "a2a": {
+      "provided": false,
+      "note": "A native element of the node: it serves the node through its doors, not the network."
+    },
+    "m2m": {
+      "provided": false
+    }
+  },
+  "provides": [
+    "vectors"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "title": "Page for the role buyer",
+  "description": "A page protected by authorization: it grants access to the role buyer.",
+  "keywords": "",
+  "blocks": [
+    {
+      "kind": "text-p",
+      "text": "You are on a page protected by authorization. It grants access to the role **buyer**.",
+      "bid": "necex"
+    },
+    {
+      "kind": "text-p",
+      "text": "Roles allowed here: {roles}.",
+      "bid": "nii4y"
+    }
+  ]
+}

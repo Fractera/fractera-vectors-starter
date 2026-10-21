@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160" role="img" aria-label="Max">
+  <defs>
+    <clipPath id="x-crop"><circle cx="80" cy="80" r="80"/></clipPath>
+    <linearGradient id="x-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cfe0f2"/><stop offset="1" stop-color="#a9c3e0"/>
+    </linearGradient>
+    <linearGradient id="x-hair" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8a5a2b"/><stop offset="1" stop-color="#5d3a18"/>
+    </linearGradient>
+  </defs>
+  <g clip-path="url(#x-crop)">
+    <rect width="160" height="160" fill="url(#x-bg)"/>
+    <!-- плечи и футболка -->
+    <path d="M80 112c26 0 44 16 48 48H32c4-32 22-48 48-48Z" fill="#3f6b8f"/>
+    <path d="M80 112c6 0 11 1 16 3l-16 18-16-18c5-2 10-3 16-3Z" fill="#dfe9f3"/>
+    <!-- шея -->
+    <path d="M68 96h24v18c0 6-24 6-24 0V96Z" fill="#e0b08a"/>
+    <!-- уши -->
+    <ellipse cx="53" cy="76" rx="4.5" ry="6" fill="#f0c7a4"/>
+    <ellipse cx="107" cy="76" rx="4.5" ry="6" fill="#f0c7a4"/>
+    <!-- лицо -->
+    <ellipse cx="80" cy="73" rx="26.5" ry="30" fill="#f2c9a6"/>
+    <!-- короткая стрижка -->
+    <path d="M54 68c0-19 11-30 26-30s26 11 26 30c-3-8-7-13-12-15-9 5-21 5-30 1-5 2-8 7-10 14Z" fill="url(#x-hair)"/>
+    <!-- брови -->
+    <path d="M65 64c3.5-2 8-2 11.5 0M83.5 64c3.5-2 8-2 11.5 0" stroke="#5a3a1c" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <!-- глаза -->
+    <ellipse cx="70.5" cy="73" rx="3.4" ry="3.8" fill="#33261c"/>
+    <ellipse cx="89.5" cy="73" rx="3.4" ry="3.8" fill="#33261c"/>
+    <circle cx="71.6" cy="71.8" r="1.1" fill="#fff"/>
+    <circle cx="90.6" cy="71.8" r="1.1" fill="#fff"/>
+    <!-- нос и улыбка -->
+    <path d="M80 77v6c0 1.6-1.4 2.6-3 2.6" stroke="#cf9a70" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M72 91c4.4 3.6 11.6 3.6 16 0" stroke="#a7674a" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

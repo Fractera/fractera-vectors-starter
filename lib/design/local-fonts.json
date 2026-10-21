@@ -1,0 +1,16 @@
+{
+  "_about": "Fonts the node serves ITSELF (step 315). One table read by scripts/local-fonts.mjs (copies files into public/fonts/ before a build) and lib/design-css.ts (links /fonts/<slug>.css). Adding a font = a row here + its npm package; the catalogue family must match `family` exactly.",
+  "fonts": [
+    { "family": "Inter", "slug": "inter", "pkg": "@fontsource-variable/inter", "css": ["wght.css"] },
+    { "family": "Manrope", "slug": "manrope", "pkg": "@fontsource-variable/manrope", "css": ["wght.css"] },
+    { "family": "Montserrat", "slug": "montserrat", "pkg": "@fontsource-variable/montserrat", "css": ["wght.css"] },
+    { "family": "Rubik", "slug": "rubik", "pkg": "@fontsource-variable/rubik", "css": ["wght.css"] },
+    { "family": "Noto Sans", "slug": "noto-sans", "pkg": "@fontsource-variable/noto-sans", "css": ["wght.css"] },
+    { "family": "Playfair Display", "slug": "playfair-display", "pkg": "@fontsource-variable/playfair-display", "css": ["wght.css"] },
+    { "family": "Merriweather", "slug": "merriweather", "pkg": "@fontsource-variable/merriweather", "css": ["wght.css"] },
+    { "family": "Lora", "slug": "lora", "pkg": "@fontsource-variable/lora", "css": ["wght.css"] },
+    { "family": "Source Serif 4", "slug": "source-serif-4", "pkg": "@fontsource-variable/source-serif-4", "css": ["wght.css"] },
+    { "family": "JetBrains Mono", "slug": "jetbrains-mono", "pkg": "@fontsource-variable/jetbrains-mono", "css": ["wght.css"] },
+    { "family": "IBM Plex Mono", "slug": "ibm-plex-mono", "pkg": "@fontsource/ibm-plex-mono", "css": ["400.css", "500.css", "700.css"] }
+  ]
+}

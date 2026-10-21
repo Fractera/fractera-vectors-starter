@@ -1,0 +1,20 @@
+{
+  "title": "Cookie Policy",
+  "description": "Which cookies and browser records this site uses, what each is for, and how to change your choice.",
+  "keywords": "cookie policy, cookies, consent, Google Analytics",
+  "blocks": [
+    { "kind": "block-section-head", "id": "cookies-h1", "title": "Cookies on %SITE%", "bid": "t4l3z" },
+    { "kind": "text-lead", "text": "A cookie is a small record a site keeps in your browser. Below is every one this site sets, why, and for how long.", "bid": "kgakq" },
+    { "kind": "text-h2", "text": "Needed for the site to work", "bid": "ck2nd" },
+    { "kind": "text-p", "text": "These are set without asking: without them the site would forget your language or your settings on the next page. None of them is used to follow you across other sites.", "bid": "ck3nw" },
+    { "kind": "text-list", "items": [
+      "**NEXT_LOCALE** — the language you chose; 1 year.",
+      "**fractera-theme**, **fractera-app-width** — light or dark theme and the page width; 1 year. A copy is kept in your browser's storage too.",
+      "**fractera-ticket** — keeps you signed in; only after you sign in; 30 days; not readable by scripts on the page.",
+      "**fractera-cookie-consent** — your answer in the cookie banner; kept in your browser's storage, not sent anywhere."
+    ], "bid": "ck4ls" },
+    { "kind": "widget-static-policy-analytics", "bid": "ck5ga" },
+    { "kind": "text-h2", "text": "How to change your choice", "bid": "ck6hw" },
+    { "kind": "text-p", "text": "Use «Cookie settings» at the bottom of any page to answer the banner again, or delete this site's cookies in your browser settings. Deleting the needed ones only resets your language and theme. More about personal data: [Privacy Policy](/en/privacy). Back to [%SITE%](/en).", "bid": "wq0pw" }
+  ]
+}

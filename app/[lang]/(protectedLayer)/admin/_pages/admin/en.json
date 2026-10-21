@@ -1,0 +1,17 @@
+{
+  "title": "Page for the role admin",
+  "description": "A page protected by authorization: it grants access to the role admin.",
+  "keywords": "",
+  "blocks": [
+    {
+      "kind": "text-p",
+      "text": "You are on a page protected by authorization. It grants access to the role **admin**.",
+      "bid": "yvdb4"
+    },
+    {
+      "kind": "text-p",
+      "text": "Roles allowed here: {roles}.",
+      "bid": "sd5q2"
+    }
+  ]
+}

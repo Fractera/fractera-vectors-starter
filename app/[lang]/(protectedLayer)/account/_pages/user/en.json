@@ -1,0 +1,17 @@
+{
+  "title": "Page for the role user",
+  "description": "A page protected by authorization: it grants access to the role user.",
+  "keywords": "",
+  "blocks": [
+    {
+      "kind": "text-p",
+      "text": "You are on a page protected by authorization. It grants access to the role **user**.",
+      "bid": "c2a8r"
+    },
+    {
+      "kind": "text-p",
+      "text": "Roles allowed here: {roles}.",
+      "bid": "snh7n"
+    }
+  ]
+}

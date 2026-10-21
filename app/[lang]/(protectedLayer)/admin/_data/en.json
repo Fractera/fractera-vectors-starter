@@ -1,0 +1,12 @@
+{
+  "title": "Administration",
+  "description": "The administration branch: pages protected by authorization.",
+  "keywords": "",
+  "blocks": [
+    {
+      "kind": "text-p",
+      "text": "You are at the root of the administration branch. Its pages are protected by authorization.",
+      "bid": "gzs8f"
+    }
+  ]
+}

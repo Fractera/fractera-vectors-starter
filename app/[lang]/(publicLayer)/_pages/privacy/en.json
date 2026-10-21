@@ -1,0 +1,20 @@
+{
+  "title": "Privacy Policy",
+  "description": "What personal data this site processes, why, who else receives it, and how to ask for it to be deleted.",
+  "keywords": "privacy policy, personal data, GDPR, Google Analytics",
+  "blocks": [
+    { "kind": "block-section-head", "id": "privacy-h1", "title": "Privacy on %SITE%", "bid": "wpj2y" },
+    { "kind": "text-lead", "text": "This site runs on its owner's own computer. Your data is kept there, not in a shared cloud database of a third company.", "bid": "kns6w" },
+    { "kind": "text-h2", "text": "What is processed and why", "bid": "pv2wh" },
+    { "kind": "text-list", "items": [
+      "**Every visit** — your IP address and the page address pass through Cloudflare, which carries the site to the internet and protects it from attacks.",
+      "**Sign-in** — when you create an account: your e-mail and the name you give, to let you in and show what is yours. Kept on the owner's computer.",
+      "**The help desk chat** — what you type or say there is sent to OpenAI to produce the answer; voice is turned into text the same way. The number of messages per address is limited to stop abuse.",
+      "**Your settings** — language, theme and your cookie choice; see the [Cookie Policy](/en/cookies)."
+    ], "bid": "pv3ls" },
+    { "kind": "widget-static-policy-analytics", "bid": "pv4ga" },
+    { "kind": "text-h2", "text": "Your rights", "bid": "pv5rt" },
+    { "kind": "text-p", "text": "You may ask what data about you is kept, ask to correct it or to delete it, and withdraw your consent to analytics at any time with «Cookie settings» at the bottom of the page. Write to the owner of %SITE% through the contacts on this site.", "bid": "xne9d" },
+    { "kind": "text-p", "text": "Back to [%SITE%](/en).", "bid": "pv6bk" }
+  ]
+}

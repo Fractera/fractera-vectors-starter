@@ -1,0 +1,17 @@
+{
+  "title": "Page for the role support_manager",
+  "description": "A page protected by authorization: it grants access to the role support_manager.",
+  "keywords": "",
+  "blocks": [
+    {
+      "kind": "text-p",
+      "text": "You are on a page protected by authorization. It grants access to the role **support_manager**.",
+      "bid": "h7bwg"
+    },
+    {
+      "kind": "text-p",
+      "text": "Roles allowed here: {roles}.",
+      "bid": "e91tc"
+    }
+  ]
+}

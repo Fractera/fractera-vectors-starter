@@ -1,0 +1,77 @@
+{
+  "title": "Fractera Vectors — search by meaning for your node",
+  "description": "Vector storage of the node: elements keep pieces of text as vectors and find the ones closest to a question. Programs reach it with the node key.",
+  "keywords": "",
+  "blocks": [
+    {
+      "kind": "block-hero-centered",
+      "pill": "Agentic engineering infrastructure",
+      "title": "Search by meaning",
+      "description": "Elements keep pieces of text here as vectors and find the ones closest to a question. Programs talk to it with the node key.",
+      "bid": "luqkd"
+    },
+    {
+      "kind": "text-list",
+      "items": [
+        "A nearest-neighbour index on sqlite-vec",
+        "Collections keep the texts of one task apart from another",
+        "Vectors made with the node's OpenAI key, or ready vectors you bring"
+      ],
+      "bid": "csbvh"
+    },
+    {
+      "kind": "text-small",
+      "text": "/vectors · sqlite-vec · text-embedding-3-large",
+      "bid": "qan9u"
+    },
+    {
+      "kind": "block-section-head",
+      "id": "works",
+      "badge": "Doors",
+      "title": "How it works",
+      "bid": "jb05y"
+    },
+    {
+      "kind": "text-h3",
+      "text": "Store",
+      "bid": "xyo5k"
+    },
+    {
+      "kind": "text-p",
+      "text": "Send a text with the name of its collection. The element turns it into a vector with the node's OpenAI key, or takes the vector you send.",
+      "bid": "h10w6"
+    },
+    {
+      "kind": "text-h3",
+      "text": "Search",
+      "bid": "asox1"
+    },
+    {
+      "kind": "text-p",
+      "text": "Ask a question and get the closest texts with a score. The index looks only at the requested collection, so a search stays fast as the store grows.",
+      "bid": "hxfts"
+    },
+    {
+      "kind": "text-h3",
+      "text": "Status",
+      "bid": "efozv"
+    },
+    {
+      "kind": "text-p",
+      "text": "One door tells which model and size the store uses, how many records it holds and whether the index works.",
+      "bid": "pso4d"
+    },
+    {
+      "kind": "block-section-head",
+      "id": "address",
+      "badge": "Address",
+      "title": "The same address as before",
+      "bid": "lvepd"
+    },
+    {
+      "kind": "text-p",
+      "text": "Elements still call /vectors on the database element, and the database element passes the request here.",
+      "bid": "i0lhz"
+    }
+  ]
+}

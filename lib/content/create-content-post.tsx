@@ -1,0 +1,261 @@
+import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
+import type { Block, FaqPair } from '@/lib/content/blocks/types'
+import { buildAlternates } from '@/lib/seo/alternates'
+import { alternatesLanguages, isIndexable, type TranslatedPage } from '@/lib/seo/translation-state'
+import { author, authorSameAs } from '@/lib/author'
+import { brand } from '@/lib/brand'
+import { StandardContentPage, type Breadcrumb } from '@/components/content-page/standard-content-page'
+import { featureOn } from '@/config/platform-config'
+
+// ─────────────────────────────────────────────────────────────────────────────
+// createContentPost — the POST factory (sibling of createContentPage). One
+// universal technology for publishing posts of every format: news, blog and
+// documentation. Like createContentPage, it renders ONE post from a CO-LOCATED
+// route folder (page.tsx + _components/index.tsx + _data/) — NO dynamic [slug]
+// route, no central registry. A post folder is an exact copy of the page folder
+// standard; deleting the folder removes the route, its components and its data.
+//
+// The `format` parameter selects a preset that carries the only real per-type
+// differences (structured-data type + author kind); everything else renders
+// through the SAME block, StandardContentPage. i18n is orthogonal: `resolve(lang)`
+// is the co-located resolver — news is localized (resolveEntry, en + <lang>),
+// EN-only formats ignore `lang`. The factory never reads or changes a data file.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// 🔒 В СТРУКТУРИРОВАННЫЕ ДАННЫЕ ОТВЕТ ЕДЕТ БЕЗ РАЗМЕТКИ (2026-08-29, шаг 38).
+// С этого дня ответ FAQ может нести ссылку (`sections/blocks/faq.server.tsx`
+// разбирает `[подпись](адрес)`), а `FAQPage` поисковик читает ДОСЛОВНО — и
+// напечатал бы квадратные скобки в выдаче. Снимаем разметку здесь, а не в
+// словах: словам ссылка нужна, поисковику — нет.
+function plainAnswer(text: string): string {
+  return text.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/\*\*([^*]+)\*\*/g, '$1')
+}
+
+export type PostFormat = 'news' | 'blog' | 'document'
+
+const JSONLD_TYPE: Record<PostFormat, 'NewsArticle' | 'BlogPosting' | 'TechArticle'> = {
+  news: 'NewsArticle',
+  blog: 'BlogPosting',
+  document: 'TechArticle',
+}
+const AUTHOR_KIND: Record<PostFormat, 'person' | 'organization'> = {
+  news: 'person',
+  blog: 'organization',
+  document: 'person',
+}
+
+/** Normalized post descriptor the route's resolver returns. */
+export type ContentPost = {
+  title: string // H1 + JSON-LD headline
+  seoTitle?: string // <title> / og:title (falls back to title)
+  subtitle?: string
+  description: string
+  keywords?: string
+  tags: string[]
+  date: string // ISO
+  readingMinutes: number
+  /** Visible byline name; omit to show no author in the byline (e.g. docs). */
+  authorName?: string
+  blocks: Block[]
+  faq?: FaqPair[]
+  /** og:image / structured-data image — absolute or site-root-relative. */
+  ogImage?: string
+  /** Default image hero (string path). */
+  heroImage?: string
+  /** Custom hero node (video / responsive picture) — overrides heroImage. */
+  hero?: ReactNode
+  /** Content language for inLanguage; defaults to 'en'. */
+  inLanguage?: string
+}
+
+export type ContentPostConfig = {
+  format: PostFormat
+  /** This post's URL path, e.g. '/news/<slug>'. */
+  subPath: string
+  /** Co-located resolver: returns this post's localized content. */
+  resolve: (lang: string) => ContentPost
+  /**
+   * Данные поста — на каких языках у него есть СВОЙ текст (256-6).
+   *
+   * 🔒 ОБЯЗАТЕЛЬНО по той же причине, что и у страницы: из этого строится
+   * `hreflang`, и умолчание вернуло бы прежнее поведение — объявлять переводом
+   * каждый включённый язык, то есть обещать поисковику дубли.
+   */
+  data: TranslatedPage
+  /** Localized breadcrumb trail + back link for this post. */
+  chrome: (lang: string, post: ContentPost) => {
+    breadcrumbs: Breadcrumb[]
+    backHref: string
+    backLabel: string
+    /** 458-11: следующая страница по порядку — «вперёд» рядом с «назад». */
+    next?: { href: string; label: string; title: string }
+  }
+  /** <title> suffix, e.g. (lang) => 'Fractera News'. */
+  titleSuffix: (lang: string) => string
+  /** "min read" label; defaults to 'min read'. */
+  minLabel?: (lang: string) => string
+  /** 458-5: разметка после тела поста (оглавление документов на корне /docs) — слот `afterBody` шаблона страницы. */
+  afterBody?: (lang: string) => ReactNode
+}
+
+function abs(path: string): string {
+  return /^https?:/.test(path) ? path : `${brand().siteUrl}${path}`
+}
+
+// Social snippet image (og:image / twitter / JSON-LD). RULE: a post that has ANY
+// image must expose it as the snippet — never ship an empty og:image when an image
+// exists. Explicit `ogImage` wins; otherwise fall back to the visible `heroImage`.
+// (A custom `hero` ReactNode has no string path, so it cannot be a snippet source —
+// such posts should set `ogImage` explicitly.)
+function snippetImage(post: ContentPost): string | undefined {
+  const path = post.ogImage ?? post.heroImage
+  return path ? abs(path) : undefined
+}
+
+function formatDate(iso: string, lang: string): string {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString(lang, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  })
+}
+
+export function createContentPost(config: ContentPostConfig) {
+  const { format, subPath, resolve, chrome, titleSuffix } = config
+  const minLabel = config.minLabel ?? (() => 'min read')
+
+  async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+    const { lang } = await params
+    const post = resolve(lang)
+    const seoTitle = post.seoTitle ?? post.title
+    const ogImage = snippetImage(post)
+    return {
+      // 🔒 `absolute` — ИНАЧЕ ИМЯ САЙТА ПОДСТАВЛЯЕТСЯ ДВАЖДЫ (2026-08-11).
+      // Корневые метаданные объявляют шаблон `%s | <имя сайта>`
+      // (`lib/construct-metadata.ts`), и Next применяет его к любому обычному
+      // заголовку. Пост уже несёт собственный суффикс раздела, поэтому выходило
+      // «Статья | Блог Fractera | Fractera». `absolute` говорит фреймворку, что
+      // заголовок готов и достраивать его не нужно.
+      // Имя сайта берётся из настроек проекта, а не из строк раздела: в
+      // исходной версии оно было вписано в данные («Fractera Blog»), и блог
+      // любого клиента представлялся бы чужим именем.
+      title: { absolute: `${seoTitle} | ${titleSuffix(lang)} | ${brand().name}` },
+      description: post.description,
+      ...(post.keywords ? { keywords: post.keywords } : {}),
+      alternates: buildAlternates(lang, subPath, alternatesLanguages(lang, config.data)),
+      // 🔒 НЕПЕРЕВЕДЁННАЯ ВЕРСИЯ НЕ ИНДЕКСИРУЕТСЯ (256-6). Здесь стояло
+      // безусловное `index: true`. Адрес на включённом языке существует всегда —
+      // резолвер честно отдаёт английскую основу, — и без этой строки такая
+      // страница попадала бы в индекс копией оригинала под чужим `lang`. Набор
+      // почти одинаковых адресов и есть то, что поисковик зовёт дорвеем.
+      //
+      // Человек её по-прежнему видит: правило о том, что ПОКАЗЫВАТЬ, и правило о
+      // том, что ОБЕЩАТЬ машине, — разные.
+      robots: isIndexable(lang, config.data)
+        ? { index: true, follow: true }
+        : { index: false, follow: true },
+      openGraph: {
+        title: seoTitle,
+        description: post.description,
+        url: `${brand().siteUrl}/${lang}${subPath}`,
+        type: 'article',
+        publishedTime: post.date,
+        ...(ogImage ? { images: [{ url: ogImage, alt: post.title }] } : {}),
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: seoTitle,
+        description: post.description,
+        ...(ogImage ? { images: [ogImage] } : {}),
+      },
+    }
+  }
+
+  async function Page({ params }: { params: Promise<{ lang: string }> }) {
+    const { lang } = await params
+    const post = resolve(lang)
+    const { breadcrumbs, backHref, backLabel, next } = chrome(lang, post)
+    const url = `${brand().siteUrl}/${lang}${subPath}`
+    const ogImage = snippetImage(post)
+
+    const authorNode =
+      AUTHOR_KIND[format] === 'person'
+        ? { '@type': 'Person', '@id': author().id, name: author().name, url: author().url, sameAs: authorSameAs() }
+        : { '@type': 'Organization', name: brand().legalName, url: brand().siteUrl }
+
+
+    // 🔒 ВЫКЛЮЧАТЕЛЬ FAQ БЫЛ МЁРТВЫМ (шаг 522, 2026-08-20). Панель его предлагала,
+    // конфиг хранил, а страница рисовала вопросы всегда: проверено браузером —
+    // при `faq: false` на живом сервере стояли и блок «Frequently asked questions»,
+    // и разметка `FAQPage`.
+    //
+    // 🔒 ГЕЙТ У ИСТОЧНИКА, А НЕ У ДВУХ ПОТРЕБИТЕЛЕЙ. Вопросы уходят в ДВА места —
+    // видимый блок и структурированные данные. Закрыть только видимое значит
+    // пообещать машине то, чего на странице нет; закрывать оба по отдельности —
+    // оставить третье место следующему, кто добавит потребителя. Гасится массив:
+    // оба потребителя уже проверяют его длину.
+    const faq = featureOn("faq") ? post.faq : undefined
+
+    const jsonLd: Record<string, unknown>[] = [
+      {
+        '@context': 'https://schema.org',
+        '@type': JSONLD_TYPE[format],
+        headline: post.title,
+        description: post.description,
+        datePublished: post.date,
+        dateModified: post.date,
+        inLanguage: post.inLanguage ?? 'en',
+        author: authorNode,
+        publisher: {
+          '@type': 'Organization',
+          name: brand().legalName,
+          url: brand().siteUrl,
+          logo: { '@type': 'ImageObject', url: brand().logoUrl },
+        },
+        mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+        keywords: post.keywords ?? post.tags.join(', '),
+        ...(ogImage ? { image: ogImage } : {}),
+      },
+      // 🪦 458-4: здесь стояла вторая разметка `BreadcrumbList` — её уже ставят видимые крошки (`components/nav/breadcrumbs.server.tsx`,
+      // с главной сайта первым пунктом). Две разметки одного пути спорили бы друг с другом в выдаче.
+      // 🪦 314-2: разметку `FAQPage` ставит сам блок `faq` из «Блоков» рядом с видимыми вопросами; здесь она была бы второй.
+    ]
+
+    // Сведения поста ЧАСТЯМИ: раскладку и разделители рисует `PageHeader`
+    // (шаг 542). До этого здесь стояла своя копия той же строки, что и в
+    // шаблоне материала, — два места, где решался один ритм.
+    const metaItems = [
+      ...(post.authorName
+        ? [<span className="font-medium text-muted-foreground">{post.authorName}</span>]
+        : []),
+      <time dateTime={post.date}>{formatDate(post.date, lang)}</time>,
+      <span>{post.readingMinutes} {minLabel(lang)}</span>,
+    ]
+
+    return (
+      <>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <StandardContentPage
+          lang={lang}
+          breadcrumbs={breadcrumbs}
+          tags={post.tags}
+          title={post.title}
+          subtitle={post.subtitle}
+          metaItems={metaItems}
+          heroImage={post.heroImage}
+          hero={post.hero}
+          blocks={post.blocks}
+          faq={faq}
+          backHref={backHref}
+          backLabel={backLabel}
+          next={next}
+          afterBody={config.afterBody?.(lang)}
+        />
+      </>
+    )
+  }
+
+  return { generateMetadata, Page }
+}

@@ -1,0 +1,213 @@
+"use client"
+
+// ДИАЛОГ ДОБАВЛЕНИЯ ПЕРЕВОДОВ — общий инструмент проекта.
+//
+// Подключается любой сущностью с переводимыми полями: продукт сегодня,
+// категория и страница завтра.
+//
+// 🔒 ЗЕРКАЛО. Такой же инструмент лежит в панели —
+// `ai-workspace/bridges/app/_tools/tool-translations-dialog/`, и записан в её реестре
+// инструментов. Копия намеренная: панель применяет его в СВОИХ формах и живёт
+// вне репозитория пользователя, а это приложение обязано работать с выключенной
+// панелью. Одна общая копия убила бы одно из двух.
+//
+// Расходятся ровно три вещи, и каждая по своей причине:
+//   • окно: здесь общий `AppDialog` приложения, там shadcn `Dialog` панели;
+//   • языки: здесь из `translations.config` самого приложения, там приходят
+//     пропсом — их знает сервер панели;
+//   • дверь перевода: здесь `/api/i18n/translate`, там `/api/config/nav/translate`.
+// Поведение общее: карточка на язык, автоперевод, сохранение по одному языку.
+//
+// 🔒 ПЕРЕЕХАЛ ИЗ `components/i18n/` В `_tools/` (шаг 529). Пока он лежал среди
+// обычных компонентов и не значился в реестре, найти его было негде — и кнопку
+// перевода в панели построили заново, самоделкой без интерфейса. Инструмент без
+// дома не существует, как бы хорош он ни был.
+//
+// 🔒 ОДНОЯЗЫЧНОЕ ПРИЛОЖЕНИЕ ЭТОГО ДИАЛОГА НЕ ВИДИТ. Переводить не на что, и
+// спрашивать об этом человека — отнимать время вопросом без ответа. Проверка
+// стоит первой строкой: вызывающему о ней помнить не надо.
+//
+// 🔒 ВЫСОТА — ДОЛЯ ЭКРАНА, А НЕ ЧИСЛО ПИКСЕЛЕЙ. Фиксированные 600 px выходили за
+// нижний край на ноутбуке вместе с кнопками сохранения. Ограничен ВЕСЬ диалог
+// (80 % высоты окна), а прокручивается только список языков — шапка с кнопками
+// перевода и подвал с сохранением остаются на месте всегда.
+//
+// 🔒 КРЕСТИК = «ПРОПУСТИТЬ». Запись уже создана: она живёт значением языка
+// интерфейса, переводы добавляются позже с карточки. Второй вопрос «точно
+// выйти?» — плата за случай, которого здесь нет.
+
+import { useState } from "react"
+import { AlertTriangle, ExternalLink, HelpCircle, Languages, Loader2 } from "lucide-react"
+import { toast } from "sonner"
+import { Button } from "@/components/ui/button"
+import { AppDialog } from "@/components/dialog/app-dialog.client"
+import type { AppDialogUi } from "@/components/dialog/app-dialog.i18n"
+import { SINGLE_LANG_MODE } from "@/config/translations/translations.config"
+import { adminBase } from "@/lib/runtime-urls"
+import type { PlatformErrors } from "@/lib/i18n/platform-errors"
+import { TranslationCell } from "./translation-cell.client"
+import type { AllVoiceStrings } from "@/_tools/tool-voice-input/client/use-voice-recorder"
+import type { TranslationsUi } from "../types/translations-dialog.i18n"
+import { useTranslations, type Drafts, type TranslatableField } from "./use-translations"
+
+export type { TranslatableField, Drafts }
+
+// 🔒 СООБЩЕНИЯ ОБ ОТКАЗАХ ПРИХОДЯТ ПРОПСОМ, а не импортом. Их 82 языка, и
+// импорт из клиентского компонента увёз бы весь словарь в браузер на каждой
+// странице. Серверный компонент резолвит их и передаёт готовыми — тот же закон,
+// что у панели (/code/CLAUDE.md §4д).
+
+export function TranslationsDialog(
+  { open, lang, fields, ui, dialogUi, errors, billingUrl, onSave, onSkip, voiceWords }: {
+    open: boolean
+    /** Слова голоса на языке страницы — от сервера (`voiceStrings(lang)`); клиент словарь не импортирует (422). */
+    voiceWords: AllVoiceStrings
+    /** Язык интерфейса — он же язык исходных значений. */
+    lang: string
+    fields: TranslatableField[]
+    /** Слова диалога на языке страницы — резолвятся на сервере (§4д). */
+    ui: TranslationsUi
+    /** Слова общего окна — резолвятся на сервере (`appDialogUi(lang)`). */
+    dialogUi: AppDialogUi
+    /** Сообщения об отказах на языке страницы — из lib/i18n/platform-errors. */
+    errors: PlatformErrors
+    billingUrl: string
+    /** Сохранить переводы ОДНОГО языка. Возвращает успех. */
+    onSave: (drafts: Drafts) => Promise<boolean>
+    onSkip: () => void
+  },
+) {
+  const t = ui
+  const [active, setActive] = useState(0)
+  const [savingLang, setSavingLang] = useState<string | null>(null)
+  const { targets, drafts, setCell, translate, busy, error, saved, markSaved } =
+    useTranslations(fields, lang)
+
+  if (!open || SINGLE_LANG_MODE || targets.length === 0) return null
+
+  const field = fields[active] ?? fields[0]
+
+  async function saveOne(code: string) {
+    setSavingLang(code)
+    const ok = await onSave({ [code]: drafts[code] ?? {} })
+    setSavingLang(null)
+    if (ok) {
+      markSaved(code)
+      toast.success(t.saved)
+    }
+  }
+
+  const errorText =
+    error === "no-key" ? errors.noKey
+    : error === "bad-key" ? errors.badKey
+    : error === "no-funds" ? errors.noFunds
+    : error === "rate-limit" ? errors.rateLimit
+    : error ? errors.upstream : null
+
+  return (
+    /* 🔒 ЭТО ОКНО БЫЛО СОБРАНО РУКАМИ ИЗ ГОЛЫХ `div` — и в нём не было НИЧЕГО из
+       того, что делает окно окном: ни `role="dialog"`, ни `aria-modal`, ни
+       ловушки фокуса, ни закрытия по Escape, ни замка прокрутки страницы под
+       ним. Выглядело оно при этом безупречно: увидеть нехватку можно было,
+       только попробовав пользоваться им с клавиатуры. Свой слой `z-[70]` он
+       назначал себе сам — ровно так два окна и оказываются друг поверх друга.
+       Теперь всё это приносит общий `AppDialog`, а здесь остаётся содержимое. */
+    <AppDialog
+      open
+      onOpenChange={v => { if (!v) onSkip() }}
+      ui={dialogUi}
+      size="lg"
+      titleClassName="flex items-center gap-1.5 text-[12px] font-medium"
+      title={<><Languages size={13} />{t.title}</>}
+      description={t.intro}
+      bodyClassName="space-y-2 p-4"
+      footerClassName="block px-4 py-2.5"
+      footer={
+        <div data-block="seg41" className="flex items-center gap-1.5">
+          <Button size="sm" variant="ghost" onClick={onSkip}>{t.skip}</Button>
+          {/* Родной `title`: работает на касании и переживает выключенный JS. */}
+          <span title={t.hint} className="cursor-help text-muted-foreground">
+            <HelpCircle size={13} />
+          </span>
+        </div>
+      }
+      toolbar={
+        <div data-block="b6wkx" className="flex flex-col gap-3">
+          {/* Вкладки полей — только когда полей больше одного. */}
+          {fields.length > 1 && (
+            <div data-block="a9rle" className="flex flex-wrap items-center gap-1.5">
+              {fields.map((f, i) => (
+                <Button
+                  key={f.key}
+                  size="sm"
+                  variant={i === active ? "default" : "outline"}
+                  className="h-7 min-w-7 px-2 text-[11px]"
+                  onClick={() => setActive(i)}
+                  title={f.label}
+                >
+                  {i + 1}
+                </Button>
+              ))}
+              <span className="ml-1 text-[11px] text-muted-foreground">{field?.label}</span>
+            </div>
+          )}
+
+          {/* ДВЕ кнопки перевода, и обе про ВКЛАДКИ: эту и все. «Перевести это
+              поле» отсюда убрано — поле и вкладка здесь одно и то же, а два
+              имени одного действия заставляли выбирать между синонимами. */}
+          <div data-block="dh9rl" className="flex flex-wrap items-center gap-2">
+            <Button size="sm" variant="outline" onClick={() => translate(field?.key)} disabled={busy}>
+              {busy ? <Loader2 size={12} className="animate-spin" /> : <Languages size={12} />}
+              {busy ? t.translating : t.translateTab}
+            </Button>
+            {fields.length > 1 && (
+              <Button size="sm" onClick={() => translate()} disabled={busy}>
+                {t.translateAllTabs}
+              </Button>
+            )}
+          </div>
+
+          {errorText && (
+            <div data-block="fy6vi" className="flex items-start gap-2 rounded-md border border-destructive/40 bg-destructive/5 p-2.5 text-[11px] leading-relaxed text-destructive">
+              <AlertTriangle size={12} className="mt-0.5 shrink-0" />
+              <div data-block="s12dy">
+                <p data-block="aj8us">{errorText}</p>
+                {(error === "no-key" || error === "bad-key") && (
+                  <a href={`${adminBase()}/${lang}/openai`} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex items-center gap-1 underline">
+                    {errors.keyLink}<ExternalLink size={10} />
+                  </a>
+                )}
+                {error === "no-funds" && (
+                  <a href={billingUrl} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex items-center gap-1 underline">
+                    {errors.fundsLink}<ExternalLink size={10} />
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      }
+    >
+      {/* Прокручивается ТОЛЬКО список языков: вкладки и кнопки перевода стоят в
+          полосе `toolbar`, которую тело окна не увозит. */}
+      {targets.map(code => {
+        const value = drafts[code]?.[field?.key ?? ""] ?? ""
+        return (
+          <TranslationCell
+            key={code}
+            voiceWords={voiceWords}
+            lang={code}
+            value={value}
+            multiline={field?.multiline}
+            dirty={Boolean(field) && value.trim() !== field.value.trim()}
+            saved={Boolean(saved[code])}
+            saving={savingLang === code}
+            labels={{ save: t.saveOne, saving: t.saving, savedMark: t.savedMark }}
+            onChange={v => field && setCell(code, field.key, v)}
+            onSave={() => saveOne(code)}
+          />
+        )
+      })}
+    </AppDialog>
+  )
+}

@@ -1,0 +1,12 @@
+{
+  "about": "Outbound A2A guard policy of this element (step 419). Every rule: deny (nothing goes out), mask (the match becomes [hidden]) or off. ownerWords: words and phrases that never leave this element. Checked by plain functions in lib/a2a/guard.mjs, no AI model.",
+  "rules": {
+    "card": "deny",
+    "cvv": "deny",
+    "secret": "deny",
+    "phone": "mask",
+    "email": "mask",
+    "owner-words": "deny"
+  },
+  "ownerWords": []
+}

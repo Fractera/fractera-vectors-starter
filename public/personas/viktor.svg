@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160" role="img" aria-label="Viktor">
+  <defs>
+    <clipPath id="v-crop"><circle cx="80" cy="80" r="80"/></clipPath>
+    <linearGradient id="v-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d8dfd2"/><stop offset="1" stop-color="#b3bfa8"/>
+    </linearGradient>
+    <linearGradient id="v-hair" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5c5f63"/><stop offset="1" stop-color="#3b3e42"/>
+    </linearGradient>
+  </defs>
+  <g clip-path="url(#v-crop)">
+    <rect width="160" height="160" fill="url(#v-bg)"/>
+    <!-- плечи, рубашка и воротник -->
+    <path d="M80 112c26 0 44 16 48 48H32c4-32 22-48 48-48Z" fill="#4b5563"/>
+    <path d="M80 112c6 0 11 1 16 3l-16 19-16-19c5-2 10-3 16-3Z" fill="#eef1f4"/>
+    <path d="M80 134l4 26h-8l4-26Z" fill="#8a4b4b"/>
+    <!-- шея -->
+    <path d="M68 96h24v18c0 6-24 6-24 0V96Z" fill="#dda87f"/>
+    <!-- уши -->
+    <ellipse cx="53" cy="76" rx="4.5" ry="6" fill="#eec39c"/>
+    <ellipse cx="107" cy="76" rx="4.5" ry="6" fill="#eec39c"/>
+    <!-- лицо -->
+    <ellipse cx="80" cy="73" rx="26.5" ry="30" fill="#f0c59d"/>
+    <!-- волосы с сединой на висках -->
+    <path d="M54 69c0-19 11-31 26-31s26 12 26 31c-3-9-7-14-12-16-9 5-21 5-30 1-5 2-8 8-10 15Z" fill="url(#v-hair)"/>
+    <path d="M55 72c1-6 3-10 6-12 1 5 1 10 0 15-2 0-4-1-6-3ZM105 72c-1-6-3-10-6-12-1 5-1 10 0 15 2 0 4-1 6-3Z" fill="#c9ced3"/>
+    <!-- брови -->
+    <path d="M65 64c3.5-2.4 8-2.4 11.5 0M83.5 64c3.5-2.4 8-2.4 11.5 0" stroke="#4a4d51" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+    <!-- глаза -->
+    <ellipse cx="70.5" cy="73" rx="3.4" ry="3.8" fill="#2f2a26"/>
+    <ellipse cx="89.5" cy="73" rx="3.4" ry="3.8" fill="#2f2a26"/>
+    <circle cx="71.6" cy="71.8" r="1.1" fill="#fff"/>
+    <circle cx="90.6" cy="71.8" r="1.1" fill="#fff"/>
+    <!-- нос -->
+    <path d="M80 77v6.5c0 1.6-1.4 2.6-3 2.6" stroke="#c8926a" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <!-- усы и рот -->
+    <path d="M68.5 89c3.5-3.2 7.5-3.6 11.5-1.4 4-2.2 8-1.8 11.5 1.4-3 2.6-7 3.4-11.5 3.4s-8.5-.8-11.5-3.4Z" fill="#4a4d51"/>
+    <path d="M73 95.5c3.6 2.6 9.4 2.6 14 0" stroke="#a4664a" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

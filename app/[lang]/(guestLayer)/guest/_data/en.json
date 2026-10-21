@@ -1,0 +1,57 @@
+{
+  "title": "Your guest account",
+  "description": "We have created an anonymous guest account for you, so that what you do here is not lost.",
+  "keywords": "",
+  "gate": {
+    "signingIn": "Creating a guest account…",
+    "failed": "The guest account could not be created: the sign-in service did not return a session. The page does not retry by itself, so that no extra records are created."
+  },
+  "blocks": [
+    {
+      "kind": "text-p",
+      "text": "We have created an anonymous guest account for you in our database. We did not ask for your name, email or phone, and we do not link this account to you as a person. It simply lets the site remember what you do here in this browser — a filled cart, an order in progress, a conversation.",
+      "bid": "zytcl"
+    },
+    {
+      "kind": "block-section-head",
+      "id": "why",
+      "title": "Why we do this",
+      "bid": "tiexd"
+    },
+    {
+      "kind": "text-p",
+      "text": "If you close the site and come back later in this same browser, everything will be where you left it: you continue as if you had never left.",
+      "bid": "nchlj"
+    },
+    {
+      "kind": "text-p",
+      "text": "A guest account is not a full registration. It lives only in this browser, it disappears if you clear the browser's data, and some of our services are available only to registered users.",
+      "bid": "c5wch"
+    },
+    {
+      "kind": "block-warning-card",
+      "title": "We recommend a full registration",
+      "text": "With a full registration you can sign in from any device and use everything we offer. It takes a minute.",
+      "bid": "o14e4"
+    },
+    {
+      "kind": "text-p",
+      "text": "Thank you for being with us.",
+      "bid": "q0qj4"
+    },
+    {
+      "kind": "widget-static-guest-account",
+      "bid": "z1uo1"
+    }
+  ],
+  "account": {
+    "back": "Go back",
+    "leave": "Delete my account and leave the site",
+    "confirm": "Your guest account and everything saved with it will be deleted for good, and you will leave the site. This cannot be undone.",
+    "confirmYes": "Yes, delete and leave",
+    "cancel": "Cancel",
+    "leaving": "Deleting…",
+    "failed": "The account could not be deleted right now. Please try again in a minute.",
+    "notGuest": "You are signed in with your own account, so you do not need a guest account."
+  }
+}

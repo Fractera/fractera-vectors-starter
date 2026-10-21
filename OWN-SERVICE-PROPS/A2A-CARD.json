@@ -1,0 +1,402 @@
+{
+  "provider": {
+    "organization": "Fractera",
+    "url": "https://fractera.ai"
+  },
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "extensions": [
+      {
+        "uri": "https://fractera.ai/a2a/ext/node/v1",
+        "description": "Fractera node: doors with examples, what the element needs from neighbours, what it does by itself, its catalog.",
+        "required": false,
+        "params": {
+          "visibility": "node",
+          "doors": [
+            {
+              "skill": "site-shell",
+              "protocol": "http",
+              "method": "GET",
+              "path": "/api/shell/:lang",
+              "key": "none",
+              "output": {
+                "brand": {
+                  "name": "Fractera"
+                },
+                "header": {},
+                "footer": {}
+              },
+              "errors": {},
+              "callers": [
+                "*"
+              ]
+            },
+            {
+              "skill": "site-shell",
+              "protocol": "http",
+              "method": "GET",
+              "path": "/api/menu/:lang",
+              "key": "none",
+              "output": {
+                "lang": "en",
+                "brand": {
+                  "name": "Fractera"
+                },
+                "top": [],
+                "footer": []
+              },
+              "errors": {},
+              "callers": [
+                "*"
+              ]
+            },
+            {
+              "skill": "current-user",
+              "protocol": "http",
+              "method": "GET",
+              "path": "/api/me",
+              "key": "session",
+              "output": {
+                "user": {
+                  "id": "u1",
+                  "email": "a@b.c"
+                },
+                "roles": [
+                  "user"
+                ]
+              },
+              "errors": {
+                "401": "not signed in"
+              },
+              "callers": [
+                "*"
+              ]
+            },
+            {
+              "skill": "follow-settings",
+              "protocol": "http",
+              "method": "POST",
+              "path": "/api/settings/changed",
+              "key": "X-Settings-Key",
+              "input": {
+                "version": "f0381e7bd79405f1"
+              },
+              "output": {
+                "ok": true,
+                "settings": {
+                  "ok": true
+                },
+                "design": {
+                  "ok": true
+                }
+              },
+              "errors": {
+                "401": "bad-key"
+              },
+              "callers": [
+                "config",
+                "design"
+              ]
+            },
+            {
+              "skill": "redraw-pages",
+              "protocol": "http",
+              "method": "POST",
+              "path": "/api/revalidate",
+              "key": "session",
+              "input": {},
+              "output": {
+                "ok": true,
+                "revalidated": [
+                  "/",
+                  "/[lang]"
+                ],
+                "ts": 1791185667291
+              },
+              "errors": {
+                "401": "Unauthorized",
+                "403": "Forbidden"
+              },
+              "callers": [
+                "*"
+              ]
+            }
+          ],
+          "consumes": [
+            {
+              "skill": "sign-in",
+              "from": "auth",
+              "why": "sessions, sign-in on its own domain, guest visitors",
+              "protocol": "i2i",
+              "via": {
+                "kind": "http",
+                "method": "GET",
+                "path": "/api/session",
+                "base": "AUTH_SERVICE_URL",
+                "key": "the visitor's session cookie",
+                "also": "GET /api/auth/ticket on this element's own domain"
+              }
+            },
+            {
+              "skill": "stored-data",
+              "from": "data",
+              "why": "media files and table rows; never a database file of its own",
+              "protocol": "i2i",
+              "via": {
+                "kind": "http",
+                "method": "GET, POST",
+                "path": "/api/*",
+                "base": "REMOTE_DATA_URL",
+                "key": "X-Data-Secret (DATA_SECRET)"
+              }
+            },
+            {
+              "skill": "project-settings",
+              "from": "config",
+              "why": "name, texts and languages of the project, unless the CONFIG link is off",
+              "protocol": "i2i",
+              "via": {
+                "kind": "mcp",
+                "path": "/mcp",
+                "tool": "get_project_settings",
+                "base": "CONFIG_SERVICE_URL",
+                "key": "SETTINGS_SECRET",
+                "also": "settings_version"
+              }
+            },
+            {
+              "skill": "design-tokens",
+              "from": "design",
+              "why": "colours, fonts and corners of every page",
+              "protocol": "i2i",
+              "via": {
+                "kind": "mcp",
+                "path": "/mcp",
+                "tool": "get_project_settings",
+                "base": "DESIGN_SERVICE_URL",
+                "key": "SETTINGS_SECRET",
+                "also": "subscribe"
+              }
+            },
+            {
+              "skill": "node-registry",
+              "from": "core",
+              "why": "who in the node can do a job; the core wakes this element's agent and is told when it is done",
+              "protocol": "i2i",
+              "via": {
+                "kind": "http",
+                "method": "GET",
+                "path": "/api/node/a2a?q=",
+                "base": "the core (logs/runtime.json)",
+                "key": "X-Node-Key (SETTINGS_SECRET)",
+                "also": "POST /api/agents/wake, POST /api/agents/done"
+              }
+            }
+          ],
+          "process": [
+            {
+              "kind": "subscription",
+              "what": "subscribes to config and design at start and redraws pages on their signal"
+            }
+          ],
+          "catalog": {
+            "find": "catalog-find",
+            "get": "catalog-get",
+            "contribute": "catalog-contribute"
+          },
+          "private": [
+            "/api/health",
+            "/api/core-origin",
+            "/api/auth",
+            "/api/config-image",
+            "/api/media-proxy",
+            "/api/media",
+            "/api/i18n/translate",
+            "/api/task-report",
+            "/api/users",
+            "/[lang]/admin/api/settings/app",
+            "/api/tools",
+            "/api/settings/platform",
+            "/api/settings/design",
+            "/api/a2a/tasks",
+            "/api/own-service-props"
+          ],
+          "a2aEndpoint": "/api/a2a",
+          "a2aSkills": [
+            "site-shell",
+            "redraw-pages",
+            "catalog-find",
+            "catalog-get",
+            "catalog-contribute"
+          ]
+        }
+      }
+    ]
+  },
+  "defaultInputModes": [
+    "application/json"
+  ],
+  "defaultOutputModes": [
+    "application/json"
+  ],
+  "skills": [
+    {
+      "id": "site-shell",
+      "name": "Site header and menu",
+      "description": "the header, footer and menu of this site, for a neighbour to show the same frame",
+      "tags": [
+        "site",
+        "header",
+        "menu",
+        "navigation"
+      ],
+      "examples": [
+        "Give me the header and menu of this site in Russian"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "current-user",
+      "name": "Who is signed in",
+      "description": "who is signed in on this site and with which roles. Not over A2A: an HTTP door — GET /api/me (extension https://fractera.ai/a2a/ext/node/v1, «doors»)",
+      "tags": [
+        "auth",
+        "session",
+        "roles",
+        "http-door"
+      ],
+      "examples": [
+        "Who is signed in on this site and with which roles?"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "follow-settings",
+      "name": "Follow project settings",
+      "description": "takes the signal that project settings or design changed and redraws its pages. Not over A2A: an HTTP door — POST /api/settings/changed (extension https://fractera.ai/a2a/ext/node/v1, «doors»)",
+      "tags": [
+        "settings",
+        "design",
+        "signal",
+        "http-door"
+      ],
+      "examples": [
+        "Project settings changed to version f0381e7b — redraw"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "redraw-pages",
+      "name": "Redraw pages",
+      "description": "redraws the static pages of this site at once",
+      "tags": [
+        "cache",
+        "revalidate",
+        "pages"
+      ],
+      "examples": [
+        "Redraw the static pages of this site now"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "catalog-find",
+      "name": "Find in the catalog",
+      "description": "Finds sections and blocks in this element's catalog by words or tags; an empty answer means there is none yet.",
+      "tags": [
+        "catalog",
+        "blocks",
+        "sections",
+        "find"
+      ],
+      "examples": [
+        "Do you have a hero section?"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "catalog-get",
+      "name": "Get from the catalog",
+      "description": "Gives a block of the catalog in full: shadcn registry item files, its fields and a filled example.",
+      "tags": [
+        "catalog",
+        "blocks",
+        "get",
+        "shadcn"
+      ],
+      "examples": [
+        "Give me hero/hero-centered"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "catalog-contribute",
+      "name": "Contribute to the catalog",
+      "description": "Takes a block another element made, checks it and stores it as the next version so anyone can reuse it.",
+      "tags": [
+        "catalog",
+        "blocks",
+        "contribute",
+        "save"
+      ],
+      "examples": [
+        "Save this hero section for everyone"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    }
+  ],
+  "securitySchemes": {
+    "nodeKey": {
+      "apiKeySecurityScheme": {
+        "description": "The node key: every element of the node holds it; elements outside the node do not.",
+        "location": "header",
+        "name": "X-Node-Key"
+      }
+    }
+  },
+  "securityRequirements": [
+    {
+      "schemes": {
+        "nodeKey": {
+          "list": []
+        }
+      }
+    }
+  ]
+}

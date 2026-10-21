@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160" role="img" aria-label="Maria">
+  <defs>
+    <clipPath id="m-crop"><circle cx="80" cy="80" r="80"/></clipPath>
+    <linearGradient id="m-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f4d9c8"/><stop offset="1" stop-color="#e7b9a2"/>
+    </linearGradient>
+    <linearGradient id="m-hair" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5a3320"/><stop offset="1" stop-color="#3a1f12"/>
+    </linearGradient>
+  </defs>
+  <g clip-path="url(#m-crop)">
+    <rect width="160" height="160" fill="url(#m-bg)"/>
+    <!-- волосы сзади -->
+    <path d="M32 78c0-30 20-48 48-48s48 18 48 48c0 22-4 38-8 52H40c-4-14-8-30-8-52Z" fill="url(#m-hair)"/>
+    <!-- плечи и блуза -->
+    <path d="M80 112c26 0 44 16 48 48H32c4-32 22-48 48-48Z" fill="#c2566a"/>
+    <path d="M80 112c6 0 11 1 16 3l-16 20-16-20c5-2 10-3 16-3Z" fill="#f6ded2"/>
+    <!-- шея -->
+    <path d="M68 96h24v18c0 6-24 6-24 0V96Z" fill="#e8b394"/>
+    <!-- лицо -->
+    <ellipse cx="80" cy="74" rx="27" ry="31" fill="#f6ddc9"/>
+    <!-- чёлка -->
+    <path d="M53 70c-1-22 12-34 27-34s28 12 27 34c-4-10-9-16-15-18-6 6-24 9-33 2-3 4-5 10-6 16Z" fill="url(#m-hair)"/>
+    <!-- брови -->
+    <path d="M65 66c3-2 8-2 11 0M84 66c3-2 8-2 11 0" stroke="#4a2a19" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+    <!-- глаза -->
+    <ellipse cx="70.5" cy="74" rx="3.4" ry="3.8" fill="#3b2a22"/>
+    <ellipse cx="89.5" cy="74" rx="3.4" ry="3.8" fill="#3b2a22"/>
+    <circle cx="71.6" cy="72.8" r="1.1" fill="#fff"/>
+    <circle cx="90.6" cy="72.8" r="1.1" fill="#fff"/>
+    <!-- нос и улыбка -->
+    <path d="M80 78v6c0 1.6-1.4 2.6-3 2.6" stroke="#d99f81" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M72 92c4.4 4 11.6 4 16 0" stroke="#b9546a" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+    <!-- серьги -->
+    <circle cx="52.5" cy="80" r="2.4" fill="#e0b64a"/>
+    <circle cx="107.5" cy="80" r="2.4" fill="#e0b64a"/>
+  </g>
+</svg>

@@ -1,0 +1,9 @@
+{
+  "name": "build-skills",
+  "version": "1.0.0",
+  "description": "Build process skills of this element: code, pages, design, texts, deploy. On in build-mode sessions (node step 552).",
+  "author": {
+    "name": "Fractera"
+  },
+  "defaultEnabled": true
+}
