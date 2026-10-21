@@ -53,8 +53,13 @@ try {
   // size — never the list of elements. Measured: the list was ~230 bytes per element (1000 elements → ~250 KB on every wake).
   // A neighbour is found by need: npm run a2a -- find <English words> (at most five).
   const core = p.project?.core
+  // 553: the node type in one line — it decides whether this element lives under the core's CONFIG by default.
+  const type = p.project?.nodeType === 'factory' ? 'factory' : 'project'
   const node = {
     domain: p.project?.domain, core,
+    type: type === 'factory'
+      ? 'factory — hosting for projects of different owners; new custom elements live on their own settings'
+      : 'project — one owner; every element under the core's CONFIG (one header and footer)',
     mainAgent: `the core's main agent routes a need to an element and creates new elements — its terminal ${core}/${lang}/architect/build/terminal`,
     elements: (p.project?.elements ?? []).length,
     find: 'npm run a2a -- find <plain English words of the job> — who in the node does it, at most five; npm run a2a -- card <address> — one of them in full',

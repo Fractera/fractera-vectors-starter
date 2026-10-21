@@ -22,11 +22,13 @@ export type TopMenuUi = {
   /** 277: Store после Core, A2A после WEB4 — тоже без перехода. */
   store: string
   blog: string
+  /** 553: первая вкладка шапки — каталог элементов узла. */
+  allProjects: string
 }
 
 const UI: Record<string, TopMenuUi> = {
-  en: { menu: 'Menu', store: 'Store', blog: 'Blog', openLeft: 'Open left menu', closeLeft: 'Close left menu', openRight: 'Open right menu', closeRight: 'Close right menu' },
-  ru: { menu: 'Меню', store: 'Store', blog: 'Блог', openLeft: 'Открыть левое меню', closeLeft: 'Закрыть левое меню', openRight: 'Открыть правое меню', closeRight: 'Закрыть правое меню' },
+  en: { menu: 'Menu', allProjects: 'All projects', store: 'Store', blog: 'Blog', openLeft: 'Open left menu', closeLeft: 'Close left menu', openRight: 'Open right menu', closeRight: 'Close right menu' },
+  ru: { menu: 'Меню', allProjects: 'Все проекты', store: 'Store', blog: 'Блог', openLeft: 'Открыть левое меню', closeLeft: 'Закрыть левое меню', openRight: 'Открыть правое меню', closeRight: 'Закрыть правое меню' },
 }
 
 export function topMenuUi(lang: string): TopMenuUi {

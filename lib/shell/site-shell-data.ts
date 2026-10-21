@@ -6,6 +6,7 @@ import { getAvailableLanguages, DEFAULT_LANGUAGE } from "@/config/translations/t
 import { LANGUAGE_REGIONS } from "@/config/translations/language-metadata"
 import { isUploadedIcon } from "@/lib/socials/catalogue"
 import { resolveTopGroups, resolveFooterGroups } from "@/lib/menu/site-menu"
+import { catalogGroup } from "@/lib/menu/catalog-group"
 import { accountLinks } from "@/lib/menu/account-links"
 import { appShellAuthSide } from "@/components/menu/account/account-config"
 import { accountLabels } from "@/components/menu/account/account-menu.i18n"
@@ -37,13 +38,16 @@ export function siteShellData(lang: string): ShellData {
       })
     : []
 
+  // 553: «Все проекты» — первая вкладка; меню выключено — она остаётся одна («как минимум одна»).
+  const catalog = catalogGroup(lang)
+
   return {
     lang,
     brand: cfg.short_name ?? "",
     logo: cfg.logo || null,
     home: `/${lang}`,
-    menuOn: featureOn("topMenu"),
-    top: resolveTopGroups(lang),
+    menuOn: featureOn("topMenu") || !!catalog,
+    top: [...(catalog ? [catalog] : []), ...resolveTopGroups(lang)],
     footer: resolveFooterGroups(lang),
     account: side
       ? {

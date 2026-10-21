@@ -11,11 +11,13 @@ import { AccountButton } from "./shell-account.client"
 //
 // 🔒 КНОПКА КАБИНЕТА ВСЕГДА СПРАВА (владелец, 2026-08-12); настройка стороны решает только, откуда выезжает ящик.
 // Ящики слева/справа — только у сайта: вид принимает их кнопки слотами `leftSlot` / `rightSlot`.
-export function ProjectHeader({ data, surface = {}, leftSlot, rightSlot }: {
+// 553: navSlot — своя вставка поверхности после логотипа (ядро ставит туда «Все проекты» островком).
+export function ProjectHeader({ data, surface = {}, leftSlot, rightSlot, navSlot }: {
   data: ShellData
   surface?: ShellSurface
   leftSlot?: ReactNode
   rightSlot?: ReactNode
+  navSlot?: ReactNode
 }) {
   const { lang } = data
   const meUrl = surface.meUrl ?? "/api/me"
@@ -27,11 +29,13 @@ export function ProjectHeader({ data, surface = {}, leftSlot, rightSlot }: {
       meUrl={meUrl}
       loginHref={surface.loginHref ? surface.loginHref(lang) : `/login?lang=${lang}`}
       logoutHref={surface.logoutHref ? surface.logoutHref(lang) : `/logout?lang=${lang}`}
+      attentionUrl={surface.attentionUrl}
+      attentionWords={surface.attentionWords}
     />
   ) : null
 
   const groups = data.menuOn ? data.top : []
-  const barNeeded = data.menuOn || !!leftSlot || !!rightSlot
+  const barNeeded = data.menuOn || !!leftSlot || !!rightSlot || !!navSlot
 
   if (!barNeeded) {
     // Меню выключено, вход включён — кнопка живёт сама в верхнем углу (владелец, 2026-08-12).
@@ -60,6 +64,7 @@ export function ProjectHeader({ data, surface = {}, leftSlot, rightSlot }: {
           ) : (
             <Link href={data.home} className={brandClass}>{brand}</Link>
           )}
+          {navSlot}
           {groups.length > 0 && <DesktopNav lang={lang} groups={groups} meUrl={meUrl} />}
         </div>
 

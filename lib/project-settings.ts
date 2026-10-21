@@ -32,7 +32,17 @@ import { linkOn } from "./own-site"
 export type SettingsKind = "app" | "platform" | "design"
 const KINDS: SettingsKind[] = ["app", "platform", "design"]
 
-type Copy = { receivedAt: string; from: string; version: string; patches: Record<SettingsKind, Record<string, unknown>> }
+/** 553: запись каталога узла — главная страница элемента для вкладки «Все проекты» (считает ядро, раздаёт CONFIG). */
+export type CatalogEntry = { id: string; title: string; description: string; href: string | null; local: string | null; kind: "custom" | "native" }
+type Catalog = { updatedAt?: string; byLang: Record<string, CatalogEntry[]> }
+
+type Copy = {
+  receivedAt: string
+  from: string
+  version: string
+  patches: Record<SettingsKind, Record<string, unknown>>
+  catalog?: Catalog | null
+}
 
 const isObj = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null && !Array.isArray(v)
 
@@ -61,6 +71,18 @@ export function projectSettingsPatch(kind: SettingsKind): Record<string, unknown
   if (!copy) return null
   const patch = copy.patches[kind]
   return isObj(patch) ? patch : {}
+}
+
+/**
+ * 553: карточки вкладки «Все проекты» на языке страницы (нет языка — английские). Связь с CONFIG выключена или каталога нет —
+ * пусто, и вкладки нет: у самостоятельного элемента своя шапка. В шапку идут только записи с публичным адресом.
+ */
+export function projectCatalog(lang: string): CatalogEntry[] {
+  if (!linkOn("config")) return []
+  const byLang = readCopy()?.catalog?.byLang
+  if (!isObj(byLang)) return []
+  const list = byLang[lang] ?? byLang.en ?? []
+  return Array.isArray(list) ? list.filter((e) => isObj(e) && typeof e.href === "string" && e.href.length > 0) : []
 }
 
 // ── MCP-клиент в одну функцию ─────────────────────────────────────────────────
@@ -104,21 +126,24 @@ export async function pullProjectSettings(): Promise<PullResult> {
   const before = readCopy()
   let patches: Record<string, unknown>
   let version: string
+  let catalog: Catalog | null = null
   try {
     const v = (await callTool(base, key, "settings_version")) as { version?: unknown }
     if (typeof v?.version !== "string") return { ok: false, reason: "bad-answer" }
     if (before && before.version === v.version) return { ok: true, changed: false, version: v.version }
-    const got = (await callTool(base, key, "get_project_settings")) as { version?: unknown; patches?: unknown }
+    const got = (await callTool(base, key, "get_project_settings")) as { version?: unknown; patches?: unknown; catalog?: unknown }
     if (typeof got?.version !== "string" || !isObj(got.patches) || !KINDS.every((k) => isObj((got.patches as Record<string, unknown>)[k]))) {
       return { ok: false, reason: "bad-answer" }
     }
     patches = got.patches
     version = got.version
+    // 553: каталог узла едет в той же копии; CONFIG без каталога (до v1.1.0) — `null`.
+    if (isObj(got.catalog) && isObj(got.catalog.byLang)) catalog = got.catalog as Catalog
   } catch (err) {
     return { ok: false, reason: "unreachable", detail: err instanceof Error ? err.message : String(err) }
   }
 
-  const copy: Copy = { receivedAt: new Date().toISOString(), from: `${base}/mcp`, version, patches: patches as Copy["patches"] }
+  const copy: Copy = { receivedAt: new Date().toISOString(), from: `${base}/mcp`, version, patches: patches as Copy["patches"], catalog }
   const file = projectSettingsCopyPath()
   const tmp = `${file}.${process.pid}.${Date.now()}.tmp`
   try {

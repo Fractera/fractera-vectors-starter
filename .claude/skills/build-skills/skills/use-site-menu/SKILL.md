@@ -26,6 +26,13 @@ The top bar and the footer are the person's settings, edited on this element's p
 filled by you. 🛑 Never write your own `<header>` or `<nav>` with links: `npm run check:menu` refuses a second navigation bar —
 the person could not manage it.
 
+## The first tab, «All projects», belongs to the node
+
+The first tab of the header, «All projects», is drawn from the node's catalog: the core lists the home page of every running
+element (title, description, address) and CONFIG sends it to every element that follows CONFIG. Do not build it by hand and do not
+remove it — it is not part of the person's menu, and the top-menu switch does not hide it. An element whose link with CONFIG is off
+does not get the tab: it has its own header.
+
 ## Where they live — ask before you edit
 
 | Link to the node's CONFIG | Source of the menu | Where a change is made |

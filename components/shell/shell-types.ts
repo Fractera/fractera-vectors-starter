@@ -10,11 +10,14 @@
 // правят. Папка не читает НИ ОДНОГО конфига: всё, что она рисует, приходит объектом `ShellData` — у сайта из
 // его настроек (`lib/shell/site-shell-data.ts`), у служб из статической двери сайта `/api/shell/<язык>`.
 
-export type ShellChild = { slug: string; title: string; href?: string }
+/** 507: `description` — вторая строка пункта мега-меню (до двух строк); нет — пункт из одного названия. */
+export type ShellChild = { slug: string; title: string; href?: string; description?: string }
 
 export type ShellGroup = {
   slug: string
   label: string
+  /** 507: описание хаба — первая карточка его выпадающего списка. */
+  description?: string
   order: number
   childrenAsDropdown: boolean
   roles: string
@@ -23,6 +26,8 @@ export type ShellGroup = {
   href?: string
   /** Кнопка без перехода: место зарезервировано, страницы ещё нет. */
   inert?: boolean
+  // 553: вкладка «Все проекты» — группа из каталога узла (CONFIG); у неё нет своей страницы и своей карточки
+  catalog?: boolean
 }
 
 export type ShellLink = {
@@ -90,4 +95,7 @@ export type ShellSurface = {
   logoutHref?: (lang: string) => string
   /** Языки, которые у этой поверхности есть на самом деле; нет — все языки сайта. */
   languages?: string[]
+  /** 356-1: дверь «что ждёт архитектора» и её слова — только у ядра; нет — ящик без точки и без списков. */
+  attentionUrl?: string
+  attentionWords?: { terminals: string; deployments: string; go: string; waiting: string }
 }
