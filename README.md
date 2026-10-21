@@ -8,6 +8,23 @@ native elements: **data** (the database), **storage** (files), **vectors** (this
 Consumers did not change: they call `/vectors/*` on the database element, which passes the request here as it is and returns
 the answer unchanged.
 
+## In the Fractera project
+
+The node's vector store: elements keep pieces of text as vectors in named collections and find the closest ones to a question. Elements reach it through the data element (`/vectors/*`).
+
+You can change it. The code is open under the MIT license and the copy on your node is yours. The node installs this element from
+this repository by the tag written in `WEB4-ITEMS-REGISTRY/web4-items.json` of the core; the core does not let you delete a built-in
+element or move its address.
+
+To change it, open it in the core (left menu, Native items, Vector storage), go to Build and tell its agent in the terminal what you need.
+The agent edits the element folder `WEB4-ITEMS/core/vectors` and commits.
+
+The change goes live when you press Deploy in Build, Deployments: the element is rebuilt beside the running one and switched over in
+seconds. Other elements call its doors by address, request and answer, so a change to a door breaks every element that uses it;
+that is a decision for the node owner, while a change inside the element is ordinary work. To keep your version when the node is
+reinstalled, save the element to your own GitHub repository in Build, GitHub. A newer Fractera version arrives through Update, which
+merges it with your commits, and the element's agent resolves a conflict.
+
 ## Doors
 
 Every door but `/health` needs the node data key (`X-Data-Secret`, the same `DATA_SECRET` the installer writes to every
