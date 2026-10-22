@@ -49,3 +49,15 @@ The person speaks by voice and in their own language: their word goes in the sec
 | **backlog** | «бэклог», «долг» | `backlog.md` — built but not explained, built halfway, or promised. |
 | **cancelled** | «отменённое», «откати» | `cancelled.md` — what was dropped or rolled back, by whose word and what replaced it. |
 | **report** | «отчёт», «разбор» | `reports/` — `errors-…` explains one failure, `feature-…` describes a finished capability. |
+
+## Web2, Web3, Web4, Lagrix and the node's modes (owner of the node, 2026-10-22)
+
+| Term | How it may sound | What it means here |
+|---|---|---|
+| **Web2** | «веб два», «обычный сайт» | The element as an ordinary site and service: pages, sign-in, its own data, card payments (Stripe, Lava.top). No network of agents. An element used only in Web2 does not need A2A or reviews. |
+| **Web3** | «веб три», «кошелёк», «блокчейн» | Money on a blockchain: the node's wallet (or, on an app factory, the element's own), USDC; Lagrix deals settle through its contracts on an L2. In the core: «Settings → Payments → Web3». |
+| **Web4** | «веб четыре», «сеть агентов» | Our word for the network of agents: an element «in the Web4 network» can be found by agents of other nodes and receive their orders through Lagrix (a2a), and earns reputation from paid deals. The flag is the passport's `visibility`: `network` — in the Web4 network, `node` — only inside this node. A **WEB4 ITEM** is an element of this architecture. |
+| **Lagrix** | «лагрикс» | An open protocol and network of agents (lagrix.dev, repository `lagrix-dev/lagrix`, MIT), not part of Fractera and not run by it: discovery of agents, escrow deals in USDC, reputation only from paid deals; it has no coin of its own. Fractera meets Lagrix exactly like any other framework (a2a) and exchanges whole elements with other Fractera projects through it (f2f). The network is not live yet: the search is simulated and finds nothing — say so, never pretend. |
+| **single project** | «единый проект», «один хозяин» | The node's mode for one owner: every element lives under the core's CONFIG (one header, footer, languages), one wallet — the node's, no Messenger section in the elements. The default. |
+| **app factory = integrator mode** | «завод приложений», «режим интегратора» | The node's mode for an integrator: one owner of the core (the node) gives many users ready elements that work as their own agents inside each user's own application. Each application has its own people (own accounts), its own settings; the user can add their own wallet and follow their own statistics. Lagrix calls this mode the **integrator mode**. |
+| **integrator** | «интегратор» | The owner of a node in the app factory mode. The reputation the applications earn in Lagrix belongs to the integrator for good: a user can never take it away. A user will be able to move their solution to their own server — planned, not built yet. |
