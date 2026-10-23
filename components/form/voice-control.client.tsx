@@ -206,7 +206,7 @@ export function VoiceControl({
         </div>
       ) : v.draft !== null ? (
         <div data-block="eye7b" data-voice-draft className="flex w-full flex-col gap-2">
-          <Small>{L.draftTitle}</Small>
+          <Small data-block="iwapq">{L.draftTitle}</Small>
           <Textarea
             value={v.draft}
             onChange={e => v.setDraft(e.target.value)}
@@ -225,7 +225,7 @@ export function VoiceControl({
       ) : null}
 
       {failure && (
-        <Small data-voice-failure className="text-warning">
+        <Small data-block="a45id" data-voice-failure className="text-warning">
           {failure}
         </Small>
       )}

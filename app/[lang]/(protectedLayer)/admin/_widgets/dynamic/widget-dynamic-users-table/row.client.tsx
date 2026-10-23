@@ -94,7 +94,7 @@ export function UsersRow(
           </div>
         ) : (
           <div data-block="ih2kv" className="flex flex-wrap items-center gap-1.5">
-            {current.map(r => <Badge key={r} variant="secondary">{r}</Badge>)}
+            {current.map(r => <Badge data-block="vdazf" key={r} variant="secondary">{r}</Badge>)}
             <Button size="sm" variant="ghost" onClick={() => setEditing(true)}>{ui.edit}</Button>
           </div>
         )}

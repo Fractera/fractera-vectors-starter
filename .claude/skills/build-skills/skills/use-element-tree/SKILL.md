@@ -100,7 +100,9 @@ description: >
     │   └── admin/
     │       ├── layout.tsx · page.tsx · _data/ · [...slug]/page.tsx · README.md
     │       ├── _components/README.md · _libs/README.md · _widgets/README.md
-    │       └── _pages/ admin/ · users/ · site-settings/
+    │       ├── _pages/ admin/ · users/ · site-settings/ · blocks/ (14 section folders, a README each — skill use-blocks)
+    │       ├── _libs/element-blocks.ts · _components/element-blocks-pages.tsx · _widgets/static/widget-static-element-blocks/
+    │       └── blocks/[section]/page.tsx · blocks/[section]/[name]/page.tsx   ← 577-11: the page of a section and the Preview of one block
     │   └── messenger-h2a/          ← 459: H2A Messenger — only the architect; UI only from ai-elements (skill use-messenger)
     │       ├── layout.tsx · page.tsx (list of conversations) · _data/ {meta,en,ru}.json · README.md
     │       ├── _components/README.md · _libs/README.md · _widgets/README.md

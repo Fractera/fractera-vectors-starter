@@ -123,7 +123,7 @@ export function ConfigEditor({
           <div data-block="imo28" className="flex flex-col gap-1">
             <H3 data-block="ed9gd" variant="ui">{ui.sections[section.id] ?? section.id}</H3>
             {ui.sectionHints[section.id] && (
-              <Small className="max-w-2xl">{ui.sectionHints[section.id]}</Small>
+              <Small data-block="d8s3w" className="max-w-2xl">{ui.sectionHints[section.id]}</Small>
             )}
           </div>
 

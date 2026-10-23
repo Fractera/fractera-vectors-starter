@@ -81,7 +81,7 @@ export function FieldRow({
             помечено языковым, а «есть/нет перевода» появляется только тогда, когда
             правится ДРУГОЙ язык. */}
         {field.perLang && (
-          <Small
+          <Small data-block="fp1h0"
             data-per-lang
             data-translated={translationMode ? (translated ? "yes" : "no") : undefined}
             className={translationMode && translated ? "text-primary" : undefined}
@@ -91,7 +91,7 @@ export function FieldRow({
         )}
 
         {field.locked && (
-          <Small data-locked className="inline-flex items-center gap-1">
+          <Small data-block="a7vj2" data-locked className="inline-flex items-center gap-1">
             <Lock className="size-3" aria-hidden />
             {ui.locked}
           </Small>
@@ -171,7 +171,7 @@ export function FieldRow({
       </div>
 
       {(words.hint || field.locked) && (
-        <Small>{field.locked ? (words.hint ?? ui.lockedHint) : words.hint}</Small>
+        <Small data-block="ox5g9">{field.locked ? (words.hint ?? ui.lockedHint) : words.hint}</Small>
       )}
     </div>
   )

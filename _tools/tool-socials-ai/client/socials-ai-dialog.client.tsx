@@ -176,7 +176,7 @@ export function SocialsAiDialog({
       >
         <div data-block="js44n" className="flex flex-col gap-5">
           <div data-block="s46xp" className="flex flex-col gap-2">
-            <Small className="font-medium text-foreground">{ui.phraseLabel}</Small>
+            <Small data-block="znxrt" className="font-medium text-foreground">{ui.phraseLabel}</Small>
             {/* Область текста, а не строка: фраза здесь описательная — «мой
                 инстаграм, псевдоним транслитерацией через дефис». */}
             <Textarea
@@ -210,11 +210,11 @@ export function SocialsAiDialog({
                 <Icon className="size-6 shrink-0" />
                 <div data-block="mnalx" className="min-w-0">
                   <P data-block="vnm7n" className="text-[length:var(--fs-body)] font-medium">{proposal.name}</P>
-                  <Small className="block truncate font-mono">{proposal.urlTemplate}</Small>
+                  <Small data-block="d0rl4" className="block truncate font-mono">{proposal.urlTemplate}</Small>
                 </div>
               </div>
 
-              {proposal.valueHint && <Small>{proposal.valueHint}</Small>}
+              {proposal.valueHint && <Small data-block="c022o">{proposal.valueHint}</Small>}
 
               {proposal.candidates.length > 0 && (
                 <ul data-block="zfcdg" className="flex flex-col gap-2">
@@ -249,7 +249,7 @@ export function SocialsAiDialog({
               {/* Свой вариант нужен всегда: модель могла не угадать ни одного, а
                   правило сборки адреса она уже дала — это половина работы. */}
               <div data-block="sk0ry" className="flex flex-col gap-2">
-                <Small className="font-medium text-foreground">{ui.ownValue}</Small>
+                <Small data-block="ucg0d" className="font-medium text-foreground">{ui.ownValue}</Small>
                 <div data-block="eh07f" className="flex items-center gap-2">
                   <Input
                     value={ownValue}

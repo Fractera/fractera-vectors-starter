@@ -1,0 +1,84 @@
+{
+  "name": "block-faq",
+  "component": "Faq",
+  "pageKind": true,
+  "categories": [
+    "page-material"
+  ],
+  "role": "closer",
+  "placement": {
+    "page": true,
+    "inside": []
+  },
+  "accepts": null,
+  "repeat": "once",
+  "mode": [
+    "read",
+    "persuade"
+  ],
+  "use": "Questions and answers at the end of a page; search engines read them as FAQPage structured data.",
+  "avoid": "Anywhere but the end of a page; answers with markdown marks (they go into structured data verbatim).",
+  "slots": {
+    "title": {
+      "maxChars": 60
+    },
+    "items": {
+      "min": 2,
+      "max": 12,
+      "fields": {
+        "q": {
+          "maxChars": 120
+        },
+        "a": {
+          "maxChars": 600
+        }
+      }
+    }
+  },
+  "props": "{ kind: 'block-faq'; title: string; items: { q: string; a: string }[] }",
+  "markdown": "case 'block-faq':\n      return [`## ${block.title}`, ...block.items.flatMap((f) => ['', `**${f.q}**`, f.a])]",
+  "variants": [],
+  "data": "static",
+  "requires": [],
+  "interactive": "none",
+  "media": "none",
+  "headings": [
+    "h2"
+  ],
+  "rtl": "untested",
+  "weight": "medium",
+  "band": false,
+  "alternatives": [],
+  "source": {
+    "origin": "own",
+    "license": "MIT"
+  },
+  "origin": {
+    "project": "base",
+    "request": null
+  },
+  "version": "1.0.0",
+  "status": "published",
+  "cases": [
+    {
+      "title": "Questions a buyer asks before signing up",
+      "mode": "read",
+      "position": "last block",
+      "why": "Answers the doubts that remain after the page, and search engines show them as answers.",
+      "props": {
+        "title": "Questions",
+        "items": [
+          {
+            "q": "Do I need a credit card?",
+            "a": "No. You can start without one."
+          },
+          {
+            "q": "Can I leave later?",
+            "a": "Yes. Your data stays yours."
+          }
+        ]
+      }
+    }
+  ],
+  "docs": "npx shadcn add @fractera/block-faq. In a page: { \"kind\": \"block-faq\", \"title\": \"…\", \"items\": [ { \"q\": \"…\", \"a\": \"…\" } ] } as the last block."
+}

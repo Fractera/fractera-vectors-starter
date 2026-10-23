@@ -50,6 +50,7 @@
     "check:lang-delivery": "node scripts/check-lang-delivery.mjs",
     "check:case": "node scripts/check-case.mjs",
     "widgets:ids": "node scripts/stamp-widget-ids.mjs --fix",
+    "blocks": "node scripts/blocks.mjs",
     "check:widget-ids": "node scripts/stamp-widget-ids.mjs",
     "check:index": "node scripts/check-index.mjs",
     "check:passport": "node scripts/check-passport.mjs",

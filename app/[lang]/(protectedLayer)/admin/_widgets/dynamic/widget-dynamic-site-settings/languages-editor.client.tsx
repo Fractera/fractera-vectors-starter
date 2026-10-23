@@ -217,21 +217,21 @@ export function LanguagesEditor({
       {/* Строка про пересборку — не украшение: без неё «Сохранено» лжёт. */}
       <div data-block="nq70d" data-lang-rebuild={pending ? "pending" : "clean"} className="flex flex-col gap-1">
         <P data-block="q0h16" className="text-[length:var(--fs-body)] font-medium">{t.rebuildTitle}</P>
-        <Small className="max-w-2xl">{t.rebuild}</Small>
+        <Small data-block="l375d" className="max-w-2xl">{t.rebuild}</Small>
       </div>
 
       <section data-block="a5c0n" className="flex flex-col gap-4">
         <div data-block="z0476" className="flex flex-col gap-1">
           <H3 data-block="b8i9j" variant="ui">{t.title}</H3>
-          <Small className="max-w-2xl">{t.hint}</Small>
-          <Small data-lang-count className="font-medium text-foreground">
+          <Small data-block="gxkrx" className="max-w-2xl">{t.hint}</Small>
+          <Small data-block="x8rd6" data-lang-count className="font-medium text-foreground">
             {selected.length} {t.selected}
             {q && ` · ${shown.length} ${t.found}`}
           </Small>
           {/* 🔒 ЗНАЧОК ОБЪЯСНЯЕТСЯ ТАМ, ГДЕ ОН СТОИТ. Подпись у самой кнопки видит
               только тот, кто уже навёл на неё мышь, — то есть тот, кто и так
               догадался. Легенда стоит над списком и читается до первого щелчка. */}
-          <Small data-star-legend className="flex items-center gap-1.5">
+          <Small data-block="uuvu2" data-star-legend className="flex items-center gap-1.5">
             <Star className="size-3.5 shrink-0" aria-hidden />
             {t.starLegend}
           </Small>
@@ -272,14 +272,14 @@ export function LanguagesEditor({
             </Button>
           )}
         </div>
-        <Small className="max-w-xl">{t.searchHint}</Small>
+        <Small data-block="fsxi6" className="max-w-xl">{t.searchHint}</Small>
 
         <Separator />
 
         {shown.length === 0 ? (
           <div data-block="tcv66" data-lang-empty className="flex flex-col gap-1 rounded-lg border border-border px-4 py-6">
             <P data-block="ulzwe" className="text-[length:var(--fs-body)] font-medium">{t.nothingFound}</P>
-            <Small>{t.nothingFoundHint}</Small>
+            <Small data-block="jv1ex">{t.nothingFoundHint}</Small>
           </div>
         ) : (
           <ul data-block="ti6z4" className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">

@@ -1,0 +1,129 @@
+{
+  "name": "block-hero-centered",
+  "component": "HeroCentered",
+  "pageKind": true,
+  "categories": [
+    "hero"
+  ],
+  "role": "opener",
+  "placement": {
+    "page": true,
+    "inside": []
+  },
+  "accepts": null,
+  "repeat": "once",
+  "mode": [
+    "persuade"
+  ],
+  "use": "The first screen of a page without a picture: a badge, a title of at most two lines, one sentence, one or two actions and, if needed, three steps.",
+  "avoid": "A first screen that needs a picture or a figure beside the title; any place but the first screen of a page.",
+  "slots": {
+    "pill": {
+      "maxChars": 40
+    },
+    "title": {
+      "maxChars": 70
+    },
+    "description": {
+      "maxChars": 220
+    },
+    "steps": {
+      "min": 3,
+      "max": 3,
+      "fields": {
+        "title": {
+          "maxChars": 40
+        },
+        "text": {
+          "maxChars": 120
+        }
+      }
+    }
+  },
+  "props": "{ kind: 'block-hero-centered'; pill?: string; title: string; description: string; cta?: { label: string; href: string }; secondary?: { label: string; href: string }; steps?: [{ title: string; text: string }, { title: string; text: string }, { title: string; text: string }] }",
+  "markdown": "case 'block-hero-centered':\n      return [\n        ...(block.pill ? [`_${block.pill}_`, ''] : []),\n        `# ${block.title}`,\n        '',\n        block.description,\n        ...(block.cta ? ['', `[${block.cta.label}](${block.cta.href})`] : []),\n        ...(block.secondary ? [`[${block.secondary.label}](${block.secondary.href})`] : []),\n        ...(block.steps ? ['', ...block.steps.map((s, i) => `${i + 1}. **${s.title}** ${s.text}`)] : []),\n      ]",
+  "variants": [
+    {
+      "id": "plain",
+      "label": "Title, sentence, actions",
+      "case": 0
+    },
+    {
+      "id": "with-steps",
+      "label": "With three steps under the actions",
+      "case": 1
+    }
+  ],
+  "data": "static",
+  "requires": [],
+  "interactive": "none",
+  "media": "none",
+  "headings": [
+    "h1",
+    "h5"
+  ],
+  "rtl": "untested",
+  "weight": "heavy",
+  "band": true,
+  "alternatives": [],
+  "source": {
+    "origin": "own",
+    "license": "MIT"
+  },
+  "origin": {
+    "project": "base",
+    "request": null
+  },
+  "version": "1.0.0",
+  "status": "published",
+  "cases": [
+    {
+      "title": "Home page of a service: what it is and two actions",
+      "mode": "persuade",
+      "position": "first block",
+      "why": "With no picture, the title and the actions are the whole offer of the first screen.",
+      "props": {
+        "pill": "Open source",
+        "title": "Sign-in for every application on your node",
+        "description": "One service keeps the accounts, roles and sign-in methods of every application.",
+        "cta": {
+          "label": "Sign in",
+          "href": "/login"
+        },
+        "secondary": {
+          "label": "Create an account",
+          "href": "/register"
+        }
+      }
+    },
+    {
+      "title": "Launch page that shows how to start in three steps",
+      "mode": "persuade",
+      "position": "first block",
+      "why": "The three steps answer «how do I start» before the reader scrolls.",
+      "props": {
+        "title": "Your own site on your own computer",
+        "description": "Install the node, open the panel, publish the first page.",
+        "cta": {
+          "label": "Start",
+          "href": "/start"
+        },
+        "steps": [
+          {
+            "title": "Install",
+            "text": "One command in a terminal."
+          },
+          {
+            "title": "Open",
+            "text": "The panel opens in the browser."
+          },
+          {
+            "title": "Publish",
+            "text": "A temporary address goes live."
+          }
+        ]
+      }
+    }
+  ],
+  "docs": "npx shadcn add @fractera/block-hero-centered. In a page sequence: { \"kind\": \"block-hero-centered\", \"title\": \"…\", \"description\": \"…\", \"cta\": { \"label\": \"…\", \"href\": \"…\" } } as the first block (after breadcrumbs, if any)."
+}

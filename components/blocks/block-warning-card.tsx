@@ -7,9 +7,9 @@ export type WarningCardProps = { blockKey?: string; title: string; text: string 
 
 export function WarningCard({ blockKey: k = 'warning', title, text }: WarningCardProps) {
   return (
-    <aside role="note" aria-labelledby={`${k}-t`} className="my-6 flex flex-col gap-2 rounded-2xl border border-destructive/40 bg-destructive/10 p-6">
-      <H4 id={`${k}-t`} className="text-destructive">{title}</H4>
-      <Small className="text-foreground">{inline(text, `${k}-x`)}</Small>
+    <aside data-block="ban00" role="note" aria-labelledby={`${k}-t`} className="my-6 flex flex-col gap-2 rounded-2xl border border-destructive/40 bg-destructive/10 p-6">
+      <H4 data-block="kmr5b" id={`${k}-t`} className="text-destructive">{title}</H4>
+      <Small data-block="lfmvg" className="text-foreground">{inline(text, `${k}-x`)}</Small>
     </aside>
   )
 }

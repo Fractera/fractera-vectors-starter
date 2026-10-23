@@ -71,7 +71,7 @@ export function AdviceNote({
       <Icon className={"mt-0.5 size-4 shrink-0 " + c.icon} aria-hidden />
       <div data-block="lc3bb" className="flex flex-col gap-1">
         <P data-block="x9vyv" className={"text-[length:var(--fs-body)] font-medium " + c.title}>{title}</P>
-        <Small className={c.text}>{text}</Small>
+        <Small data-block="e53er" className={c.text}>{text}</Small>
       </div>
     </div>
   )

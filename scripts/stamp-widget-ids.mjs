@@ -27,6 +27,10 @@ const CONTAINERS = new Set([
   'Card', 'CardHeader', 'CardContent', 'CardFooter', 'Accordion', 'AccordionItem', 'Alert', 'FieldSet', 'FieldGroup', 'Field',
   'Collapsible', 'CollapsibleContent', 'ScrollArea', 'EmptyState', 'ButtonGroup', 'Table', 'Tabs', 'TabsContent',
   'H1', 'H2', 'H3', 'H4', 'P', 'Lead',
+  // 577-4 (владелец 2026-10-23: «непоколебимый стандарт … без каких-либо ограничений»): строки и ячейки таблиц, списки определений,
+  // подпись фигуры и типографика, передающая свойства на свой DOM-элемент. Тот же список — у «Блоков».
+  'dl', 'dt', 'dd', 'thead', 'tbody', 'tr', 'th', 'td', 'figcaption',
+  'H5', 'Small', 'Eyebrow', 'Badge',
 ])
 const rel = (p) => relative(ROOT, p).split(sep).join('/')
 
@@ -83,6 +87,9 @@ function follow(file, seen = new Set()) {
   }
 }
 for (const d of dirs) for (const f of files(d, '.tsx')) follow(f)
+// 577-4: каждый блок `components/blocks/` под процедурой, даже если его не импортирует ни один виджет.
+const BLOCK_DIR = join(ROOT, 'components', 'blocks')
+if (existsSync(BLOCK_DIR)) for (const f of files(BLOCK_DIR, '.tsx')) { extraFiles.add(f); follow(f) }
 
 
 // Занятые адреса — во всём DOM сайта: `bid` данных и уже стоящие в коде.

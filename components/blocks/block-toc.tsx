@@ -47,7 +47,7 @@ export function Toc({ items, heading }: { items: TocItem[]; heading: string }) {
       </p>
       <ol data-block="tc460" className="mt-3 flex flex-col gap-2">
         {items.map((item, i) => (
-          <li key={item.id} className="flex flex-col gap-2 text-[15px] leading-snug">
+          <li data-block="zkdvg" key={item.id} className="flex flex-col gap-2 text-[15px] leading-snug">
             <span className="flex gap-3">
               <span aria-hidden className="select-none font-mono text-sm text-muted-foreground">
                 {String(i + 1).padStart(2, '0')}
@@ -58,9 +58,9 @@ export function Toc({ items, heading }: { items: TocItem[]; heading: string }) {
             </span>
             {/* Второй уровень: подразделы своего раздела. Номера им не даются — отступа и точки достаточно. */}
             {item.children && item.children.length > 0 && (
-              <ul className="ml-9 flex flex-col gap-1.5">
+              <ul data-block="v04ae" className="ml-9 flex flex-col gap-1.5">
                 {item.children.map((sub) => (
-                  <li key={sub.id} className="flex gap-2 text-sm leading-snug">
+                  <li data-block="gp9yy" key={sub.id} className="flex gap-2 text-sm leading-snug">
                     <span aria-hidden className="select-none text-muted-foreground">·</span>
                     <a href={`#${sub.id}`} className="text-muted-foreground transition-colors hover:text-primary">
                       {sub.text}

@@ -87,6 +87,8 @@ A production build is always the whole app; the only lever is how many route fil
 - **A block** the set does not have — skill `use-blocks`: by the node's mode it comes from the Blocks element (`npm run blocks --
   find`, then `add`, or a request) or is built here among the element's own blocks; either way it is registered in
   `lib/content/blocks/registry.tsx`, `lib/content/blocks/types.ts` and `lib/aio/blocks-to-markdown.ts`. Never draw a section by hand.
+  The blocks of this element, by section, with a Preview of each: `/<lang>/admin/blocks` (the architect opens it from the core,
+  «Build → Blocks»).
 - A public page has a Markdown copy for agents (`<page>/index.md`, `llms-full.txt`) built from this sequence; a `widget-*`
   in it brings its own text through `markdown.ts` (skill `use-machine-copy`).
 

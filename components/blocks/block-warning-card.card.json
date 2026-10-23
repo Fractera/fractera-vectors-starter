@@ -1,0 +1,67 @@
+{
+  "name": "block-warning-card",
+  "component": "WarningCard",
+  "pageKind": true,
+  "categories": [
+    "page-material"
+  ],
+  "role": "body",
+  "placement": {
+    "page": true,
+    "inside": []
+  },
+  "accepts": null,
+  "repeat": "not-adjacent",
+  "mode": [
+    "read",
+    "persuade",
+    "operate"
+  ],
+  "use": "A warning about the price or the risk of a decision the reader is about to make.",
+  "avoid": "Ordinary notes or tips; more than one or two per page.",
+  "slots": {
+    "title": {
+      "maxChars": 60
+    },
+    "text": {
+      "maxChars": 400
+    }
+  },
+  "props": "{ kind: 'block-warning-card'; title: string; text: string }",
+  "markdown": "case 'block-warning-card':\n      return [`> **${block.title}** ${block.text}`]",
+  "variants": [],
+  "data": "static",
+  "requires": [],
+  "interactive": "none",
+  "media": "none",
+  "headings": [
+    "h4"
+  ],
+  "rtl": "untested",
+  "weight": "medium",
+  "band": false,
+  "alternatives": [],
+  "source": {
+    "origin": "own",
+    "license": "MIT"
+  },
+  "origin": {
+    "project": "base",
+    "request": null
+  },
+  "version": "1.0.0",
+  "status": "published",
+  "cases": [
+    {
+      "title": "The risk of setting up sign-in late",
+      "mode": "read",
+      "position": "body",
+      "why": "The reader is about to postpone a decision that is expensive to postpone.",
+      "props": {
+        "title": "Set it up early",
+        "text": "If sign-in breaks, nobody can open the protected pages, architects included."
+      }
+    }
+  ],
+  "docs": "npx shadcn add @fractera/block-warning-card. In a page: { \"kind\": \"block-warning-card\", \"title\": \"…\", \"text\": \"…\" }."
+}

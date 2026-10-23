@@ -86,7 +86,7 @@ export function SocialsField({
 
   return (
     <div data-block="mh1st" data-socials-field className="flex flex-col gap-4">
-      {links.length === 0 && <Small>{ui.socialsEmpty}</Small>}
+      {links.length === 0 && <Small data-block="yizbx">{ui.socialsEmpty}</Small>}
 
       {links.map((link, index) => {
         // Загруженная картинка остаётся картинкой: поле `icon` держит две формы, и
@@ -178,7 +178,7 @@ export function SocialsField({
             <div data-block="y6h04" className="mt-2 flex items-center justify-between gap-3">
               {/* Итоговый адрес показывается сразу: правило, посчитанное на глазах,
                   избавляет от «сохранил и пошёл проверять в подвал». */}
-              <Small data-social-href className="truncate">
+              <Small data-block="htbtj" data-social-href className="truncate">
                 {link.urlTemplate ? socialHref(link) : ""}
               </Small>
               <Button

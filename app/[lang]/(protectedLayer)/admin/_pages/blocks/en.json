@@ -1,0 +1,16 @@
+{
+  "title": "Blocks of this element",
+  "description": "Every block the pages of this element can use: where it came from and where it stands.",
+  "keywords": "",
+  "blocks": [
+    {
+      "kind": "text-p",
+      "text": "A page of this element is made of these blocks. Preview opens a block on a page of its own, drawn with the words of the first page that uses it.",
+      "bid": "eb0p1"
+    },
+    {
+      "kind": "widget-static-element-blocks",
+      "bid": "eb0p2"
+    }
+  ]
+}

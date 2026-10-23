@@ -1,0 +1,67 @@
+{
+  "name": "block-section-head",
+  "component": "SectionHead",
+  "pageKind": true,
+  "categories": [
+    "page-material"
+  ],
+  "role": "body",
+  "placement": {
+    "page": true,
+    "inside": []
+  },
+  "accepts": null,
+  "repeat": "not-adjacent",
+  "mode": [
+    "persuade",
+    "read",
+    "operate"
+  ],
+  "use": "The heading of a section with an anchor: the blocks after it belong to the section.",
+  "avoid": "Before block-cards, block-flow or block-showcase-frame (they print the same head themselves); two heads in a row.",
+  "slots": {
+    "title": {
+      "maxChars": 80
+    },
+    "badge": {
+      "maxChars": 30
+    }
+  },
+  "props": "{ kind: 'block-section-head'; id: string; title: string; badge?: string }",
+  "markdown": "case 'block-section-head':\n      return [`## ${block.title}`]",
+  "variants": [],
+  "data": "static",
+  "requires": [],
+  "interactive": "none",
+  "media": "none",
+  "headings": [
+    "h2"
+  ],
+  "rtl": "untested",
+  "weight": "light",
+  "band": false,
+  "alternatives": [],
+  "source": {
+    "origin": "own",
+    "license": "MIT"
+  },
+  "origin": {
+    "project": "base",
+    "request": null
+  },
+  "version": "1.0.0",
+  "status": "published",
+  "cases": [
+    {
+      "title": "A section that groups the paragraphs after it",
+      "mode": "read",
+      "position": "body",
+      "why": "The anchor and the heading make the section findable from a table of contents.",
+      "props": {
+        "id": "roles",
+        "title": "Roles"
+      }
+    }
+  ],
+  "docs": "npx shadcn add @fractera/block-section-head. In a page: { \"kind\": \"block-section-head\", \"id\": \"roles\", \"title\": \"Roles\" }."
+}

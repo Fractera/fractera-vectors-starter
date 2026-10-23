@@ -94,7 +94,7 @@ export function SearchLanguages({
     <section data-block="sl340" data-search-languages className="flex flex-col gap-5">
       <H3 data-block="h60b0" variant="ui">{w.title}</H3>
       <AdviceNote probe="search-languages" tone="recommended" title={w.adviceTitle} text={w.advice} />
-      <Small className="max-w-2xl">{w.why}</Small>
+      <Small data-block="x3rik" className="max-w-2xl">{w.why}</Small>
 
       <div data-block="sl34a" className="flex flex-col gap-2">
         <P data-block="k6qjy" className="text-[length:var(--fs-body)] font-medium">{w.openTitle}</P>
@@ -104,10 +104,10 @@ export function SearchLanguages({
               <LockOpen className="size-4 shrink-0 text-primary" aria-hidden />
               <span className="min-w-0 flex-1 truncate text-[length:var(--fs-body)]">{label(code)}</span>
               {always.includes(code) ? (
-                <Small>{w.alwaysOpen}</Small>
+                <Small data-block="p4hcr">{w.alwaysOpen}</Small>
               ) : (
                 <>
-                  <Small>{w.unlockedByYou}</Small>
+                  <Small data-block="var8p">{w.unlockedByYou}</Small>
                   <Button type="button" variant="ghost" size="sm" disabled={busy} data-close-lang={code} onClick={() => save(unlocked.filter((l) => l !== code))}>
                     <Lock className="size-4" aria-hidden />
                     {w.close}
@@ -122,7 +122,7 @@ export function SearchLanguages({
       <div data-block="sl34d" className="flex flex-col gap-2">
         <P data-block="mtdfv" className="text-[length:var(--fs-body)] font-medium">{w.closedTitle}</P>
         {closed.length === 0 ? (
-          <Small>{w.allOpen}</Small>
+          <Small data-block="ns9du">{w.allOpen}</Small>
         ) : (
           <div data-block="sl34e" className="flex flex-wrap items-center gap-3">
             <Select value={pick} onValueChange={(v) => { setPick(v); setConfirming(false) }}>
@@ -146,7 +146,7 @@ export function SearchLanguages({
         {confirming && pick && (
           <div data-block="sl34f" data-unlock-confirm className="flex max-w-2xl flex-col gap-3 rounded-lg border border-destructive/40 bg-destructive/10 p-4">
             <P data-block="tj0y9" className="text-[length:var(--fs-body)] font-medium">{w.confirmTitle} {label(pick)}</P>
-            <Small className="text-foreground">{w.confirmText}</Small>
+            <Small data-block="f4hmt" className="text-foreground">{w.confirmText}</Small>
             <div data-block="sl34g" className="flex flex-wrap gap-2">
               <Button type="button" disabled={busy} data-unlock-yes onClick={unlock}>
                 {busy && <Loader2 className="size-4 animate-spin" aria-hidden />}
@@ -162,11 +162,11 @@ export function SearchLanguages({
 
       <div data-block="sl34h" data-search-rebuild={pending ? "pending" : "clean"} className="flex flex-col gap-1">
         <P data-block="vednf" className="text-[length:var(--fs-body)] font-medium">{pending ? w.pendingTitle : w.clean}</P>
-        {pending && <Small className="max-w-2xl">{w.pending}</Small>}
+        {pending && <Small data-block="h567v" className="max-w-2xl">{w.pending}</Small>}
         {/* 340-4: развёртывание запускает человек на странице элемента в ядре (закон 337) — туда и ведёт кнопка. */}
         {pending && deployHref && (
           <div data-block="sl34i" className="mt-2 flex max-w-2xl flex-col gap-2">
-            <Small className="text-foreground">{w.deployNote}</Small>
+            <Small data-block="o4lxx" className="text-foreground">{w.deployNote}</Small>
             <a href={deployHref} data-start-deploy className={buttonVariants({ className: "h-10 w-fit" })}>
               {w.deploy}
             </a>

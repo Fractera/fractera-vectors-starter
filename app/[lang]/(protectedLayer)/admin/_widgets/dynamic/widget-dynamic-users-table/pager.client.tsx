@@ -38,7 +38,7 @@ export function UsersPager(
 ) {
   return (
     <div data-block="bh4z6" className="mt-3 flex flex-wrap items-center justify-between gap-2">
-      <Small>{ui.count.replace("{count}", String(total))}</Small>
+      <Small data-block="nh069">{ui.count.replace("{count}", String(total))}</Small>
 
       <div data-block="m15q0" className="flex items-center gap-1.5 sm:gap-3">
         <div data-block="fdil0" className="flex items-center gap-1">
