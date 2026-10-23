@@ -149,3 +149,19 @@ full address so it is clickable; it opens the page. The place lights up only whe
 delete any file or folder. Guards refuse a build that leaves it; a change of the tree itself is the person's decision.
 Something of the starting tree is gone (`npm run check:tree` lists a missing path) → the skill's section «Restore the starting
 architecture»: find the removing commit, ask the person, restore from git history or the template tag (node step 462).
+
+## Highlight addresses — every container, no exceptions
+
+The owner of the node, 2026-10-23, verbatim: «непоколебимый стандарт по отношению к всему коду всегда требует атрибуты для подсветки
+контейнеров том числе без каких-либо ограничений это распространяется на блоке и все их контейнеры». And the same evening: «любой код
+разрабатывать с этим атрибутом».
+
+- Every container you write — in a page, a widget, a tool, a component, a block — carries `data-block="<letter + 4 base36>"`. The
+  highlight of the tab «Live site» sees only `[data-block]`: a container without it cannot be pointed at, the person's task about it
+  arrives vague, and your answer cannot point at the place you changed.
+- After you write or change code, run `npm run widgets:ids` — it stamps every container that has no address; `npm run prebuild`
+  refuses one without. Never remove or rename an address that stands.
+- A block of the catalogue arrives with its addresses (`npm run blocks -- add`, the Blocks element stamps them at the source); never
+  strip them. A container the stamp does not know (your own wrapper) passes `...props` to its DOM root, and its name goes into
+  `CONTAINERS` of `scripts/stamp-widget-ids.mjs`.
+- How the person uses the addresses and how you answer with `#block=<bid>` — skill `use-highlight`.
