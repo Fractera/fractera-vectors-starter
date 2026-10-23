@@ -152,9 +152,9 @@ architecture»: find the removing commit, ask the person, restore from git histo
 
 ## Highlight addresses — every container, no exceptions
 
-The owner of the node, 2026-10-23, verbatim: «непоколебимый стандарт по отношению к всему коду всегда требует атрибуты для подсветки
-контейнеров том числе без каких-либо ограничений это распространяется на блоке и все их контейнеры». And the same evening: «любой код
-разрабатывать с этим атрибутом».
+The owner of the node, 2026-10-23, verbatim:
+«непоколебимый стандарт по отношению к всему коду всегда требует атрибуты для подсветки контейнеров том числе без каких-либо ограничений это распространяется на блоке и все их контейнеры».
+And the same evening: «любой код разрабатывать с этим атрибутом».
 
 - Every container you write — in a page, a widget, a tool, a component, a block — carries `data-block="<letter + 4 base36>"`. The
   highlight of the tab «Live site» sees only `[data-block]`: a container without it cannot be pointed at, the person's task about it
