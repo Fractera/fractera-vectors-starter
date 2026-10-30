@@ -86,8 +86,8 @@ element is a microservice that answers its neighbours and asks them for help; to
    that needed it. A session that did not ask tells its person the answer in two lines and stops.
 5. **A task from the core's main agent to check or find out something** (not to build) is a job: do it, save the result with
    `npm run reply-core -- "<the result in a few lines>"` and finish as usual — your «done» wakes the main agent, which tells the architect.
-6. **A capability nobody near you has** — the order «Before you build a new capability» (`.claude/modes/build.md`, «Steps», 1b). This
-   element has no `npm run need` yet: a need no neighbour covers goes to the architect in your answer.
+6. **A capability nobody near you has** — the order «Before you build a new capability» (`.claude/modes/build.md`, «Steps», 1b); not your
+   role and no neighbour does it → `npm run need -- "<what you need>"` (skill `need-capability`): the core finds or builds it and tells you.
 
 ## 6. Protocols — how you talk and to whom
 
@@ -124,7 +124,7 @@ session shares; the group of the build session is in `.claude/modes/build.md`. A
 
 | Group | Mode | Skills |
 |---|---|---|
-| own-service-props-skills | every mode | `own-service-props-detection`, `node-elements-detection`, `ask-core` (the core answers how the node works — the last resort), `computer-off`, `local-node`, `a2a-conversation`, `telegram-channel` (your person writes to you from Telegram, right into this terminal) |
+| own-service-props-skills | every mode | `own-service-props-detection`, `node-elements-detection`, `ask-core` (the core answers how the node works — the last resort), `computer-off`, `local-node`, `a2a-conversation`, `telegram-channel` (your person writes to you from Telegram, right into this terminal), `need-capability` (a capability nobody in the node has: `npm run need` — the core finds or builds it and tells you) |
 | messenger-skills | messenger | `use-h2a` (with the media rule) |
 
 ## 9. Glossary
