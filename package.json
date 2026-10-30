@@ -55,6 +55,7 @@
     "check:index": "node scripts/check-index.mjs",
     "check:passport": "node scripts/check-passport.mjs",
     "review:digest": "node scripts/review-digest.mjs",
+    "evolution": "node scripts/evolution.mjs",
     "check:dev-docs": "node scripts/check-dev-docs.mjs",
     "check:product": "node scripts/check-product.mjs",
     "passport": "node scripts/passport.mjs",
