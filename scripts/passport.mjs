@@ -59,7 +59,7 @@ try {
     domain: p.project?.domain, core,
     type: type === 'factory'
       ? 'factory — hosting for projects of different owners; new custom elements live on their own settings'
-      : 'project — one owner; every element under the core's CONFIG (one header and footer)',
+      : 'project — one owner; every element under the core\'s CONFIG (one header and footer)',
     mainAgent: `the core's main agent routes a need to an element and creates new elements — its terminal ${core}/${lang}/architect/build/terminal`,
     elements: (p.project?.elements ?? []).length,
     find: 'npm run a2a -- find <plain English words of the job> — who in the node does it, at most five; npm run a2a -- card <address> — one of them in full',
