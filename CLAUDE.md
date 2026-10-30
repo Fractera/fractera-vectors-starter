@@ -157,5 +157,7 @@ backup and nothing else. How to build a copy and put it on the schedule — skil
   branch. It is written only after your person's «yes» in a review (skill `self-review`) and never contradicts sections 1–10.
 - At most 150 lines from «## 12. Evolution» to the end. Full — offer your person what to drop. An entry that turned wrong is removed:
   no tombstones, no history here — the history is git.
+- Before you change a skill or this file, read its history: `npm run evolution -- <skill or CLAUDE.md>` — changes, reverts, your
+  person's decisions and the template's earlier ones. A change shown as reverted is not made again without your person's word.
 
 Entries:
