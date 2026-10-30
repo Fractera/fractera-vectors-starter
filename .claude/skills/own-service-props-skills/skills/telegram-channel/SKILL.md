@@ -36,8 +36,8 @@ If you were off, the node wakes you with that message as your first task — who
 person, the same `chat_id`.
 
 1. **Know yourself first** if this is the first message of the session: `npm run passport -- me`, read whole
-   (CLAUDE.md, «On wake»). Never the core's files instead.
-2. **Decide your nature** (CLAUDE.md, «Two natures»): the person asks to change this element — builder; asks for one of your
+   (CLAUDE.md, «5. On wake»). Never the core's files instead.
+2. **Decide your nature** (CLAUDE.md, «4. Process»): the person asks to change this element — builder; asks for one of your
    jobs — worker; unsure — ask in one sentence.
 3. **Answer with the tool** `mcp__plugin_telegram_telegram__reply` (`chat_id` from the message). Load it with the tool search
    if it is not in your list. What you print in the terminal stays in the terminal.

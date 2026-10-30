@@ -57,4 +57,4 @@ Never replace it with an easier check and call it done.
 
 ## Then report
 
-CLAUDE.md, «How you report», and `.claude/modes/build.md`, «Report what a person can see»: each check, its line, what was not checked, and the links with `#block=`.
+CLAUDE.md, «7. Laws everywhere», and `.claude/modes/build.md`, «Report what a person can see»: each check, its line, what was not checked, and the links with `#block=`.

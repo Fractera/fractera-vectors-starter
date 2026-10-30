@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const PLACE = {
-  'CLAUDE.md': ['Process —', 'Two natures', 'On wake', 'Skills by group', 'Outbound A2A guard', 'Protocols', 'How you report'],
+  'CLAUDE.md': ['1. Role and goal', '2. Where you live', '3. Your session', '4. Process', '5. On wake', '6. Protocols', '7. Laws everywhere', '8. Skills by group', '9. Glossary', '10. Where the details are', '12. Evolution'],
   '.claude/modes/build.md': ['Confirm the request first', 'Plan the checks before the work', 'Steps', 'Skills of the build session',
     'Design skill', 'Page', 'Texts', 'Report what a person can see', 'Tree'],
 }

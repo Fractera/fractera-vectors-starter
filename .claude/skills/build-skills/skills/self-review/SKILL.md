@@ -36,6 +36,8 @@ No reason at all — say so: «nothing to improve». Do not invent a proposal fo
 - **A proposal names the process** of the skill it touches — build or working (`.claude/modes/build.md`, «Skills of the build session»: «A skill starts with its process and its group»); a new skill or a
   rewritten one keeps its `Builder skill` / `Work skill` / `Both natures` mark and its `**Process: …**` line (owner of the node,
   2026-10-12); `npm run check:skill-process` must stay green.
+- **A rule for yourself that belongs to no skill** is an entry of `CLAUDE.md`, section 12 «Evolution»: one line
+  `- If … — …; else …`, at most 25 words, never against sections 1–10; `npm run check:instruction` must stay green.
 - **Replacing a line beats adding a paragraph.** A skill is a vision, not a step-by-step plan: a long skill works worse.
 - **Already decided — do not propose.** A proposal that `development-docs/owner-decisions-on-skill-changes.md` shows as rejected
   is not repeated; if the reason is new and weighty — name the earlier refusal and ask whether something has changed.

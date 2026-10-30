@@ -37,7 +37,7 @@ in skill `use-i2i`. Use them in code; never search for them and never ask their 
 
 ## How you work with a neighbour
 
-By the protocols (`CLAUDE.md`, «Protocols»): with neighbours — **i2i**. Never read or write a neighbour's files: each element owns
+By the protocols (`CLAUDE.md`, «6. Protocols»): with neighbours — **i2i**. Never read or write a neighbour's files: each element owns
 its code, and that code changes. If you read the data element's files and wrote to its database yourself, the next change on its
 side would silently break you, and it would never know you depended on it. Instead:
 

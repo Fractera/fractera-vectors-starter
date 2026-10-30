@@ -36,7 +36,7 @@ try {
     : `${v.method ?? ''} ${v.path} at ${v.base}, key ${v.key}${v.also ? `; also ${v.also}` : ''}`
   const links = (ext.consumes ?? []).map((c) => `${c.from} — ${c.protocol ?? 'protocol not recorded'} — ${via(c.via)} — ${c.why}`)
   // 548-9 (owner 2026-10-19: the element first understands «какие у него есть способы взаимодействия с внешним миром»): the
-  // protocols this element may use, from its type and passport flags; the details — the skill of each protocol (CLAUDE.md, «Protocols»).
+  // protocols this element may use, from its type and passport flags; the details — the skill of each protocol (CLAUDE.md, «6. Protocols»).
   // The door does not always carry the passport flags — then they are read from the passport file itself.
   const own = (() => { try { return JSON.parse(readFileSync(join(process.cwd(), 'OWN-SERVICE-PROPS', 'OWN-SERVICE-PROPS.json'), 'utf8')) } catch { return {} } })()
   const native = (p.elementType ?? own.elementType) === 'native'
