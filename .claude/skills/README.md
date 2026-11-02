@@ -11,6 +11,8 @@ skill itself: a `<!-- PROOF … -->` mark under its header). Vendored skills are
 
 | Skill | Whose | What | Proof |
 |---|---|---|---|
+| `humanizer` | vendored, blader, MIT | removes the signs of AI writing from any text a person reads, the product quiz too — `SOURCE.md`, `.claude/modes/build.md` «Texts» | — not proven |
+| `backup-schedule` | ours, `build-skills` | backup of this memory element: the copying service is code, its schedule is data in `data/cron.json` (node step 558) | — not proven |
 | `use-page-tree` | ours, `build-skills` | pages as data folders; a page is one sequence of block-* · text-* · widget-*; blocks from the registry | ✅ 2026-10-07 |
 | `use-typography` | ours, `build-skills` | plain text on a page as `text-*`, drawn by the element typography | ✅ 2026-10-07 |
 | `build-widget` | ours, `build-skills` | a widget inside its route: static or dynamic, the branch list, its door in the branch, its skeleton | ✅ 2026-10-07 |
@@ -37,7 +39,7 @@ skill itself: a `<!-- PROOF … -->` mark under its header). Vendored skills are
 | `connect-own-domain` | ours, `build-skills` | the person asks «connect my domain»: buy it, the node adds the zone and gives two name servers, the registrar step (browser or words), measure ≤5 min, old domain → come back in 3–4 h, attach to this element | — not proven |
 | `own-domain-sign-in` | ours, `build-skills` | sign-in on this element's own domain goes through the node's sign-in center — why, what to tell the person, the cost of direct sign-in, how to check it is alive and the env marker that breaks it | — not proven |
 | `computer-off` | ours, `own-service-props-skills` | what still works with the computer off (the Cloudflare copy) and what waits for it | ✅ 2026-10-07 (report 2026-10-07-node-skills.md) |
-| `project-origin` | ours, `build-skills` | a project only from the person's own fork of fractera/web4; updates; moving to a new computer | — not proven |
+| `project-origin` | ours, `build-skills` | a project only from the person's own fork of Fractera/web4-node-starter-kit; updates; moving to a new computer | — not proven |
 | `github-repositories` | ours, `build-skills` | one private repository per element: created by a button, renamed with the element, tokens, import, restore | — not proven |
 | `temporary-domain` | ours, `build-skills` | the free trycloudflare address: not permanent, read-only panel, when it dies, switch to an own domain early | — not proven |
 | `local-node` | ours, `own-service-props-skills` | a private node at home: agents, data, automations, Telegram as the remote, a buyer node over a2a | ✅ 2026-10-07 (report 2026-10-07-node-skills.md) |
@@ -54,9 +56,8 @@ skill itself: a `<!-- PROOF … -->` mark under its header). Vendored skills are
 | `impeccable` | vendored, Paul Bakaus, Apache-2.0 | design direction from the audience's world — `SOURCE.md` (without hooks and agents) | — not proven |
 | `copywriting` | vendored, Corey Haines, MIT | writes page copy: headlines, value, calls to action — `SOURCE.md` | — not proven |
 | `copy-editing` | vendored, Corey Haines, MIT | edits existing copy line by line — `SOURCE.md` | — not proven |
-| `humanizer` | vendored, blader, MIT | removes the signs of AI writing from any text a person reads, the product quiz too — `SOURCE.md`, `.claude/modes/build.md` «Texts» | — not proven |
+| `humanizer` | vendored, blader, MIT | removes the signs of AI writing from any text a person reads, the product quiz too — `SOURCE.md`, `.claude/modes/build-texts.md` «Texts»; lives only in the texts pass (node step 590-5) | — not proven |
 | `self-review` | ours, `build-skills` | on the person's «review» (in their language): at most three proposals to improve the skills, nothing changed without «yes» | — not proven |
-| `backup-schedule` | ours, `build-skills` | backup of this memory element: the copying service is code, its schedule is data in `data/cron.json` (node step 558) | — not proven |
 | `add-door` | ours, `build-skills` | a door for a neighbour: `npm run door:add` writes the route, the key and the card — you write the work | the mark in its `SKILL.md` |
 | `ask-core` | ours, `own-service-props-skills` | ask the core how the node works — the last resort | the mark in its `SKILL.md` |
 

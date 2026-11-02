@@ -1,7 +1,7 @@
 ---
 name: project-origin
 description: >
-  Builder skill. How a Fractera project is born and stays updatable — only from the person's own fork of github.com/fractera/web4, cloned to
+  Builder skill. How a Fractera project is born and stays updatable — only from the person's own fork of github.com/Fractera/web4-node-starter-kit, cloned to
   their own computer; why any other copy is refused; how updates come («Sync fork» for the node, «Update» for an element); how
   a node is restored on a new computer. Load it whenever the person asks how to install, start, move or copy the project, «can I
   download it as a zip», «my friend gave me his copy», «how do I get updates», «I have a new computer», or sees
@@ -19,7 +19,7 @@ description: >
 
 ## How a project is born
 
-1. The person presses **«Fork»** on `github.com/fractera/web4` — their own fork, not someone else's, not a zip, not a clone of the
+1. The person presses **«Fork»** on `github.com/Fractera/web4-node-starter-kit` — their own fork, not someone else's, not a zip, not a clone of the
    original.
 2. An AI agent on **their own computer** (never a cloud session — install refuses there with `===CLOUD_REFUSED===`) clones that
    fork, runs `npm install`, `npm run build`, `npm run serve:start`.
@@ -27,7 +27,7 @@ description: >
    watchdog, and puts the panel on a temporary Cloudflare address (skill `temporary-domain`).
 
 `scripts/check-origin.mjs` (first step of the build and of the start) asks GitHub whether `origin` is a direct fork of
-`fractera/web4`; anything else stops with «You are trying to install a non-original Fractera project».
+`Fractera/web4-node-starter-kit`; anything else stops with «You are trying to install a non-original Fractera project».
 
 ## Why only a fork
 
