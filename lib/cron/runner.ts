@@ -1,10 +1,12 @@
 import { appendFileSync, mkdirSync, readFileSync } from "node:fs"
 import { join } from "node:path"
-import { TELEGRAM_MESSAGE, dueAt, elementDir, hm, readPlan, seedSchedule, ymd, type CronSchedule } from "./due"
+import { AGENT_TASK, TELEGRAM_MESSAGE, dueAt, elementDir, hm, readPlan, seedSchedule, ymd, type CronSchedule } from "./due"
 import { sendToOwner } from "./telegram"
+import { wakeOwnAgent } from "./wake"
 import { ownSiteUrl } from "../own-site"
 
-// ИСПОЛНИТЕЛЬ РАСПИСАНИЯ ЭЛЕМЕНТА (шаг 465; в элементе памяти — шаг 558: часы резервного копирования, заказ владельца узла 2026-10-21). Владелец 2026-10-12 подтвердил: «сервер элемента РАЗ В МИНУТУ сверяется с часами и
+// ИСПОЛНИТЕЛЬ РАСПИСАНИЯ ЭЛЕМЕНТА (шаг 465; у нативного элемента — шаг 636: часы у каждого нативного элемента, слово владельца узла
+// 2026-11-03 «Да, оба»; у четырёх элементов памяти они с шага 558 — часы резервного копирования). Владелец 2026-10-12 подтвердил: «сервер элемента РАЗ В МИНУТУ сверяется с часами и
 // запускает событие, чьё время пришло … Новых процессов не будет … Если компьютер выключен, запуск пропускается и потом не
 // выполняется». 🔒 Это единственный таймер элемента, и служит он только CRON.json: без повторов при ошибке, без опроса чужого.
 // Журнал — `data/cron-runs.jsonl` папки элемента (строка на запуск, `slot` = «YYYY-MM-DDTHH:MM» по местным часам); календарь
@@ -13,6 +15,8 @@ import { ownSiteUrl } from "../own-site"
 // встроенное событие `telegram-message` шлёт текст `message` самой записи — новое напоминание не требует кода и сборки.
 // Новое УМЕНИЕ (не текст) = строительный процесс: файл `lib/cron/events/<id>.ts` + строка в EVENTS + запись в `events` каталога
 // (навык schedule-cron-automations-calendar-reminders-recurring-and-one-time-tasks).
+// 636 (владелец узла 2026-11-03: «Нашей архитектуре никто не может взаимодействовать с какими-либо агентами кроме самих агентов»):
+// встроенное `agent-task` будит СВОЕГО агента текстом записи (`wake.ts`); до другого агента и до чужого бота часы не дотягиваются.
 
 type Result = { ok: boolean; detail?: string }
 const EVENTS: Record<string, (s: CronSchedule) => Promise<Result>> = {
@@ -20,6 +24,7 @@ const EVENTS: Record<string, (s: CronSchedule) => Promise<Result>> = {
   [TELEGRAM_MESSAGE]: async (s) => (s.message?.trim()
     ? sendToOwner(s.message.trim().replaceAll("{address}", ownSiteUrl() ?? `http://localhost:${process.env.PORT ?? ""}`))
     : { ok: false, detail: "no message text" }),
+  [AGENT_TASK]: wakeOwnAgent,
 }
 
 const MINUTE = 60_000

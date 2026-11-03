@@ -13,18 +13,22 @@ import { join } from "node:path"
 // ✗ Оплачено: расписание лежало в git, а текст напоминания нельзя было вписать — агент на «напомни про день рождения» написал код,
 // коммит и попросил пересобрать элемент.
 
-export type CronRepeat = "once" | "daily" | "weekdays" | "weekly" | "monthly"
+export type CronRepeat = "once" | "daily" | "weekdays" | "weekly" | "monthly" | "yearly"
 export type CronEvent = { id: string; name: string; description: string }
+// `saidAt` — когда человек это сказал (ISO): третье время прежнего календаря (Telegram Desk, шаг 148-1), его видно в календаре ядра.
 export type CronSchedule = {
-  id: string; event: string; name?: string; message?: string
+  id: string; event: string; name?: string; message?: string; saidAt?: string
   time: string; repeat: CronRepeat; start: string; until?: string; enabled: boolean
 }
 export type CronPlan = { repeatsPaused: boolean; events: CronEvent[]; schedules: CronSchedule[] }
 
 /** Встроенное событие: отправить человеку текст `message` записи. Новое напоминание = запись, а не код. */
 export const TELEGRAM_MESSAGE = "telegram-message"
+/** Встроенное событие (шаг узла 636): разбудить СВОЕГО агента с текстом `message` записи — `lib/cron/wake.ts`. */
+export const AGENT_TASK = "agent-task"
 
-const REPEATS = new Set(["once", "daily", "weekdays", "weekly", "monthly"])
+// 636 (владелец узла 2026-11-03, «напомни мне через неделю про день рождения мамы»): `yearly` — день и месяц `start`.
+const REPEATS = new Set(["once", "daily", "weekdays", "weekly", "monthly", "yearly"])
 
 /** Папка элемента: собранный сервер делает chdir в свою сборку, поэтому сначала ELEMENT_DIR. */
 export const elementDir = () => process.env.ELEMENT_DIR?.trim() || process.cwd()
@@ -80,6 +84,7 @@ export function occursOn(s: CronSchedule, day: Date): boolean {
     case "weekdays": return dow >= 1 && dow <= 5
     case "weekly": return dow === start.getDay()
     case "monthly": return day.getDate() === start.getDate()
+    case "yearly": return day.getDate() === start.getDate() && day.getMonth() === start.getMonth()
   }
 }
 
