@@ -1,8 +1,9 @@
 import { appendFileSync, mkdirSync, readFileSync } from "node:fs"
 import { join } from "node:path"
-import { AGENT_TASK, TELEGRAM_MESSAGE, dueAt, elementDir, hm, readPlan, seedSchedule, ymd, type CronSchedule } from "./due"
+import { AGENT_TASK, NODE_NOTICE, TELEGRAM_MESSAGE, dueAt, elementDir, hm, readPlan, seedSchedule, ymd, type CronSchedule } from "./due"
 import { sendToOwner } from "./telegram"
 import { wakeOwnAgent } from "./wake"
+import { noticeMainChat } from "./notice"
 import { ownSiteUrl } from "../own-site"
 
 // ИСПОЛНИТЕЛЬ РАСПИСАНИЯ ЭЛЕМЕНТА (шаг 465; у нативного элемента — шаг 636: часы у каждого нативного элемента, слово владельца узла
@@ -17,6 +18,8 @@ import { ownSiteUrl } from "../own-site"
 // (навык schedule-cron-automations-calendar-reminders-recurring-and-one-time-tasks).
 // 636 (владелец узла 2026-11-03: «Нашей архитектуре никто не может взаимодействовать с какими-либо агентами кроме самих агентов»):
 // встроенное `agent-task` будит СВОЕГО агента текстом записи (`wake.ts`); до другого агента и до чужого бота часы не дотягиваются.
+// 636-8 (владелец 2026-11-03: «события крон должны приходить не затрагивая искусственный интеллект»): встроенное `node-notice` шлёт слова
+// записи в главный чат договорённой дверью ядра (`notice.ts`) — без модели, в свою минуту.
 
 type Result = { ok: boolean; detail?: string }
 const EVENTS: Record<string, (s: CronSchedule) => Promise<Result>> = {
@@ -25,6 +28,7 @@ const EVENTS: Record<string, (s: CronSchedule) => Promise<Result>> = {
     ? sendToOwner(s.message.trim().replaceAll("{address}", ownSiteUrl() ?? `http://localhost:${process.env.PORT ?? ""}`))
     : { ok: false, detail: "no message text" }),
   [AGENT_TASK]: wakeOwnAgent,
+  [NODE_NOTICE]: noticeMainChat,
 }
 
 const MINUTE = 60_000

@@ -60,7 +60,7 @@ element is a microservice that answers its neighbours and asks them for help; to
   `use-development-docs`).
 - **Worker** — your jobs for the elements of your node run over agreed i2i doors with no model; a job your person gives in Telegram
   changes only data (`data/`, outside git) — no code, no commit, no rebuild — and the answer is one or two lines. A reminder is such a
-  job: one entry of your calendar (skill `schedule-cron-automations-calendar-reminders-recurring-and-one-time-tasks`).
+  job: one `node-notice` entry of your calendar (skill `schedule-cron-automations-calendar-reminders-recurring-and-one-time-tasks`).
 - Building is expensive: it needs the whole architecture and most skills. A job needs a few — builder knowledge loaded for a job spends
   the person's subscription and invites changes nobody asked for.
 - In the core's menu of this element «Build» and «Product design» are the build process. The core shows a native element neither
@@ -90,9 +90,10 @@ element is a microservice that answers its neighbours and asks them for help; to
    `npm run reply-core -- "<the result in a few lines>"` and finish as usual — your «done» wakes the main agent, which tells the architect.
 6. **A capability nobody near you has** — the order «Before you build a new capability» (`.claude/modes/build.md`, «Steps», 1b); not your
    role and no neighbour does it → `npm run need -- "<what you need>"` (skill `need-capability`): the core finds or builds it and tells you.
-7. **«Your alarm fired — the calendar entry «…»»** in your input — your own clock woke you (skill
-   `schedule-cron-automations-calendar-reminders-recurring-and-one-time-tasks`): do what the entry asks; words for the person →
-   `npm run tell-core -- --alarm "<the words>"`, and the core's main agent tells them, naming you.
+7. **«Your alarm fired — the calendar entry «…»»** in your input — your own clock woke you for work at that time (an `agent-task`
+   entry, skill `schedule-cron-automations-calendar-reminders-recurring-and-one-time-tasks`): do the work; words the person must hear now →
+   `npm run tell-core -- --alarm "<the words>"`. A plain reminder never wakes you: a `node-notice` entry surfaces in the node's main
+   chat by itself.
 
 ## 6. Protocols — how you talk and to whom
 
@@ -111,8 +112,9 @@ element is a microservice that answers its neighbours and asks them for help; to
 
 - **Only agents talk to agents.** Your code — a clock, a door, a script — speaks only to you; it never reaches another agent, nor a
   person through another agent's channel. The first contact with a neighbour goes through the core's main agent, the orchestrator
-  (section 5); you and the neighbour then agree an API (i2i), and only that agreed API is called by code directly. A shortcut around
-  an agent is a catastrophic error (the owner of the node, 2026-11-03).
+  (section 5); you and the neighbour then agree an API (i2i), and only that agreed API is called by code directly. The core's notice
+  door is such an API for every element: a reminder of your calendar (`node-notice`) surfaces in the node's main chat at its minute,
+  with no model. A shortcut around an agent is a catastrophic error (the owner of the node, 2026-11-03).
 - **No subagents.** You work alone, one task at a time; a subagent only when a skill explicitly allows it — `context: fork` in its
   frontmatter and «Subagent: allowed — <why>» in its body.
 - **The answer is the text you write, not what you think.** Nobody sees your thinking: print the answer in the terminal (in Telegram —

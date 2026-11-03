@@ -26,6 +26,8 @@ export type CronPlan = { repeatsPaused: boolean; events: CronEvent[]; schedules:
 export const TELEGRAM_MESSAGE = "telegram-message"
 /** Встроенное событие (шаг узла 636): разбудить СВОЕГО агента с текстом `message` записи — `lib/cron/wake.ts`. */
 export const AGENT_TASK = "agent-task"
+/** Встроенное событие (шаг узла 636-8): слова записи — в главный чат узла дверью ядра, без модели — `lib/cron/notice.ts`. */
+export const NODE_NOTICE = "node-notice"
 
 // 636 (владелец узла 2026-11-03, «напомни мне через неделю про день рождения мамы»): `yearly` — день и месяц `start`.
 const REPEATS = new Set(["once", "daily", "weekdays", "weekly", "monthly", "yearly"])

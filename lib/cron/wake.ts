@@ -13,7 +13,7 @@ import { elementDir, type CronSchedule } from "./due"
 // Первое слово — процесс сессии: у элемента с рабочим процессом (`.claude/modes/work.md`) — «Working process:», у нативного —
 // «Build process:» (551-1: у нативного элемента одна сессия).
 
-function id(): string | null {
+export function elementId(): string | null {
   try {
     const p = JSON.parse(readFileSync(join(elementDir(), "OWN-SERVICE-PROPS", "OWN-SERVICE-PROPS.json"), "utf8")) as { id?: unknown }
     if (typeof p.id === "string" && p.id.trim()) return p.id.trim()
@@ -34,7 +34,7 @@ export function alarmText(s: CronSchedule): string {
 /** Разбудить своего агента. Ответ — для журнала запусков (`data/cron-runs.jsonl`): календарь ядра покажет его. */
 export async function wakeOwnAgent(s: CronSchedule): Promise<{ ok: boolean; detail: string }> {
   if (!s.message?.trim()) return { ok: false, detail: "no message text" }
-  const me = id()
+  const me = elementId()
   const core = coreUrl()
   const key = process.env.SETTINGS_SECRET?.trim()
   if (!me) return { ok: false, detail: "this element has no id (OWN-SERVICE-PROPS.json → id)" }
