@@ -28,6 +28,17 @@ description: >
 существует стандартный процесс ответа Claude Code Agent». ✗ Paid for: on «remind me about a birthday» an agent wrote an event
 in code, committed it, asked for a rebuild, and «tested» it by sending the real «tomorrow is the birthday» a month early.
 
+## Your calendar is your own (owner of the node, 2026-11-03)
+
+«каждый элемент имеет право способен жить своей собственной жизнью вставить свои собственные задания отправлять уведомления через своего
+Telegram бота если существует если не существует то через тебя» — two ways an entry comes, both yours to write, no permission needed:
+1. **Your own life.** Your person asks you directly (your bot, your terminal), or your own job needs a time («every night at 3 —
+   back up the data»): you put the entry yourself; the core's main agent is not asked.
+2. **The orchestrator's task.** The core's main agent gives you a task with a time (`npm run task`): the same entry.
+At its minute a `node-notice` puts the words into the node's main chat, and — if you have your own bot — into your bot too: the person
+gets two messages for now («Пусть будет пока так», the owner). An `agent-task` wakes you; words the work ends with go to the main chat
+through `npm run tell-core -- --alarm`.
+
 ## Who does what (owner of the node, 2026-10-20)
 
 | What | Who | Where |
@@ -71,7 +82,7 @@ While the computer is off or the element is stopped, a run is skipped and **not 
 - Three built-in events, none needs new code (owner of the node, 2026-11-03: «события крон должны приходить не затрагивая
   искусственный интеллект независимо от происходящих процессов оно просто должно всплыть по расписанию и всё»):
   - `node-notice` — **any reminder for the person**: at that minute the core's notice door puts `message` into the node's main chat,
-    «⏰ Reminder · <this element>» and the words as a quote. No model, no agent woken, nothing to pay.
+    «⏰ Reminder · <this element>» and the words as a quote — and your own bot sends it too when you have one. No model, no agent woken.
   - `telegram-message` — your own Telegram bot sends `message` as written: only when the person talks to you in your own bot and
     asked there.
   - `agent-task` — at that minute your clock wakes **you** with the entry's words («Your alarm fired — …»): only for work that needs
