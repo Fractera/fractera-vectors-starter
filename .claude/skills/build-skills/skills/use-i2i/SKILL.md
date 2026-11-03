@@ -24,9 +24,10 @@ control and cannot pass such a track. Through f2f a new element arrives: «I rem
 
 1. **The newcomer becomes known.** The core's main agent gives it its purpose if it has none (`shortDescription`), takes its
    description into the core's registry and tells the person what arrived. Nobody broadcasts it to the other agents.
-2. **The need finds it.** Quality control hits the screech. Before giving up, and before building it into itself, it searches
-   the node: `npm run a2a -- find remove metallic screech music` (skill `a2a-conversation` holds every command). It reads the
-   candidate's card and passport.
+2. **The need finds it — through the orchestrator.** Quality control hits the screech. Before giving up, and before building it
+   into itself, it asks the core's main agent: `npm run need -- "remove a metallic screech from music" --use "pass tracks"` (skill
+   `need-capability`); the main agent names the newcomer (node step 636: a first contact always goes through the orchestrator). It
+   reads that candidate's card and passport (`npm run a2a -- card <address>`, skill `a2a-conversation`).
 3. **The agents talk once** — `npm run a2a -- send <address> "<what is needed>"`: what goes in, in what form, what comes back,
    what it may not do. This is the only part that costs a model.
 4. **The agreement becomes an API.** The provider builds a door (HTTP) or a code skill (an A2A data part that answers at once).

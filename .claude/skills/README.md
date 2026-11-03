@@ -22,7 +22,7 @@ skill itself: a `<!-- PROOF … -->` mark under its header). Vendored skills are
 | `own-service-props-detection` | ours, `own-service-props-skills` | who this element is in the node — from its passport (npm run passport): id, addresses, port, role, partners | ✅ 2026-10-06 |
 | `use-i2i` | ours, `build-skills` | i2i: the elements of the node and the core agree an API once, then work with no model; recording a link | ⬜ |
 | `use-h2a` | ours, `messenger-skills` | H2A: the person and their agent; the media rule — save, then pass the link | ⬜ |
-| `node-elements-detection` | ours, `own-service-props-skills` | a neighbour by need — `npm run a2a -- find`, never a list of the node; working with it over i2i, never through its code | ⬜ changed 2026-10-20 |
+| `node-elements-detection` | ours, `own-service-props-skills` | a neighbour by need, named by the core's main agent (`npm run need`) — never a list of the node, never one you found yourself; working with it over i2i, never through its code | ⬜ changed 2026-11-03 |
 | `telegram-channel` | ours, `own-service-props-skills` | the person writes from Telegram into this terminal: how a message looks, answer with `reply`, text only, language, no secrets | ✅ 2026-10-07 |
 | `a2a-conversation` | ours, `own-service-props-skills` | the commands of the A2A wire (`npm run a2a`): find, call, continue in one `contextId`, carry the human's comment — i2i with neighbours, a2a with other nodes | ✅ 2026-10-06 |
 | `custom-design` | ours, `build-skills` | the gatekeeper: when the person wants an own design instead of the Blocks — ask taste or impeccable, then which rules win | ✅ 2026-10-07 |
@@ -59,7 +59,7 @@ skill itself: a `<!-- PROOF … -->` mark under its header). Vendored skills are
 | `humanizer` | vendored, blader, MIT | removes the signs of AI writing from any text a person reads, the product quiz too — `SOURCE.md`, `.claude/modes/build-texts.md` «Texts»; lives only in the texts pass (node step 590-5) | — not proven |
 | `self-review` | ours, `build-skills` | on the person's «review» (in their language): at most three proposals to improve the skills, nothing changed without «yes» | — not proven |
 | `add-door` | ours, `build-skills` | a door for a neighbour: `npm run door:add` writes the route, the key and the card — you write the work | the mark in its `SKILL.md` |
-| `ask-core` | ours, `own-service-props-skills` | ask the core how the node works — the last resort | the mark in its `SKILL.md` |
+| `ask-core` | ours, `own-service-props-skills` | ask the core how the node works — the last resort; tell the architect through the core's main agent (`npm run tell-core`, your alarm first of all) | the mark in its `SKILL.md` |
 
 Vendored skills are copies, never symbolic links, and are never edited by hand: `SOURCE.md` next to each says where it came
 from and how to update it.

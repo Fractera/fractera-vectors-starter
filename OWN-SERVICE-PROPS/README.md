@@ -31,7 +31,8 @@ No private data: the file is public. A key is never here, not even its variable 
 |---|---|
 | `OWN-SERVICE-PROPS.json` | what only the agent or the person knows |
 | `A2A-CARD.json` | the Google A2A card body — skills, examples, the node extension; its name, description and version come from this passport when it is served (`/.well-known/agent-card.json`), never a second copy |
-| — | a native element keeps no showcase, no subscriptions and no schedule: it has no working process (node step 551-1, owner of the node 2026-10-20) |
+| `CRON.json` | what the element CAN run on a schedule (node step 636, owner of the node 2026-11-03: a clock and a calendar for every native element): the catalog of `events` — built-in `agent-task` wakes this element's own agent with an entry's text, `telegram-message` sends it to the element's own bot. The person's schedule is NOT here — it is data, `data/cron.json` outside git; the core draws both as the calendar «Cron events». Skill `schedule-cron-automations-calendar-reminders-recurring-and-one-time-tasks` |
+| — | a native element keeps no showcase and no subscriptions: it has no working process (node step 551-1, owner of the node 2026-10-20) |
 | `README.md` | this page: why the file exists and the rule for a field |
 | `server.ts` | the door: the file + fields computed at the moment of the request; `app/api/own-service-props/route.ts` only re-exports it |
 

@@ -1,9 +1,9 @@
 ---
 name: node-elements-detection
-description: Both natures (every element). How to find another element of this node when a task needs something you do not do — sign-in, storing data or files, settings, design, or any ability a neighbour may already have — by searching the node's registry, never by listing the node. Use it whenever a task touches something outside this element, even if the person does not name the other element, and before you think of building another element's job into yourself.
+description: Both natures (every element). How to reach another element of this node when a task needs something you do not do — sign-in, storing data or files, settings, design, or any ability a neighbour may already have — through the core's main agent, which names the neighbour; never by listing the node, never by a neighbour you picked yourself. Use it whenever a task touches something outside this element, even if the person does not name the other element, and before you think of building another element's job into yourself.
 ---
 
-<!-- PROOF · CHANGED 2026-10-20 (node step 548-14): a neighbour by search, no list of the node — not proven again yet -->
+<!-- PROOF · CHANGED 2026-10-20 (node step 548-14): no list of the node; CHANGED 2026-11-03 (node step 636): the neighbour is named by the core's main agent — not proven again yet -->
 
 # A neighbour — by need, never by a list
 
@@ -16,15 +16,15 @@ A hint, not a law: models of late 2026 work worse under rigid step-by-step instr
 A node holds ten elements today and a thousand tomorrow. A list of all of them on every wake would grow with each new element,
 and every agent of the node would pay for it on every wake — the owner of the node, 2026-10-20: the cost of an agent must not grow
 with the node. So you hold only where you live (`npm run passport -- me`, block `node`: the core, the main agent's terminal, how
-many elements) and look a neighbour up when a task needs one:
+many elements) and ask for a neighbour when a task needs one. The core's main agent names it — the owner of the node, 2026-11-03:
+a first contact always goes only through the orchestrator agent, «скажи кто я хочу с ним договориться»:
 
 ```
-npm run a2a -- find <plain English words of the job>   # at most five, one sentence each
-npm run a2a -- card <address>                          # one of them in full: its skills with examples
+npm run need -- "<what you need, one English sentence>" --use "<what you will do with it>"   # skill need-capability
+npm run a2a -- card <address>                          # the one it named, in full: its skills with examples
 ```
 
-The registry is written in English: a query in another language finds nothing — search again in English. Read the answer whole;
-never go to the core's files around it.
+Write the need in English. Read the answer whole; never go to the core's files around it.
 
 In the answer, `role` is what the node made that element for (the core's main agent gives it); `description` and `skills` are
 what its card says is built today. A just-born element still carries the template's card: its `role` is what it is for — ask
@@ -41,7 +41,7 @@ By the protocols (`CLAUDE.md`, «6. Protocols»): with neighbours — **i2i**. N
 its code, and that code changes. If you read the data element's files and wrote to its database yourself, the next change on its
 side would silently break you, and it would never know you depended on it. Instead:
 
-1. Find candidates (`find`), read the one that fits (`card`) — the two looks are in `a2a-conversation`.
+1. The core's main agent names the neighbour (`npm run need`); read it in full (`card`) — `a2a-conversation`.
 2. It has a door for this — call it (a plain call, no model).
 3. No door — wake its agent once to agree an API; the other side builds it, then you use it (`use-i2i`).
 4. Record the link in your card `consumes` with its protocol and API, and the partner's id in `calls` (`use-i2i`).
@@ -51,4 +51,4 @@ around it.
 
 ## When the core does not answer
 
-`find` fails while the core is restarting — ask again in a minute. Do not conclude the node is empty.
+`need` or `card` fails while the core is restarting — ask again in a minute. Do not conclude the node is empty.

@@ -1,11 +1,11 @@
 ---
 name: need-capability
 description: >
-  Both natures. You need something this element does not do and no neighbour in the node does either: a door, a function, a kind of
-  data («refund a payment», «convert a title to a slug»). Load it after `npm run a2a -- find` found nobody, before you build a
-  neighbour's job inside this element or give up. What you cannot guess: one command records the need in the core with no model and
-  wakes its main agent; it finds the owner by the A2A cards or asks the architect to build it, and the answer comes back into your
-  input.
+  Both natures. You need something this element does not do: a door, a function, a kind of data («refund a payment», «convert a
+  title to a slug») — a neighbour may have it, or nobody does. Load it before your first contact with any neighbour, before you build
+  a neighbour's job inside this element, before you give up: the first contact goes through the core's main agent, the orchestrator
+  (node step 636). What you cannot guess: one command records the need in the core with no model and wakes its main agent; it names
+  the neighbour by the A2A cards or asks the architect to build it, and the answer comes back into your input.
 ---
 
 # Ask the node for a capability
@@ -15,9 +15,10 @@ description: >
 A hint, not a law. Owner of the node, 2026-10-24: «Если нет то сообщить элементу который запросил … мы приступаем к её разработке по
 факту готовности можно будет реализовать вашу задачу».
 
-1. First the cheap ways: yourself (`npm run passport -- me`), then a neighbour (`npm run a2a -- find <English words>`). Found — use it
-   (`use-i2i`).
-2. Nobody does it and it is not your role → `npm run need -- "<what you need, in English, one sentence>" --use "<what you will do with it>"`.
+1. First yourself (`npm run passport -- me`). A neighbour is never picked by you: only agents talk to agents, and the first contact
+   goes through the core's main agent (the owner of the node, 2026-11-03: a first contact always goes only through the orchestrator
+   agent — «скажи кто я хочу с ним договориться»).
+2. Not your role → `npm run need -- "<what you need, in English, one sentence>" --use "<what you will do with it>"`.
    `===NEED_OK=== need-…` — recorded; the main agent of the core is woken.
 3. Go on with what you can do without it. Do not build a neighbour's job here and do not guess the answer.
 4. The answer comes into your input as «Answer from the core to «<need>»: …» — found (who and which door), not built yet (the architect

@@ -1,6 +1,7 @@
 // ASK THE CORE (node step 548-18) AND ANSWER IT (548-20).
 //   npm run ask-core -- "<one question in English>"
 //   npm run reply-core -- "<the result of a task the core's main agent gave you, a few lines>"
+//   npm run tell-core -- [--alarm] "<words for the architect, in the person's language>"
 //
 // The owner of the node, 2026-10-20: «одним из аналогов должен быть навык спросить ядро … i2i должен всегда оставаться резервным
 // источником данных в случае крайней необходимости именно ядро может рассказать о архитектуре глубже». The question wakes the
@@ -11,6 +12,10 @@
 // main agent gives comes under its lead (supervision) — `--reply` only saves the result into this element's data
 // (`SERVICE_DATA_DIR/core-report.json`); the element's usual «done» wakes the main agent with no question, and it reads the result
 // with `npm run state` and tells the architect.
+// Words for the architect (node step 636; the owner, 2026-11-03: a first contact always goes only through the orchestrator agent — «у
+// меня тут будильник сработал кстати говоря если ты общаешься с кем-то можешь сказать бла-бла-бла»): `tell-core` wakes the core's main
+// agent, and it passes the words to the person, naming this element (its skill answer-element). `--alarm` — your own clock woke you
+// for them: the node does not ask the person first (owner: «Не спрашивать»). Never another agent's bot or door.
 // 🔒 The core is reached on the machine's loopback, its port asked from the node (NODE_DOMAIN_FILE → logs/runtime.json), never
 // remembered: the public address of the core asks for a sign-in.
 import { readFileSync, writeFileSync } from 'node:fs'
@@ -53,9 +58,11 @@ function coreUrl() {
 }
 
 const reply = process.argv.includes('--reply')
-const words = process.argv.slice(2).filter((a) => a !== '--reply').join(' ').replace(/\s+/g, ' ').trim()
-const limit = reply ? 1500 : 600
-if (words.length < 10) fail(reply ? 'reply-core -- "<the result of the task, a few lines>"' : 'ask-core -- "<one question in English, with the words of the area>"')
+const tell = process.argv.includes('--tell')
+const alarm = process.argv.includes('--alarm')
+const words = process.argv.slice(2).filter((a) => !['--reply', '--tell', '--alarm'].includes(a)).join(' ').replace(/\s+/g, ' ').trim()
+const limit = reply ? 1500 : tell ? 1000 : 600
+if (words.length < (tell ? 2 : 10)) fail(reply ? 'reply-core -- "<the result of the task, a few lines>"' : tell ? 'tell-core -- [--alarm] "<the words for the architect>"' : 'ask-core -- "<one question in English, with the words of the area>"')
 if (words.length > limit) fail(`at most ${limit} characters (now ${words.length})`)
 const id = ownId()
 if (!id) fail('this element has no id (OWN-SERVICE-PROPS/OWN-SERVICE-PROPS.json → id)')
@@ -83,17 +90,27 @@ if (!core) fail('the address of the core is unknown here (NODE_DOMAIN_FILE → l
 if (!key) fail('no node key here (SETTINGS_SECRET in .env.local)')
 
 // The answer carries its question (548-20): it may come into a fresh session that never asked.
-const text = `Element ${id} asks about the node's architecture: «${words}». Answer from the core's instruction (skill answer-element) in at most 10 lines with: npm run task -- ${id} "Answer from the core to «${words}»: …". Do not build anything; if the core's instruction does not say, answer that the core does not know it and that the architect decides.`
+// 552-4: the request opens with its process (the core's bridge routes by the first word); asking the core is building work, passing
+// words on is not (636).
+const text = tell
+  ? `Working process: Element ${id} tells the architect: «${words}». Pass these words to the architect where they read you now, naming ${id} (skill answer-element). Nothing else: no plan, no build.`
+  : `Build process: Element ${id} asks about the node's architecture: «${words}». Answer from the core's instruction (skill answer-element) in at most 10 lines with: npm run task -- ${id} "Answer from the core to «${words}»: …". Do not build anything; if the core's instruction does not say, answer that the core does not know it and that the architect decides.`
+const reason = tell ? (alarm ? 'alarm' : 'element-message') : 'element-question'
 try {
   const r = await fetch(`${core}/api/agents/wake`, {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-node-key': key },
-    body: JSON.stringify({ service: 'build', from: id, about: words.slice(0, 300), reason: 'element-question', text }),
+    body: JSON.stringify({ service: 'build', from: id, about: words.slice(0, 300), reason, text }),
     signal: AbortSignal.timeout(30000),
   })
   const b = await r.json().catch(() => ({}))
   if (!b.ok) fail(`the core answered ${r.status}: ${b.reason ?? 'no reason'}`)
   const how = b.pending ? 'the person is asked in Telegram to turn the main agent on' : b.already ? 'pasted into the main agent\'s live session' : 'the main agent woke'
+  if (tell) {
+    console.log(`===TELL_CORE_OK=== ${how} with your words`)
+    console.log('The core\'s main agent passes them to the architect, naming you. Nothing comes back unless the person answers.')
+    process.exit(0)
+  }
   console.log(`===ASK_CORE_OK=== ${how} with your question`)
   console.log('The answer comes into your input as «Answer from the core to «…»: …». Do not guess meanwhile and do not read the core\'s files.')
 } catch (e) {

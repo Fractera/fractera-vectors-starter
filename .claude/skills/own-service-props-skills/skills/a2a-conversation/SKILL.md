@@ -1,6 +1,6 @@
 ---
 name: a2a-conversation
-description: Both natures (every element). The commands of the A2A wire, `npm run a2a` — find who can do a job, read its card and passport, send a task or call a code skill, follow it, answer tasks sent to you. A native element uses the wire only for i2i with the elements of this node, to agree an API (skill use-i2i). Load it when you need one of these commands, whenever a line «A2A task <id> from <who>…» is pasted into your terminal, and whenever the person comments on a conversation with a neighbour.
+description: Both natures (every element). The commands of the A2A wire, `npm run a2a` — read the card and passport of the neighbour the core's main agent named, send a task or call a code skill, follow it, answer tasks sent to you. A native element uses the wire only for i2i with the elements of this node, to agree an API (skill use-i2i). Load it when you need one of these commands, whenever a line «A2A task <id> from <who>…» is pasted into your terminal, and whenever the person comments on a conversation with a neighbour.
 ---
 
 > **Three protocols (owner 2026-10-11).** Talking to an element of THIS node is **i2i**: meet it as A2A describes below, and aim
@@ -30,8 +30,10 @@ Roles: the **person** sets the goal and talks only to their own agent — you; *
 
 ## Find who can do it — two looks
 
-1. **Short — the node.** `npm run a2a -- find <plain words of the job>` ranks the elements of the node by your words (the core's
-   A2A registry), at most five, one sentence each. There is no list of all elements: it would grow with the node.
+1. **Who — the orchestrator names it.** `npm run need -- "<the job, one English sentence>" --use "<what for>"` (skill
+   `need-capability`): the core's main agent looks it up in the node's A2A registry and names it in your input. Never a neighbour
+   you found yourself: only agents talk to agents, and the first contact goes through the orchestrator (node step 636). There is no
+   list of all elements: it would grow with the node.
 2. **Full — the candidate.** `npm run a2a -- card <address>` (its skills with examples) and its passport
    `GET <its url>/api/own-service-props` (long description, what it accepts, what it returns). Decide here, before the first
    message — not after.

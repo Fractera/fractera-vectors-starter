@@ -1,6 +1,11 @@
 {
-  "why": "Node step 558 (owner 2026-10-21): what this memory element CAN run on a schedule — its backup events (handlers written in advance, build process). The person's schedule is NOT here: it is data, `data/cron.json` (outside git). The core draws events + schedule as the calendar under «Backup → Cron events»; the element's server checks the clock once a minute (lib/cron/). A missed run (computer off) is not caught up. Skill: backup-schedule. Never published in /.well-known/agent-card.json.",
+  "why": "Node step 558 (owner 2026-10-21): what this memory element CAN run on a schedule — its backup events (handlers written in advance, build process). The person's schedule is NOT here: it is data, `data/cron.json` (outside git). The core draws events + schedule as the calendar under «Backup → Cron events»; the element's server checks the clock once a minute (lib/cron/). A missed run (computer off) is not caught up. Skill: backup-schedule. Never published in /.well-known/agent-card.json. Node step 636: the built-in `agent-task` wakes only this element's own agent; words for the person go through the core's main agent.",
   "events": [
+    {
+      "id": "agent-task",
+      "name": "Wake this element's agent",
+      "description": "Wakes this element's own agent with the schedule's own text (field «message»): work for it at that time, or words for the person — the agent passes them to the core's main agent (npm run tell-core), which tells the person. No other agent is reached (node step 636)."
+    },
     {
       "id": "telegram-message",
       "name": "Message in Telegram",
