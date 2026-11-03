@@ -38,7 +38,7 @@ element) or a privileged session (architect, admin, agent) checked by the node's
 | `/vectors` | POST | `{ id?, collection, text, embedding?, refTable?, refId? }` → `{ ok, id, dims, model, index }`; same `id` replaces |
 | `/vectors/search` | POST | `{ collection?, query \| embedding, k? }` (k ≤ 100) → `{ ok, scanned, index, indexed, results }` |
 | `/vectors/:id` | DELETE | `{ ok, deleted }` |
-| `/vectors/status` | GET | `{ ok, configured, model, dims, index, indexed, extension, count }` |
+| `/vectors/status` | GET | `{ ok, configured, model, dims, embeddings, setAside, index, indexed, extension, count }` — `configured`: the node's `embeddings` answers ready with this store's model |
 
 Example — store a paragraph and find it again (through the database element, as every consumer does):
 
@@ -52,6 +52,23 @@ const r = await fetch(`${base}/vectors/search`, { method: 'POST', headers,
 const { results } = await r.json() // [{ id, collection, refTable, refId, text, score }]
 ```
 
+## Where the vectors come from
+
+A text that arrives without a ready vector (`POST /vectors` with `text`, `POST /vectors/search` with `query`) is counted by the
+node's own element **embeddings** — `paraphrase-multilingual-MiniLM-L12-v2`, 384 numbers, on this computer, no key and no internet
+(node step 626-3). The store learns its model and size from that element (`GET /api/embed-status`) when it opens, and records them
+inside itself (`store_meta`). A caller may still bring a ready vector — it must have the store's size.
+
+Until node step 626 the store counted with OpenAI `text-embedding-3-large` (3072 numbers) and needed an OpenAI key.
+
+## Changing the model
+
+Changing the model means recounting every stored vector, and only the owner decides it (a new model of the embeddings element).
+When the store opens and its recorded model is not the one `embeddings` names, the whole file is **set aside** — renamed beside it,
+`data/vectors.<model>-<date>.db` (a store from before 626: `data/vectors.openai-<date>.db`), never read again and never deleted —
+and a new empty store is made (the owner, 2026-11-02: «Нет, начать с чистого листа»). `/vectors/status` names the set-aside file.
+The elements that keep vectors here store their texts again by their own paths.
+
 ## How the search works
 
 The index is an sqlite-vec `vec0` table partitioned by collection: a search touches only its own collection and reads only the
@@ -63,14 +80,16 @@ a fast empty answer never passes for a working one.
 ## Where things live
 
 - `lib/data-store/vectors.mjs` — the vector handlers of the former `server.js`, moved verbatim.
-- `lib/data-store/app.mjs` — opens `data/vectors.db` (own file since step 550) and the order of the doors.
+- `lib/data-store/app.mjs` — opens `data/vectors.db` (own file since step 550), sets aside a store of another model, the order of
+  the doors.
+- `lib/data-store/context.mjs` — the door to the node's embeddings element (`EMBEDDINGS_URL`, the node key).
 - `app/vectors/[[...path]]/route.ts`, `app/health/route.ts`, `app/capabilities/route.ts` — the route files.
 
 ## Environment
 
-`DATA_SECRET` (shared), `OPENAI_API_KEY` (foreign: embeddings of texts; without it a text without a ready vector is refused),
-`EMBED_MODEL` and `EMBED_DIMS` (text-embedding-3-large, 3072). 🛑 Changing the model or the size on a live store makes every
-stored vector unreadable: only on an empty store or with a full reindex, announced in advance.
+`DATA_SECRET` (shared: the lock of the doors), `SETTINGS_SECRET` (shared: the node key sent to embeddings), `EMBEDDINGS_URL`
+(derived: the node's embeddings element; empty — texts are refused, ready vectors still work). No OpenAI key is read for vectors;
+`OPENAI_API_KEY` stays only for the site's voice input and translations.
 
 ## Extending
 
@@ -83,6 +102,9 @@ door is the owner's decision.
 It is not a knowledge graph (that is the graph element) and it does not decide what to store: elements send their texts.
 
 ## Proven by
+
+Step 626-3: a text stored without a vector is found by a question in other words, a store of the OpenAI model is set aside whole
+(the node's completed-steps/626-3.md).
 
 Step 550: the same requests to the former data service and to this element return the same status and shape
 (`/code/scripts/agent-tokens/door-parity.mjs`); a stored vector is found again by a search with a ready vector.
