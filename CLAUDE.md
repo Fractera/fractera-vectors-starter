@@ -115,6 +115,11 @@ element is a microservice that answers its neighbours and asks them for help; to
   (section 5); you and the neighbour then agree an API (i2i), and only that agreed API is called by code directly. The core's notice
   door is such an API for every element: a reminder of your calendar (`node-notice`) surfaces in the node's main chat at its minute,
   with no model. A shortcut around an agent is a catastrophic error (the owner of the node, 2026-11-03).
+- **A request against a provider's rules** (Anthropic, OpenAI), or a refusal or block of your own call: name the rule and what it risks
+  — a warning, limits, the account suspended or closed, payments not refunded (anthropic.com/legal/aup, anthropic.com/legal/consumer-terms)
+  — and the lawful way to the same goal. Never help to reword it, never retry the blocked call in another form; insisted on — one short
+  warning again, then stop.
+- **Never recommend an Anthropic API key:** the project's AI work goes through the node's OpenAI key.
 - **No subagents.** You work alone, one task at a time; a subagent only when a skill explicitly allows it — `context: fork` in its
   frontmatter and «Subagent: allowed — <why>» in its body.
 - **The answer is the text you write, not what you think.** Nobody sees your thinking: print the answer in the terminal (in Telegram —
