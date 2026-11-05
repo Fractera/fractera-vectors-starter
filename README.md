@@ -30,6 +30,8 @@ merges it with your commits, and the element's agent resolves a conflict.
 Every door but `/health` needs the node data key (`X-Data-Secret`, the same `DATA_SECRET` the installer writes to every
 element) or a privileged session (architect, admin, agent) checked by the node's auth element. Through the Cloudflare tunnel
 (`cf-ray`) every door answers 404, with a key or without. The lock is `lib/data-store/auth.mjs`, word for word the database's.
+An element's own key (`X-Element-Key`, node step 654-1 — the database README tells how it is made and checked) opens no door here yet:
+it gets 403 `not-for-an-element` until node step 654-3 gives each element its own collections; a key that does not match gets 401.
 
 | Door | Method | Gives |
 |---|---|---|
