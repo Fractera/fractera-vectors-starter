@@ -93,7 +93,7 @@ The owner of the node, 2026-11-05: «объектное хранилище до�
   counts its own records. A name beginning with `el/` from an element is refused (400 `reserved-prefix`): the store adds the prefix
   itself. An element id holds no slash, so no name of one element — `../root/faq` included — reaches another element's.
 - **The node sees everything** (its key, a privileged session): its own collections as before (the deep memory's `memory-said--<element>`,
-  the core's `memory-<agent>` and `self-*` stay where they are), an element's collection named in full (`el/root/faq`), findings named
+  the core's diary `memory-<agent>` and the elements' descriptions `node-elements` stay where they are), an element's collection named in full (`el/root/faq`), findings named
   by their element, any record deleted by its full id. The node never writes under `el/` (400 `reserved-prefix`): that prefix is the
   elements'.
 - **What it does not do:** vectors an element kept under the node's names before 654-3 stay the node's; the element stores its texts
