@@ -1,0 +1,135 @@
+{
+  "name": "block-access-map",
+  "component": "AccessMap",
+  "pageKind": true,
+  "categories": [
+    "how-it-works"
+  ],
+  "docs": "npx shadcn add @fractera/block-access-map. In a page: { \"kind\": \"block-access-map\", \"title\": \"…\", \"outer\": { \"title\", \"text\" }, \"spaces\": [ two to six { \"title\", \"text\" } ], \"between\": \"…\" }.",
+  "role": "body",
+  "placement": {
+    "page": true,
+    "inside": []
+  },
+  "accepts": null,
+  "repeat": "not-adjacent",
+  "mode": [
+    "persuade",
+    "read"
+  ],
+  "use": "Who sees what: one frame for the one who sees everything and, inside it, two to six tiles that each see only their own — memory spaces, roles, folders.",
+  "avoid": "A sequence of steps (use block-flow); a plain list of features with no question of who sees what (use block-cards).",
+  "slots": {
+    "title": {
+      "maxChars": 80
+    },
+    "note": {
+      "maxChars": 200
+    },
+    "outer": {
+      "fields": {
+        "title": {
+          "maxChars": 60
+        },
+        "text": {
+          "maxChars": 180
+        }
+      }
+    },
+    "spaces": {
+      "min": 2,
+      "max": 6,
+      "fields": {
+        "title": {
+          "maxChars": 40
+        },
+        "text": {
+          "maxChars": 120
+        }
+      }
+    },
+    "between": {
+      "maxChars": 140
+    }
+  },
+  "props": "{ kind: 'block-access-map'; title: string; badge?: string; note?: string; blockKey?: string; outer: { title: string; text: string }; spaces: { title: string; text: string }[]; between?: string }",
+  "markdown": "case 'block-access-map':\n      return [`## ${block.title}`, ...(block.note ? ['', block.note] : []), '', `**${block.outer.title}** — ${block.outer.text}`, '', ...block.spaces.map((s) => `- **${s.title}** — ${s.text}`), ...(block.between ? ['', block.between] : [])]",
+  "variants": [],
+  "data": "static",
+  "requires": [],
+  "interactive": "none",
+  "media": "none",
+  "headings": [
+    "h2",
+    "h3"
+  ],
+  "rtl": "untested",
+  "weight": "medium",
+  "band": false,
+  "alternatives": [],
+  "source": {
+    "origin": "own",
+    "license": "MIT"
+  },
+  "origin": {
+    "project": "base",
+    "request": null
+  },
+  "version": "1.0.0",
+  "status": "published",
+  "cases": [
+    {
+      "title": "Each element remembers only its own",
+      "mode": "read",
+      "position": "body",
+      "why": "The question is who sees whose memory: the main agent sees every space, each element only its own, and the tiles must not reach each other.",
+      "props": {
+        "title": "Whose memory it is",
+        "note": "The deep memory keeps a space for every element.",
+        "outer": {
+          "title": "The architect's main agent",
+          "text": "Sees every space: what each element was told, with the element named."
+        },
+        "spaces": [
+          {
+            "title": "Mom's element",
+            "text": "Only its own: her phrases, files and answers."
+          },
+          {
+            "title": "Son's element",
+            "text": "Only its own: his lessons and questions."
+          },
+          {
+            "title": "Your site",
+            "text": "Only its own: what visitors and you told it."
+          }
+        ],
+        "between": "Elements do not see each other's spaces."
+      }
+    },
+    {
+      "title": "Roles of an app",
+      "mode": "persuade",
+      "position": "body",
+      "why": "One role sees all records and the others only their own, the same shape as the memory.",
+      "props": {
+        "title": "Who sees which orders",
+        "outer": {
+          "title": "The owner",
+          "text": "Sees every order of the shop."
+        },
+        "spaces": [
+          {
+            "title": "A courier",
+            "text": "Only the orders given to them."
+          },
+          {
+            "title": "A customer",
+            "text": "Only their own orders."
+          }
+        ],
+        "between": "A courier and a customer do not see each other's orders."
+      }
+    }
+  ]
+}

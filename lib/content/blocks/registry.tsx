@@ -4,6 +4,7 @@ import { SectionHead } from '@/components/blocks/block-section-head'
 import { HeroCentered } from '@/components/blocks/block-hero-centered'
 import { WarningCard } from '@/components/blocks/block-warning-card'
 import { Faq } from '@/components/blocks/block-faq'
+import { AccessMap } from '@/components/blocks/block-access-map'
 import type { Block } from './types'
 import { TEXT_SET } from '@/lib/content/text-set'
 
@@ -19,6 +20,7 @@ export const BLOCK_SET: BlockSet = {
   'block-hero-centered': HeroCentered,
   'block-warning-card': WarningCard,
   'block-faq': Faq,
+  'block-access-map': AccessMap,
 }
 
 /** Нарисовать список блоков по порядку; `keyPrefix` держит ключи уникальными между вызовами на одной странице. */

@@ -21,6 +21,7 @@ export type Block = Addressed & (
   | { kind: 'block-section-head'; id: string; title: string; badge?: string }
   | { kind: 'block-hero-centered'; pill?: string; title: string; description: string; cta?: Link; secondary?: Link }
   | { kind: 'block-warning-card'; title: string; text: string }
+  | { kind: 'block-access-map'; title: string; badge?: string; note?: string; blockKey?: string; outer: { title: string; text: string }; spaces: { title: string; text: string }[]; between?: string }
   // 423: типографика элемента (`lib/content/text-set.tsx`) — третий вид рядом с блоками и виджетами.
   | { kind: 'text-h2' | 'text-h3' | 'text-h4'; text: string; id?: string }
   | { kind: 'text-p' | 'text-lead' | 'text-small' | 'text-code'; text: string }

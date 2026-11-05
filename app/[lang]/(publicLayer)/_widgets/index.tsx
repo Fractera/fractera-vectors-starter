@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { PolicyAnalytics } from './static/widget-static-policy-analytics'
 import { ReferenceTitle } from './static/widget-static-reference-title'
+import { VectorsLanding } from './static/widget-static-vectors-landing'
 
 // ВИДЖЕТЫ ЭТОЙ ВЕТКИ (владелец 2026-10-07: «удалили маршрут — проект чистый»). Страница ветки называет виджет в `meta.json` →
 // `"widget"`; ищется он только здесь. Удалили ветку — список ушёл вместе с ней.
@@ -9,4 +10,6 @@ export const WIDGETS: Record<string, (lang: string) => ReactNode> = {
   'widget-static-policy-analytics': (lang) => <PolicyAnalytics lang={lang} />,
   // Главная эталонного стартового шаблона — одна надпись по центру (узел, шаг 542).
   'widget-static-reference-title': (lang) => <ReferenceTitle lang={lang} />,
+  // Главная векторного хранилища — лендинг по образцу Stripe (узел, шаг 650-4).
+  'widget-static-vectors-landing': (lang) => <VectorsLanding lang={lang} />,
 }

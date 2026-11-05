@@ -1,77 +1,34 @@
 {
-  "title": "Fractera Vectors — search by meaning for your node",
-  "description": "Vector storage of the node: elements keep pieces of text as vectors and find the ones closest to a question. Programs reach it with the node key.",
-  "keywords": "",
+  "title": "Search by meaning for every element of your node",
+  "description": "The vector store of a Fractera node keeps pieces of text in named collections and finds the ones closest in meaning to a question, in any language, on your own computer.",
+  "keywords": "vector store, search by meaning, semantic search, embeddings, sqlite-vec, collections",
   "blocks": [
-    {
-      "kind": "block-hero-centered",
-      "pill": "Agentic engineering infrastructure",
-      "title": "Search by meaning",
-      "description": "Elements keep pieces of text here as vectors and find the ones closest to a question. Programs talk to it with the node key.",
-      "bid": "luqkd"
-    },
-    {
-      "kind": "text-list",
-      "items": [
-        "A nearest-neighbour index on sqlite-vec",
-        "Collections keep the texts of one task apart from another",
-        "Vectors made with the node's OpenAI key, or ready vectors you bring"
-      ],
-      "bid": "csbvh"
-    },
-    {
-      "kind": "text-small",
-      "text": "/vectors · sqlite-vec · text-embedding-3-large",
-      "bid": "qan9u"
-    },
-    {
-      "kind": "block-section-head",
-      "id": "works",
-      "badge": "Doors",
-      "title": "How it works",
-      "bid": "jb05y"
-    },
-    {
-      "kind": "text-h3",
-      "text": "Store",
-      "bid": "xyo5k"
-    },
-    {
-      "kind": "text-p",
-      "text": "Send a text with the name of its collection. The element turns it into a vector with the node's OpenAI key, or takes the vector you send.",
-      "bid": "h10w6"
-    },
-    {
-      "kind": "text-h3",
-      "text": "Search",
-      "bid": "asox1"
-    },
-    {
-      "kind": "text-p",
-      "text": "Ask a question and get the closest texts with a score. The index looks only at the requested collection, so a search stays fast as the store grows.",
-      "bid": "hxfts"
-    },
-    {
-      "kind": "text-h3",
-      "text": "Status",
-      "bid": "efozv"
-    },
-    {
-      "kind": "text-p",
-      "text": "One door tells which model and size the store uses, how many records it holds and whether the index works.",
-      "bid": "pso4d"
-    },
-    {
-      "kind": "block-section-head",
-      "id": "address",
-      "badge": "Address",
-      "title": "The same address as before",
-      "bid": "lvepd"
-    },
-    {
-      "kind": "text-p",
-      "text": "Elements still call /vectors on the database element, and the database element passes the request here.",
-      "bid": "i0lhz"
-    }
+    {"kind": "widget-static-vectors-landing", "bid": "vwl01"},
+    {"kind": "block-hero-centered", "pill": "OpenSource Web4 agent & app starter kit", "title": "Search by meaning for every element of your node", "description": "Every element keeps its texts here as vectors and asks for the closest ones to a question, in any language. The meaning is counted on your own computer, with no key and no internet.", "cta": {"label": "Connect your element", "href": "#connect"}, "secondary": {"label": "Under the hood", "href": "#hood"}, "bid": "vhr01"},
+    {"kind": "block-section-head", "id": "route", "title": "How a search goes", "bid": "vsr01"},
+    {"kind": "text-h4", "text": "An element sends a text", "bid": "vr101"},
+    {"kind": "text-p", "text": "It names a collection and the text and sends them through the database element, the door every element already uses.", "bid": "vr102"},
+    {"kind": "text-h4", "text": "Embeddings counts it", "bid": "vr201"},
+    {"kind": "text-p", "text": "The node's own embeddings element turns the text into 384 numbers on this computer. Nothing leaves it.", "bid": "vr202"},
+    {"kind": "text-h4", "text": "The store keeps it", "bid": "vr301"},
+    {"kind": "text-p", "text": "The vector goes into its collection. A text with the same id replaces the old one.", "bid": "vr302"},
+    {"kind": "text-h4", "text": "A question finds it", "bid": "vr401"},
+    {"kind": "text-p", "text": "A question is counted the same way and meets the closest texts of its own collection, each with its score.", "bid": "vr402"},
+    {"kind": "text-small", "text": "A search reads only its own collection and only the nearest rows, then counts the exact score for them.", "bid": "vrs01"},
+    {"kind": "block-section-head", "id": "solves", "title": "What changes for you", "bid": "vss01"},
+    {"kind": "text-table", "head": ["Without it", "With the vector store"], "rows": [["Search finds only the exact words you typed", "It finds texts close in meaning, in any language"], ["Counting meaning needs a paid key and the internet", "The node counts it itself, on your computer, with no key"], ["Every element would build its own search", "Every element keeps its collections in one store"], ["Your texts sit on someone else's server", "They stay on your computer, inside your node"]], "bid": "vst01"},
+    {"kind": "block-section-head", "id": "spaces", "title": "Whose memory it is", "bid": "vsp01"},
+    {"kind": "block-access-map", "outer": {"title": "The main agent of the node", "text": "The deep memory asks every collection of the spaces for it."}, "spaces": [{"title": "Mom's element", "text": "Her phrases live in a collection of her element."}, {"title": "Son's element", "text": "His collection, searched only by his element."}, {"title": "Your site", "text": "Its own collection, its own search."}], "between": "A search never crosses into another collection.", "bid": "vsp02"},
+    {"kind": "text-p", "text": "The deep memory keeps what each element was told in that element's collection: memory-said for the main agent, memory-said--<element> for an element.", "bid": "vsp03"},
+    {"kind": "text-p", "text": "A search touches only its own collection, so an element's question never meets another element's phrases. The main agent's question is asked in every collection, and the closest answers come together.", "bid": "vsp04"},
+    {"kind": "text-p", "text": "The collections divide the search. The store itself opens with the node's data key, and the computer it runs on is yours.", "bid": "vsp05"},
+    {"kind": "block-section-head", "id": "connect", "title": "Connect your element", "bid": "vsc01"},
+    {"kind": "text-p", "text": "Every element of the node already has the database address and the data key. Store a text and find it again:", "bid": "vsc02"},
+    {"kind": "text-code", "text": "const base = process.env.REMOTE_DATA_URL\nconst headers = { 'X-Data-Secret': process.env.DATA_SECRET, 'Content-Type': 'application/json' }\nawait fetch(`${base}/vectors`, { method: 'POST', headers,\n  body: JSON.stringify({ collection: 'faq', text: 'Delivery takes two days.', refTable: 'faq', refId: '17' }) })\nconst r = await fetch(`${base}/vectors/search`, { method: 'POST', headers,\n  body: JSON.stringify({ collection: 'faq', query: 'How long is shipping?', k: 3 }) })\nconst { results } = await r.json() // [{ id, collection, refTable, refId, text, score }]", "bid": "vsc03"},
+    {"kind": "text-p", "text": "The answer lists the closest texts with their score. The same id replaces a text, and DELETE /vectors/:id removes it.", "bid": "vsc04"},
+    {"kind": "block-section-head", "id": "hood", "title": "Under the hood", "bid": "vsh01"},
+    {"kind": "text-table", "head": ["Part", "What it does"], "rows": [["The index", "An sqlite-vec vec0 table split by collection: a search reads the nearest rows of its own collection and counts the exact cosine score for them"], ["The meaning", "The node's embeddings element: paraphrase-multilingual-MiniLM-L12-v2, 384 numbers, on this computer"], ["A new model", "The store counted by the old model is set aside whole beside the new one, never read again and never deleted"], ["The lock", "The node's data key or a privileged session; through the Cloudflare tunnel every door answers 404"], ["/vectors/status", "Whether the store is ready, its model and size, the index mode and how many vectors it holds"]], "bid": "vsh02"},
+    {"kind": "block-section-head", "id": "credits", "title": "Open source", "bid": "vsx01"},
+    {"kind": "text-p", "text": "Built by Fractera for the [Lagrix](https://lagrix.dev) protocol and for any web2 project that needs search by meaning. MIT license, the code is at [github.com/Fractera/fractera-vectors-starter](https://github.com/Fractera/fractera-vectors-starter).", "bid": "vxp01"}
   ]
 }
