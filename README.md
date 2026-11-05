@@ -30,17 +30,17 @@ merges it with your commits, and the element's agent resolves a conflict.
 Every door but `/health` needs the node data key (`X-Data-Secret`, the same `DATA_SECRET` the installer writes to every
 element) or a privileged session (architect, admin, agent) checked by the node's auth element. Through the Cloudflare tunnel
 (`cf-ray`) every door answers 404, with a key or without. The lock is `lib/data-store/auth.mjs`, word for word the database's.
-An element's own key (`X-Element-Key`, node step 654-1 — the database README tells how it is made and checked) opens no door here yet:
-it gets 403 `not-for-an-element` until node step 654-3 gives each element its own collections; a key that does not match gets 401.
+An element's own key (`X-Element-Key`, node step 654-1 — the database README tells how it is made and checked) opens the `/vectors/*`
+doors and `/capabilities` on that element's own collections only (see «Whose vectors»); a key that does not match gets 401.
 
 | Door | Method | Gives |
 |---|---|---|
 | `/health` | GET | `{ ok: true }`, no key |
 | `/capabilities` | GET | the doors, the model and size of embeddings |
-| `/vectors` | POST | `{ id?, collection, text, embedding?, refTable?, refId? }` → `{ ok, id, dims, model, index }`; same `id` replaces |
-| `/vectors/search` | POST | `{ collection?, query \| embedding, k? }` (k ≤ 100) → `{ ok, scanned, index, indexed, results }` |
-| `/vectors/:id` | DELETE | `{ ok, deleted }` |
-| `/vectors/status` | GET | `{ ok, configured, model, dims, embeddings, setAside, index, indexed, extension, count }` — `configured`: the node's `embeddings` answers ready with this store's model |
+| `/vectors` | POST | `{ id?, collection, text, embedding?, refTable?, refId? }` → `{ ok, id, dims, model, index }`; same `id` replaces — an element's only its own |
+| `/vectors/search` | POST | `{ collection?, query \| embedding, k? }` (k ≤ 100) → `{ ok, scanned, index, indexed, results }`; no `collection` — the node: the whole store, an element: each of its own collections |
+| `/vectors/:id` | DELETE | `{ ok, deleted }`; an element: another's or a missing id → 404 |
+| `/vectors/status` | GET | `{ ok, configured, model, dims, embeddings, setAside, index, indexed, extension, count }` — `configured`: the node's `embeddings` answers ready with this store's model; an element: `count` of its own records, no `setAside` |
 
 Example — store a paragraph and find it again (through the database element, as every consumer does):
 
@@ -79,9 +79,31 @@ k nearest rows; the exact cosine score is then computed for those rows. Three mo
 extension: a linear scan that still works). A failing index drops the store to `scan` with the real error in the log —
 a fast empty answer never passes for a working one.
 
+## Whose vectors (node step 654-3)
+
+The owner of the node, 2026-11-05: «объектное хранилище должно быть обновлено не только для использования глубинной памятью но и для
+использования просто внутри элемента» — the same rule for every store of the node, in both node types.
+
+- **An element's names are its own.** With an element's own key, its collection `faq` is kept as `el/<element id>/faq` and its record
+  `x` as `el/<element id>/x`; every answer gives the element its own names back (`faq`, `x`), never the prefix. The partition of the
+  index stays the collection, so a search still reads one collection.
+- **An element writes, finds, counts and deletes only its own.** The same `id` replaces only its own record; a search with `collection`
+  reads its own collection of that name, a search without one reads each of its own collections and merges the findings by score (until
+  654-3 it read every collection of the node); `DELETE` of another's record answers 404, the same as a missing one; `/vectors/status`
+  counts its own records. A name beginning with `el/` from an element is refused (400 `reserved-prefix`): the store adds the prefix
+  itself. An element id holds no slash, so no name of one element — `../root/faq` included — reaches another element's.
+- **The node sees everything** (its key, a privileged session): its own collections as before (the deep memory's `memory-said--<element>`,
+  the core's `memory-<agent>` and `self-*` stay where they are), an element's collection named in full (`el/root/faq`), findings named
+  by their element, any record deleted by its full id. The node never writes under `el/` (400 `reserved-prefix`): that prefix is the
+  elements'.
+- **What it does not do:** vectors an element kept under the node's names before 654-3 stay the node's; the element stores its texts
+  again by its own paths, as after a model change. All collections lie in one file of this element (`data/vectors.db`); all elements run
+  as one user of the computer, and an element's agent is held off the neighbours' files by the node's boundary hook on named paths, not
+  by the operating system.
+
 ## Where things live
 
-- `lib/data-store/vectors.mjs` — the vector handlers of the former `server.js`, moved verbatim.
+- `lib/data-store/vectors.mjs` — the vector handlers of the former `server.js`, moved verbatim; whose names a call works on (654-3).
 - `lib/data-store/app.mjs` — opens `data/vectors.db` (own file since step 550), sets aside a store of another model, the order of
   the doors.
 - `lib/data-store/context.mjs` — the door to the node's embeddings element (`EMBEDDINGS_URL`, the node key).

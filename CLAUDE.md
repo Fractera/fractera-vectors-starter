@@ -165,6 +165,12 @@ You are one of the four memory elements (data, storage, vectors, graph). The cor
 server checks `data/cron.json` once a minute (`lib/cron/runner.ts`) — the only timer you have, ordered by the owner of the node for
 backup and nothing else. How to build a copy and put it on the schedule — skill `backup-schedule`.
 
+### Whose vectors — each element its own collections (node step 654-3)
+
+A call with an element's own key (`X-Element-Key`, `lib/data-store/element-key.mjs`) works on that element's names only: its collection
+`faq` is kept as `el/<id>/faq`, its record `x` as `el/<id>/x`, and every answer gives its own names back; a search without a collection
+reads only its own collections. The node's key sees everything under the full names and never writes under `el/`. README «Whose vectors».
+
 ## 12. Evolution
 
 - Sections 1–10 and these rules are sealed: they change only with a new release of the template, and `npm run check:instruction` (part
