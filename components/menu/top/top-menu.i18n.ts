@@ -24,11 +24,13 @@ export type TopMenuUi = {
   blog: string
   /** 553: первая вкладка шапки — каталог элементов узла. */
   allProjects: string
+  nativeElements: string
+  customElements: string
 }
 
 const UI: Record<string, TopMenuUi> = {
-  en: { menu: 'Menu', allProjects: 'All projects', store: 'Store', blog: 'Blog', openLeft: 'Open left menu', closeLeft: 'Close left menu', openRight: 'Open right menu', closeRight: 'Close right menu' },
-  ru: { menu: 'Меню', allProjects: 'Все проекты', store: 'Store', blog: 'Блог', openLeft: 'Открыть левое меню', closeLeft: 'Закрыть левое меню', openRight: 'Открыть правое меню', closeRight: 'Закрыть правое меню' },
+  en: { menu: 'Menu', allProjects: 'All projects', nativeElements: 'Native elements', customElements: 'Custom elements', store: 'Store', blog: 'Blog', openLeft: 'Open left menu', closeLeft: 'Close left menu', openRight: 'Open right menu', closeRight: 'Close right menu' },
+  ru: { menu: 'Меню', allProjects: 'Все проекты', nativeElements: 'Нативные элементы', customElements: 'Кастомные элементы', store: 'Store', blog: 'Блог', openLeft: 'Открыть левое меню', closeLeft: 'Закрыть левое меню', openRight: 'Открыть правое меню', closeRight: 'Закрыть правое меню' },
 }
 
 export function topMenuUi(lang: string): TopMenuUi {
