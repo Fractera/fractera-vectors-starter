@@ -9,9 +9,6 @@ import { buildDesignCss } from "@/lib/design-css";
 import { DrawerProvider } from "@/providers/drawer-provider.client";
 import { TopMenu } from "@/components/menu/top/top-menu.server";
 import { FooterMenu } from "@/components/menu/footer/footer-menu.server";
-import { StarterBanner } from "@/components/shell/starter-banner.client";
-import { starterBannerStrings } from "@/components/shell/starter-banner.i18n";
-import { ownId } from "@/lib/own-id";
 import { DrawerMenu } from "@/components/menu/drawer/drawer-menu.server";
 import { ViewportBadge } from "@/components/dev/viewport-badge.client";
 import { viewportBadgeWords } from "@/components/dev/viewport-badge.i18n";
@@ -168,22 +165,8 @@ export default async function LangLayout({
               Footer is always present (site furniture + theme/language). */}
           <DrawerProvider>
             <TopMenu lang={lang} />
-            {/* 🔒 ПОЛОСА-ПОДСКАЗКА НА ВСЕХ СТРАНИЦАХ — решение владельца
-                2026-09-20: «этот нотификейшн должен быть на всех страницах».
-                Прежде она жила только на главной, то есть человек, пришедший по
-                ссылке на любую другую страницу, не узнавал, что смотрит чужой
-                шаблон.
-
-                🔒 МЕСТО ВЫБРАНО НЕ СЛУЧАЙНО: сразу под шапкой, потому что полоса
-                позиционируется от её нижней границы (`top-14`). Соседство в
-                разметке повторяет соседство на экране — иначе связь двух чисел
-                видна только тому, кто читал оба файла.
-
-                🔒 СТАТИКУ НЕ ЛОМАЕТ: это островок, слушатель прокрутки живёт
-                внутри него, а макет остаётся серверным и ничего не спрашивает. */}
-            {/* 542 (владелец 2026-10-19): жёлтая вывеска стартера — та же, что у root («единственное что мы оставляем это выпадающее
-                жёлтая вывеска»); выезжает сразу, ссылка ведёт на «Подписку Claude Code» этого элемента в ядре. 🪦 314-2 её снимал. */}
-            <StarterBanner strings={starterBannerStrings(lang)} lang={lang} dropOnLoad href={process.env.ARCHITECT_URL && ownId() ? `${process.env.ARCHITECT_URL.replace(/\/+$/, "")}/${lang}/${ownId()}/build/subscription` : undefined} />
+            {/* 662-6 (владелец 2026-11-06: «Его нужно убрать. Баннерный шаблон должен существовать только в рут и внутри кастомного стартового
+                элемента»): у нативного элемента жёлтой вывески стартера нет — его не «удаляют и создают своё». 🪦 542 её возвращал. */}
             {children}
             <FooterMenu lang={lang} />
             {/* Left & right slide-in drawers (shadcn Sheet), controlled by the same

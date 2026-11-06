@@ -21,6 +21,10 @@ import { useShellMe } from "./shell-me.client"
 // (`components/menu/top/*`, `components/menu/shared/*`) без изменения вида; адреса — через `shellHref`, чтобы
 // у служб абсолютные ссылки на сайт не получали второй язык.
 
+/** 662-6 (владелец 2026-11-06: «внутри меню ты должен требовать чтобы каждое первая буква была заглавной независимо от того какая она к
+ *  тебе приходит»): название пункта и вкладки — с заглавной, как бы его ни записали данные («root» → «Root»). */
+export const cap = (s: string): string => (s ? s.charAt(0).toLocaleUpperCase() + s.slice(1) : s)
+
 export function isPublicGroup(roles: string): boolean {
   return !roles || roles === "public" || roles === "public+guest"
 }
@@ -81,7 +85,7 @@ function MegaItem({ lang, group }: { lang: string; group: ShellGroup }) {
     return (
       <NavigationMenuItem>
         <span aria-disabled="true" className={buttonVariants({ variant: "ghost", size: "sm", className: "cursor-default opacity-60 hover:bg-transparent" })}>
-          {group.label}
+          {cap(group.label)}
         </span>
       </NavigationMenuItem>
     )
@@ -91,7 +95,7 @@ function MegaItem({ lang, group }: { lang: string; group: ShellGroup }) {
     return (
       <NavigationMenuItem>
         <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-          <Link href={groupHref}>{group.label}</Link>
+          <Link href={groupHref}>{cap(group.label)}</Link>
         </NavigationMenuLink>
       </NavigationMenuItem>
     )
@@ -134,7 +138,7 @@ function MegaDropdown({ group, groupHref, childHref }: { group: ShellGroup; grou
   const count = group.children.length + (group.catalog ? 0 : 1)
   return (
     <NavigationMenuItem>
-      <NavigationMenuTrigger ref={trigger} className="h-8 px-3">{group.label}</NavigationMenuTrigger>
+      <NavigationMenuTrigger ref={trigger} className="h-8 px-3">{cap(group.label)}</NavigationMenuTrigger>
       <NavigationMenuContent
         ref={content}
         forceMount
@@ -147,9 +151,9 @@ function MegaDropdown({ group, groupHref, childHref }: { group: ShellGroup; grou
         onFocusOutside={(e) => { if (content.current?.dataset.state !== "open") e.preventDefault() }}
       >
         <ul className={`grid max-h-[70vh] gap-1 overflow-y-auto overscroll-contain p-1 ${columnsOf(count)}`}>
-          {!group.catalog && <MegaCard href={groupHref} title={group.label} description={group.description} strong />}
+          {!group.catalog && <MegaCard href={groupHref} title={cap(group.label)} description={group.description} strong />}
           {group.children.map((c) => (
-            <MegaCard key={c.slug} href={childHref(c)} title={c.title} description={c.description} mark={c.mark} />
+            <MegaCard key={c.slug} href={childHref(c)} title={cap(c.title)} description={c.description} mark={c.mark} />
           ))}
         </ul>
       </NavigationMenuContent>
@@ -215,13 +219,13 @@ export function MobileMenu({ lang, groups, label, meUrl }: { lang: string; group
                 return (
                   <div key={g.slug} className="flex flex-col">
                     {g.inert ? (
-                      <span aria-disabled="true" className="py-2.5 text-sm font-semibold text-muted-foreground cursor-default">{g.label}</span>
+                      <span aria-disabled="true" className="py-2.5 text-sm font-semibold text-muted-foreground cursor-default">{cap(g.label)}</span>
                     ) : g.catalog ? (
                       // 553: подпись каталога — не ссылка, у него нет своей страницы.
-                      <span className="py-2.5 text-sm font-semibold text-foreground">{g.label}</span>
+                      <span className="py-2.5 text-sm font-semibold text-foreground">{cap(g.label)}</span>
                     ) : (
                       <Link href={groupHref} onClick={() => setOpen(false)} className="py-2.5 text-sm font-semibold text-foreground hover:text-foreground transition-colors">
-                        {g.label}
+                        {cap(g.label)}
                       </Link>
                     )}
                     {g.childrenAsDropdown && g.children.map((c) => (
@@ -231,7 +235,7 @@ export function MobileMenu({ lang, groups, label, meUrl }: { lang: string; group
                         onClick={() => setOpen(false)}
                         className="py-2 pl-4 text-sm font-medium text-foreground hover:text-foreground transition-colors whitespace-normal break-words leading-snug"
                       >
-                        {c.title}<Mark text={c.mark} />
+                        {cap(c.title)}<Mark text={c.mark} />
                         {c.description && <span className="mt-0.5 line-clamp-2 text-xs font-normal text-muted-foreground">{c.description}</span>}
                       </Link>
                     ))}
