@@ -5,6 +5,7 @@ import { AccessMap } from "@/components/blocks/block-access-map"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { H1, H2, H3, Lead, P, Small } from "@/components/ui/typography"
 import { inline } from "@/lib/blocks/inline"
+import { renderBlocks } from "@/lib/content/blocks/registry"
 import type { Block } from "@/lib/content/blocks/types"
 import { TEXT_SET } from "@/lib/content/text-set"
 import { cn } from "@/lib/utils"
@@ -43,6 +44,8 @@ function SectionView({ section }: { section: Section }) {
     case "files": return <Hood section={section} />
     case "talk": return <Agent section={section} />
     case "agent": return <Agent section={section} />
+    // 662-2: «your own builder» — the element's Claude Code agent and its Telegram bot, in the muted band of `agent`.
+    case "builder": return <Agent section={section} />
     case "turn-on": return <Steps section={section} />
     case "connect": return <Connect section={section} />
     case "hood": return <Hood section={section} />
@@ -282,14 +285,18 @@ function Spaces({ section }: { section: Section }) {
 }
 
 /** Раздел с незнакомым `id` — общим видом типографики элемента. */
+// onlyFaq
 function Generic({ section }: { section: Section }) {
   return (
     <section data-block="aebxc" id={section.id} className={cn(WRAP, "scroll-mt-20 py-16 md:py-24")}>
-      <H2 data-block="blo59" className="text-balance">{section.title}</H2>
+      {/* 662-2: a section of only questions and answers — the block draws its own heading. */}
+      {!(section.blocks.length === 1 && (section.blocks[0].kind as string) === "block-faq") && <H2 data-block="blo59" className="text-balance">{section.title}</H2>}
       <div data-block="hqlo8" className="mt-6 flex max-w-[70ch] flex-col gap-4">
         {section.blocks.map((b, i) => {
           const Render = TEXT_SET[b.kind]
-          return Render ? <Render key={i} blockKey={`${section.id}-${i}`} {...b} /> : null
+          // 662-2: a catalogue block (questions and answers, cards) is drawn by the block registry, as on the graph's landing.
+          if (Render) return <Render key={i} blockKey={`${section.id}-${i}`} {...b} />
+          return <div data-block="e8bpq" key={i} className="min-w-0">{renderBlocks([b], `${section.id}-${i}`)}</div>
         })}
       </div>
     </section>
