@@ -6,7 +6,8 @@
 // оформление всё равно применяется, и наоборот.
 import { NextRequest, NextResponse } from "next/server"
 import { revalidatePath } from "next/cache"
-import { onSettingsSignal, signalKeyOk } from "@/lib/settings-listener"
+import { onSettingsSignal, signalKeyOk, subscribeToConfig } from "@/lib/settings-listener"
+import { ownId } from "@/lib/own-id"
 import { pullDesign } from "@/lib/design-follow"
 
 export const dynamic = "force-dynamic"
@@ -19,6 +20,15 @@ export async function POST(req: NextRequest) {
   if (!design.ok && design.reason !== "no-design-element") console.warn(`[design] сигнал: оформление не получено — ${design.reason}`)
   const settings = await onSettingsSignal()
   if (!settings.ok && settings.reason !== "no-config-element") console.warn(`[settings] сигнал: настройки не получены — ${settings.reason}`)
+
+  // 662-1: сигнал с ключом узла — и повод подписаться снова. ✗ Замерено на узле владельца 2026-11-06: root, design, graph, cache,
+  // memory, stripe стартовали, пока CONFIG перезапускался при `node:update`, подписка не удалась, а повторов нет (закон) — правки
+  // CONFIG до них не доходили. Ядро после установки зовёт эту дверь у каждого элемента; подписка по имени заменяет прежнюю запись.
+  const who = ownId()
+  if (who) {
+    const sub = await subscribeToConfig(who)
+    if (!sub.ok && sub.reason !== "no-config-element") console.warn(`[settings] сигнал: подписка не удалась — ${sub.reason}`)
+  }
 
   // Перерисовка — по любому сигналу с ключом (как у служб, 308): собранные страницы могли быть построены по другим файлам.
   revalidatePath("/", "layout")

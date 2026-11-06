@@ -11,7 +11,9 @@
 // его настроек (`lib/shell/site-shell-data.ts`), у служб из статической двери сайта `/api/shell/<язык>`.
 
 /** 507: `description` — вторая строка пункта мега-меню (до двух строк); нет — пункт из одного названия. */
-export type ShellChild = { slug: string; title: string; href?: string; description?: string }
+/** 662-1: `roles` — кому показывать пункт («architect», «architect+admin»; нет — всем), как у группы; вежливость, а не замок.
+ *  `mark` — короткая метка рядом с названием («выключен»), слово приходит с данными на языке страницы. */
+export type ShellChild = { slug: string; title: string; href?: string; description?: string; roles?: string; mark?: string }
 
 export type ShellGroup = {
   slug: string

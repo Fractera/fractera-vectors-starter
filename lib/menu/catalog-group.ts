@@ -19,6 +19,14 @@ export function catalogGroup(lang: string): ShellGroup | null {
     childrenAsDropdown: true,
     roles: "public",
     catalog: true,
-    children: entries.map((e) => ({ slug: e.id, title: e.title, href: e.href as string, ...(e.description ? { description: e.description } : {}) })),
+    // 662-1 (владелец 2026-11-06, выбор «Метка + включение»): выключенный элемент — с меткой, ведёт в раздел ядра со включателем,
+    // посетителю сайта не виден (только архитектору).
+    children: entries.map((e) => ({
+      slug: e.id,
+      title: e.title,
+      href: e.href as string,
+      ...(e.description ? { description: e.description } : {}),
+      ...(e.off ? { roles: "architect", ...(e.mark ? { mark: e.mark } : {}) } : {}),
+    })),
   }
 }

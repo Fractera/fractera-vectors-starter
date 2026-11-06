@@ -25,15 +25,26 @@ export function isPublicGroup(roles: string): boolean {
   return !roles || roles === "public" || roles === "public+guest"
 }
 
-/** Группа, закрытая ролью, прячется, пока не известно, кто вошёл: без вспышки «гостевого» меню. */
+/** Группа, закрытая ролью, прячется, пока не известно, кто вошёл: без вспышки «гостевого» меню. 662-1: так же и пункт с `roles`
+ *  (выключенный элемент в «Все проекты» виден архитектору, посетителю — нет); группа без видимых пунктов не рисуется. */
 export function useVisibleGroups(groups: ShellGroup[], meUrl: string): ShellGroup[] {
   const me = useShellMe(meUrl)
-  return groups.filter((g) => {
-    if (isPublicGroup(g.roles)) return true
+  const allowed = (roles?: string) => {
+    if (!roles || isPublicGroup(roles)) return true
     if (me === undefined) return false
     const mine = me?.roles ?? []
-    return g.roles.split("+").some((r) => mine.includes(r))
-  })
+    return roles.split("+").some((r) => mine.includes(r))
+  }
+  return groups
+    .filter((g) => allowed(g.roles))
+    .map((g) => (g.children.some((c) => c.roles) ? { ...g, children: g.children.filter((c) => allowed(c.roles)) } : g))
+    .filter((g) => !g.catalog || g.children.length > 0)
+}
+
+/** 662-1: метка пункта («выключен») — рядом с названием, приглушённая. */
+function Mark({ text }: { text?: string }) {
+  if (!text) return null
+  return <span className="ml-1.5 inline-block rounded border border-border px-1 py-px align-middle text-[10px] font-normal uppercase tracking-wide text-muted-foreground">{text}</span>
 }
 
 // 507 — МЕГА-МЕНЮ (владелец 2026-10-16: «Посмотри на вкладки контент выпадающем меню представляет из себя название и описание.
@@ -49,12 +60,12 @@ function columnsOf(count: number): string {
   return "w-[min(54rem,calc(100vw-2rem))] grid-cols-3"
 }
 
-function MegaCard({ href, title, description, strong }: { href: string; title: string; description?: string; strong?: boolean }) {
+function MegaCard({ href, title, description, strong, mark }: { href: string; title: string; description?: string; strong?: boolean; mark?: string }) {
   return (
     <li>
       <NavigationMenuLink asChild>
         <Link href={href} className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-          <span className={`block truncate text-sm leading-tight ${strong ? "font-semibold" : "font-medium"}`}>{title}</span>
+          <span className={`block truncate text-sm leading-tight ${strong ? "font-semibold" : "font-medium"}`}>{title}<Mark text={mark} /></span>
           {description && <span className="mt-1.5 line-clamp-2 text-sm leading-snug text-muted-foreground">{description}</span>}
         </Link>
       </NavigationMenuLink>
@@ -138,7 +149,7 @@ function MegaDropdown({ group, groupHref, childHref }: { group: ShellGroup; grou
         <ul className={`grid max-h-[70vh] gap-1 overflow-y-auto overscroll-contain p-1 ${columnsOf(count)}`}>
           {!group.catalog && <MegaCard href={groupHref} title={group.label} description={group.description} strong />}
           {group.children.map((c) => (
-            <MegaCard key={c.slug} href={childHref(c)} title={c.title} description={c.description} />
+            <MegaCard key={c.slug} href={childHref(c)} title={c.title} description={c.description} mark={c.mark} />
           ))}
         </ul>
       </NavigationMenuContent>
@@ -220,7 +231,7 @@ export function MobileMenu({ lang, groups, label, meUrl }: { lang: string; group
                         onClick={() => setOpen(false)}
                         className="py-2 pl-4 text-sm font-medium text-foreground hover:text-foreground transition-colors whitespace-normal break-words leading-snug"
                       >
-                        {c.title}
+                        {c.title}<Mark text={c.mark} />
                         {c.description && <span className="mt-0.5 line-clamp-2 text-xs font-normal text-muted-foreground">{c.description}</span>}
                       </Link>
                     ))}

@@ -33,7 +33,8 @@ export type SettingsKind = "app" | "platform" | "design"
 const KINDS: SettingsKind[] = ["app", "platform", "design"]
 
 /** 553: запись каталога узла — главная страница элемента для вкладки «Все проекты» (считает ядро, раздаёт CONFIG). */
-export type CatalogEntry = { id: string; title: string; description: string; href: string | null; local: string | null; kind: "custom" | "native" }
+/** 662-1: `off` — элемент выключен узлом, его сайта нет: `href` ведёт в его раздел ядра (путь от корня ядра), `mark` — слово метки. */
+export type CatalogEntry = { id: string; title: string; description: string; href: string | null; local: string | null; kind: "custom" | "native"; off?: boolean; mark?: string }
 type Catalog = { updatedAt?: string; byLang: Record<string, CatalogEntry[]> }
 
 type Copy = {
@@ -75,14 +76,29 @@ export function projectSettingsPatch(kind: SettingsKind): Record<string, unknown
 
 /**
  * 553: карточки вкладки «Все проекты» на языке страницы (нет языка — английские). Связь с CONFIG выключена или каталога нет —
- * пусто, и вкладки нет: у самостоятельного элемента своя шапка. В шапку идут только записи с публичным адресом.
+ * пусто, и вкладки нет: у самостоятельного элемента своя шапка.
+ * 662-1 (владелец 2026-11-06: «верхнее меню должно существовать всегда … когда пользователи добавляют элементы они автоматически
+ * появляются в меню»): ✗ замерено на узле без своего домена — у каждой карточки `href: null`, и вкладки не было ни у одного элемента.
+ * Нет публичного адреса — карточка ведёт на `local` (хозяин за этим компьютером: на временном адресе сайты элементов наружу не
+ * видны). Выключенный элемент ведёт в свой раздел ядра (`ARCHITECT_URL`); без этого адреса его карточки нет.
  */
 export function projectCatalog(lang: string): CatalogEntry[] {
   if (!linkOn("config")) return []
   const byLang = readCopy()?.catalog?.byLang
   if (!isObj(byLang)) return []
   const list = byLang[lang] ?? byLang.en ?? []
-  return Array.isArray(list) ? list.filter((e) => isObj(e) && typeof e.href === "string" && e.href.length > 0) : []
+  if (!Array.isArray(list)) return []
+  const core = (process.env.ARCHITECT_URL ?? "").trim().replace(/[/]+$/, "")
+  const out: CatalogEntry[] = []
+  for (const e of list) {
+    if (!isObj(e) || typeof e.id !== "string") continue
+    const entry = e as CatalogEntry
+    const href = entry.off
+      ? (typeof entry.href === "string" && entry.href.startsWith("/") && core ? `${core}${entry.href}` : null)
+      : (typeof entry.href === "string" && entry.href ? entry.href : typeof entry.local === "string" && entry.local ? entry.local : null)
+    if (href) out.push({ ...entry, href })
+  }
+  return out
 }
 
 // ── MCP-клиент в одну функцию ─────────────────────────────────────────────────
