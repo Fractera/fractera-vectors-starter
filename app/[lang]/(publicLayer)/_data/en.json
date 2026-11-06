@@ -76,12 +76,12 @@
     {
       "kind": "block-section-head",
       "id": "power",
-      "title": "On from the start",
+      "title": "On, asleep only when memory is short",
       "bid": "q0000"
     },
     {
       "kind": "text-p",
-      "text": "This element starts with the node. The node holds the switch: the architect turns it off or on with a word to the main agent, or on the element's settings page in the core.",
+      "text": "The element starts with the node. With less than 0.5 GB of free memory the node may put it to sleep; the first call or a calendar entry wakes it in seconds, and above 1 GB free it comes back by itself.",
       "bid": "q0001"
     },
     {

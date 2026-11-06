@@ -14,11 +14,17 @@
     "auth",
     "data",
     "config",
-    "design"
+    "design",
+    "embeddings"
   ],
   "messengers": {
     "h2a": true,
     "h2h": false,
     "a2a": false
+  },
+  "power": {
+    "default": "on",
+    "switch": "auto",
+    "wakeOnCall": true
   }
 }
