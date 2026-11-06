@@ -17,17 +17,66 @@ export type PartDef = {
 }
 
 export const FEET_Y = 135
+// 667 (владелец 2026-11-06: «он появляется слева направо это неправильно он должен появляться справа налево но оставаться в том же самом
+// положении»): все части прилетают справа — `from` по x только положительный (корпус был −560, левая рука −620, левые ноги −180/−120);
+// собранное место (`pos`) прежнее.
 export const PARTS: PartDef[] = [
-  { id: "body", size: [210, 130, 120], pos: [0, 0, 0], explode: [0, -6, 0], from: [-560, -190, 0], spin: [50, -70] },
+  { id: "body", size: [210, 130, 120], pos: [0, 0, 0], explode: [0, -6, 0], from: [560, -190, 0], spin: [50, 70] },
   { id: "eyeL", size: [26, 46, 8], pos: [-52, -14, 63], dark: true, explode: [-14, -46, 96], from: [260, -420, 0], spin: [-80, 40] },
   { id: "eyeR", size: [26, 46, 8], pos: [52, -14, 63], dark: true, explode: [14, -46, 96], from: [480, -320, 0], spin: [-60, 70] },
-  { id: "armL", size: [62, 22, 26], pos: [-136, 14, 0], rotZ: 18, explode: [-54, -14, 0], from: [-620, 60, 0], spin: [0, 120] },
+  { id: "armL", size: [62, 22, 26], pos: [-136, 14, 0], rotZ: 18, explode: [-54, -14, 0], from: [620, 60, 0], spin: [0, -120] },
   { id: "armR", size: [62, 22, 26], pos: [136, 14, 0], rotZ: -18, explode: [54, -14, 0], from: [640, 40, 0], spin: [0, -120] },
-  { id: "legBL", size: [26, 70, 26], pos: [-26, 100, -38], explode: [-10, 52, -10], from: [-180, 460, 0], spin: [90, 0] },
+  { id: "legBL", size: [26, 70, 26], pos: [-26, 100, -38], explode: [-10, 52, -10], from: [180, 460, 0], spin: [90, 0] },
   { id: "legBR", size: [26, 70, 26], pos: [26, 100, -38], explode: [10, 52, -10], from: [220, 460, 0], spin: [90, 0] },
-  { id: "legFL", size: [26, 70, 26], pos: [-72, 100, 38], explode: [-10, 52, 10], from: [-120, 480, 0], spin: [100, 0] },
+  { id: "legFL", size: [26, 70, 26], pos: [-72, 100, 38], explode: [-10, 52, 10], from: [120, 480, 0], spin: [100, 0] },
   { id: "legFR", size: [26, 70, 26], pos: [72, 100, 38], explode: [10, 52, 10], from: [140, 480, 0], spin: [100, 0] },
 ]
+
+// ── 667: БУМАЖНЫЙ САМОЛЁТИК TELEGRAM ─────────────────────────────────────────────────────────────────────────────────────────────
+// Владелец 2026-11-06: «Добавь ещё заключительный кадр … прилетает самолётик пролетает по синусоиде сзади клада и в конце падает у него
+// перед ногами. Самолётик должен быть бумажный имитирующий Telegram поскольку попишем что код приходит вместе с [Telegram]». Путь — в
+// координатах фигурки (от её центра): справа налево по синусоиде ЗА корпусом (z −175, сцена 3D сама прячет его за фигуркой), за левым
+// краем — разворот (там его не видно), затем к ногам СПЕРЕДИ (z +115) со снижением и лёгким отскоком на полу.
+const REST: [number, number, number, number] = [-8, FEET_Y - 14, 135, 8]
+const ease = { out: (v: number) => 1 - (1 - v) ** 3, inOut: (v: number) => (1 - Math.cos(Math.PI * v)) / 2, in: (v: number) => v * v }
+const deg = (dy: number, dx: number) => (Math.atan2(dy, dx) * 180) / Math.PI
+const plane = (x: number, y: number, z: number, rot: number, flip: boolean) => `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,${z.toFixed(1)}px) rotateZ(${rot.toFixed(1)}deg) scaleX(${flip ? -1 : 1})`
+/** Самолётик в покое — у ног, носом вправо: последний кадр сервера и «меньше движения». */
+export const PLANE_REST = plane(REST[0], REST[1], REST[2], REST[3], false)
+/** Где он ждёт до своего кадра — за правым краем сцены и до, и после приближения камеры. */
+export const PLANE_START = plane(560, -78, -175, 0, true)
+/** Полёт кадрами: 0–0,6 — за корпусом справа налево (нос влево), 0,6–1 — из-за левого края к ногам (нос вправо). */
+export function planeFrames(n = 56): Keyframe[] {
+  const at = (t: number): [number, number, number] => {
+    if (t <= 0.6) { const u = t / 0.6; return [560 - 860 * u, -78 + 30 * Math.sin(2 * Math.PI * 1.25 * u), -175] }
+    const v = (t - 0.6) / 0.4
+    return [-300 + (REST[0] + 300) * ease.out(v), -60 + (REST[1] + 60) * ease.in(v) - 22 * Math.sin(Math.PI * v) * (1 - v), -175 + (REST[2] + 175) * ease.inOut(v)]
+  }
+  const frames: Keyframe[] = []
+  for (let i = 0; i <= n; i++) {
+    const t = (i / n) * 0.94
+    const [x, y, z] = at(t)
+    const [x2, y2] = at(Math.min(1, t + 0.01))
+    const back = t > 0.6
+    const rot = back ? deg(y2 - y, x2 - x) : deg(y2 - y, x2 - x) - 180
+    frames.push({ transform: plane(x, y, z, Math.max(-50, Math.min(50, ((rot + 540) % 360) - 180)), !back), offset: t })
+  }
+  // Касание пола и отскок — нос выравнивается.
+  frames.push({ transform: plane(REST[0], REST[1] - 7, REST[2], 20, false), offset: 0.97 })
+  frames.push({ transform: PLANE_REST, offset: 1 })
+  return frames
+}
+
+/** Бумажный самолётик в цветах Telegram (форма знакомого «отправить»): две грани и сгиб, тонкая белая кромка; нос вправо. */
+export function PaperPlane() {
+  return (
+    <svg data-block="fg007" width={56} height={56} viewBox="0 0 24 24" style={{ position: "absolute", left: -28, top: -28, overflow: "visible", transform: "rotate(45deg)" }} aria-hidden>
+      <path d="M22 2 L2 9.2 L11 13 Z" fill="#63C7F5" stroke="#ffffff" strokeOpacity={0.6} strokeWidth={0.35} strokeLinejoin="round" />
+      <path d="M22 2 L11 13 L15 22 Z" fill="#229ED9" stroke="#ffffff" strokeOpacity={0.6} strokeWidth={0.35} strokeLinejoin="round" />
+      <path d="M11 13 L15 22 L12.6 14.2 Z" fill="#167BB0" />
+    </svg>
+  )
+}
 
 const CORAL = { front: "#d9694f", back: "#c25a43", side: "#b9533c", top: "#e98a70", bottom: "#8f3f2e" }
 const DARK = { front: "#0b0f17", back: "#0b0f17", side: "#111827", top: "#1e293b", bottom: "#0b0f17" }

@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { Cuboid, FEET_Y, Floor, PARTS, type Vec } from "./figure-parts"
+import { Cuboid, FEET_Y, Floor, PaperPlane, PARTS, PLANE_REST, PLANE_START, planeFrames, type Vec } from "./figure-parts"
 
 // ФИГУРКА CLAUDE — «СВОЙ СТРОИТЕЛЬ» (узел, шаг 662-7). Владелец 2026-11-06: «сначала прилетает элементы потом к каждому элементу руки ноги
 // головами отрисовываются линии и анимирована на них появляется текст затем все эти элементы соединяются в едино фигурка становится
@@ -11,25 +11,33 @@ import { Cuboid, FEET_Y, Floor, PARTS, type Vec } from "./figure-parts"
 const W = 680
 const H = 440
 const ORIGIN = { x: 236, y: 196 }
-const START = "rotateX(-14deg) rotateY(-34deg)"
+// 667 (владелец 2026-11-06): «сейчас он смотрит налево должен смотреть направо»; «поворачиваться он должен по часовой стрелке» — один знак:
+// с +34° фигурка смотрит вправо, и разворот к камере идёт по часовой стрелке (если смотреть сверху).
+const START = "rotateX(-14deg) rotateY(34deg)"
 const END = "rotateX(-7deg) rotateY(0deg)"
-const LABEL_X = 444
+const LABEL_X = 424
 const LABEL_Y = [58, 130, 202, 274, 346]
+// 667 (владелец: «сноски ноги и рот пересекаются … сноска рот должно быть выше а сноска [ноги] должна быть ниже»): РОТ — четвёртой строкой,
+// НОГИ — последней. Последний кадр (владелец: «после того как он подпрыгивает нужно сделать увеличение и выравнивания его по центру окна»):
+// «камера» везёт фигурку в центр окна и увеличивает в полтора раза; перспектива едет вместе с ней, объём не искажается.
+const FOCUS = { x: ORIGIN.x, y: ORIGIN.y + 35 }
+const ZOOM = `translate(${W / 2 - FOCUS.x}px, ${H / 2 - FOCUS.y}px) scale(1.5)`
+const IDENT = "translate(0px, 0px) scale(1)"
 type Word = { k: string; name: string; note: string; target: string; at: [number, number] }
 const WORDS: Record<"ru" | "en", Word[]> = {
   ru: [
     { k: "A", name: "КОРПУС", note: "×1 · агент Claude Code", target: "body", at: [0, -42] },
     { k: "D", name: "ГЛАЗА", note: "×2 · видят только свою папку", target: "eyeR", at: [0, 0] },
     { k: "C", name: "РУКИ", note: "×2 · пишут код, отдают коммит", target: "armR", at: [0, 0] },
-    { k: "B", name: "НОГИ", note: "×4 · приходят в Telegram", target: "legFR", at: [0, 0] },
     { k: "E", name: "РОТ", note: "×0 · не болтает — бережёт токены", target: "body", at: [0, 38] },
+    { k: "B", name: "НОГИ", note: "×4 · приходят в Telegram", target: "legFR", at: [0, 0] },
   ],
   en: [
     { k: "A", name: "BODY", note: "×1 · the Claude Code agent", target: "body", at: [0, -42] },
     { k: "D", name: "EYES", note: "×2 · see their own folder only", target: "eyeR", at: [0, 0] },
     { k: "C", name: "ARMS", note: "×2 · write code, hand back a commit", target: "armR", at: [0, 0] },
-    { k: "B", name: "LEGS", note: "×4 · walk into Telegram", target: "legFR", at: [0, 0] },
     { k: "E", name: "MOUTH", note: "×0 · no chatter — tokens saved", target: "body", at: [0, 38] },
+    { k: "B", name: "LEGS", note: "×4 · walk into Telegram", target: "legFR", at: [0, 0] },
   ],
 }
 const t3 = (v: Vec) => `translate3d(${v[0]}px,${v[1]}px,${v[2]}px)`
@@ -45,6 +53,8 @@ export function BuilderFigure({ ru, title }: { ru: boolean; title: string }) {
   const group = useRef<HTMLDivElement>(null)
   const bounce = useRef<HTMLDivElement>(null)
   const shadow = useRef<HTMLDivElement | null>(null)
+  const cam = useRef<HTMLDivElement>(null)
+  const plane = useRef<HTMLDivElement>(null)
   const parts = useRef<(HTMLDivElement | null)[]>([])
   const anchors = useRef<Record<string, HTMLDivElement | null>>({})
   const lines = useRef<(SVGPolylineElement | null)[]>([])
@@ -81,6 +91,8 @@ export function BuilderFigure({ ru, title }: { ru: boolean; title: string }) {
       state = "pre"
       parts.current.forEach((p, i) => go(p, [{ transform: start(i) }], { duration: 0 }))
       go(group.current, [{ transform: START }], { duration: 0 })
+      go(cam.current, [{ transform: IDENT }], { duration: 0 })
+      go(plane.current, [{ transform: PLANE_START }], { duration: 0 })
       hide([...lines.current, ...dots.current, ...names.current, ...notes.current])
     }
     const play = async () => {
@@ -132,6 +144,12 @@ export function BuilderFigure({ ru, title }: { ru: boolean; title: string }) {
       ]
       const shade: Keyframe[] = [{ transform: "scale(1)", opacity: 1 }, { transform: "scale(1.1)", opacity: 1, offset: 0.2 }, { transform: "scale(.62)", opacity: 0.45, offset: 0.56 }, { transform: "scale(1.08)", opacity: 1, offset: 0.8 }, { transform: "scale(1)", opacity: 1 }]
       await Promise.all([go(bounce.current, jump, { duration: 1000 }), go(shadow.current, shade, { duration: 1000 })])
+      if (!alive()) return
+      // 6. Камера: в центр окна и крупнее.
+      await go(cam.current, [{ transform: IDENT }, { transform: ZOOM }], { duration: 900, easing: "cubic-bezier(.22,1,.36,1)" })
+      if (!alive()) return
+      // 7. Самолётик Telegram: справа налево по синусоиде за корпусом, из-за левого края — к ногам, спереди (владелец: «код приходит вместе с Telegram»).
+      await go(plane.current, planeFrames(), { duration: 2600, easing: "linear" })
       if (alive()) state = "done"
     }
     const io = new IntersectionObserver(([e]) => {
@@ -145,7 +163,8 @@ export function BuilderFigure({ ru, title }: { ru: boolean; title: string }) {
 
   return (
     <div data-block="fg010" ref={outer} role="img" aria-label={title} className="relative w-full overflow-hidden rounded-[calc(var(--radius)*1.5)] border border-border bg-[#0e1320]" style={{ height: H * k }}>
-      <div data-block="fg011" ref={stage} style={{ position: "absolute", left: 0, top: 0, width: W, height: H, transform: `scale(${k})`, transformOrigin: "0 0", perspective: 1100, perspectiveOrigin: `${ORIGIN.x}px ${ORIGIN.y - 40}px` }}>
+      <div data-block="fg011" ref={stage} style={{ position: "absolute", left: 0, top: 0, width: W, height: H, transform: `scale(${k})`, transformOrigin: "0 0" }}>
+        <div data-block="fg021" ref={cam} style={{ position: "absolute", left: 0, top: 0, width: W, height: H, perspective: 1100, perspectiveOrigin: `${ORIGIN.x}px ${ORIGIN.y - 40}px`, transform: ZOOM, transformOrigin: `${FOCUS.x}px ${FOCUS.y}px` }}>
         <div data-block="fg012" style={{ position: "absolute", left: ORIGIN.x, top: ORIGIN.y, transformStyle: "preserve-3d" }}>
           <div data-block="fg013" ref={group} style={{ position: "absolute", transformStyle: "preserve-3d", transform: END }}>
             <Floor shadowRef={(n) => { shadow.current = n }} />
@@ -159,6 +178,10 @@ export function BuilderFigure({ ru, title }: { ru: boolean; title: string }) {
               ))}
             </div>
           </div>
+          <div data-block="fg022" ref={plane} style={{ position: "absolute", transformStyle: "preserve-3d", transform: PLANE_REST }}>
+            <PaperPlane />
+          </div>
+        </div>
         </div>
         <svg data-block="fg017" width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
           {words.map((w, i) => (
