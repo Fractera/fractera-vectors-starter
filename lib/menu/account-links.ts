@@ -1,6 +1,6 @@
 import { branchChild, wordsIn } from "@/lib/page-tree"
 import type { ShellLink as DrawerLink } from "@/components/shell/shell-types"
-// The architect pages live in the node's core (280); /<lang>/architect redirects there.
+// The architect pages live in the node's core (280): the link goes to the core address (ARCHITECT_URL, step 564).
 const ARCHITECT_HOME = "/architect"
 const ARCHITECT_TITLE: Record<string, string> = {
   en: "The architect group of pages",
@@ -46,6 +46,14 @@ const MESSENGERS = [
   { href: "/messenger-h2a", label: "H2A Messenger" },
 ]
 
+// 564 (владелец 2026-10-21: «Кнопка находится в правом выдвижном ящике … должна посылать прямо на субдомен типа: architect.domain»):
+// у элемента со своей веткой /<язык>/architect (config, design) путь без адреса ядра оставался на субдомене элемента. 660: и у всех
+// остальных — относительная ссылка уходила 307 в ядро на другой порт, и предзагрузка Next.js в открытом ящике давала ошибки CORS
+// (замер на узле владельца: 10 в консоли). Адрес ядра —
+// ARCHITECT_URL от установщика узла; нет его — прежний путь (у сайта и прочих он перенаправляет в ядро).
+const ARCHITECT_URL = (process.env.ARCHITECT_URL ?? "").replace(/[/]+$/, "")
+const architectHref = (lang: string, path = "") => `${ARCHITECT_URL}/${lang}${ARCHITECT_HOME}${path ? `/${path}` : ""}`
+
 // 645-3 (владелец 2026-11-04, после первой установки глазами нового человека): «в нём сейчас огромное количество мусора который мы
 // ещё не используем: нужно скрыть все вкладки, а вместо них создать: – как это работает – подписка Cloud Code – терминал – активация
 // Telegram»; «Группа страниц архитектора» — пятой («Оставить пятым»). Четыре страницы живут в ядре: `/<lang>/architect/...` этого
@@ -61,7 +69,7 @@ const OWNER_PAGES: { path: string; label: Record<string, string> }[] = [
 export function accountLinks(lang: string): DrawerLink[] {
   return [
     ...OWNER_PAGES.map((p) => ({
-      href: `/${lang}${ARCHITECT_HOME}/${p.path}`,
+      href: architectHref(lang, p.path),
       label: p.label[lang] ?? p.label.en,
       roles: ARCHITECT_LAYER_ROLES,
     })),
@@ -70,7 +78,7 @@ export function accountLinks(lang: string): DrawerLink[] {
     // Адрес, роли и подпись взяты у самого слоя — `ARCHITECT_HOME`, `ARCHITECT_LAYER_ROLES` и его словарь, —
     // а не переписаны сюда: копия разошлась бы с дверью, которую открывает пункт.
     {
-      href: `/${lang}${ARCHITECT_HOME}`,
+      href: architectHref(lang),
       label: ARCHITECT_TITLE[lang] ?? ARCHITECT_TITLE.en,
       roles: ARCHITECT_LAYER_ROLES,
     },
