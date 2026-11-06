@@ -58,6 +58,7 @@ skill itself: a `<!-- PROOF … -->` mark under its header). Vendored skills are
 | `copy-editing` | vendored, Corey Haines, MIT | edits existing copy line by line — `SOURCE.md` | — not proven |
 | `humanizer` | vendored, blader, MIT | removes the signs of AI writing from any text a person reads, the product quiz too — `SOURCE.md`, `.claude/modes/build-texts.md` «Texts»; lives only in the texts pass (node step 590-5) | — not proven |
 | `self-review` | ours, `build-skills` | on the person's «review» (in their language): at most three proposals to improve the skills, nothing changed without «yes» | — not proven |
+| `ultracode-session` | ours, `build-skills` | a session your person confirmed as ultracode in Telegram: workflows and subagents only there, ended by the node at «выключить» | — not proven |
 | `add-door` | ours, `build-skills` | a door for a neighbour: `npm run door:add` writes the route, the key and the card — you write the work | the mark in its `SKILL.md` |
 | `ask-core` | ours, `own-service-props-skills` | ask the core how the node works — the last resort; tell the architect through the core's main agent (`npm run tell-core`, your alarm first of all) | the mark in its `SKILL.md` |
 

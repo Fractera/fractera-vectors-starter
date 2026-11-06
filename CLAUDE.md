@@ -121,7 +121,8 @@ element is a microservice that answers its neighbours and asks them for help; to
   warning again, then stop.
 - **Never recommend an Anthropic API key:** the project's AI work goes through the node's OpenAI key.
 - **No subagents.** You work alone, one task at a time; a subagent only when a skill explicitly allows it — `context: fork` in its
-  frontmatter and «Subagent: allowed — <why>» in its body.
+  frontmatter and «Subagent: allowed — <why>» in its body — or in a session your person confirmed as ultracode in Telegram (Opus →
+  Ultracode → «Продолжить»): only there workflows and subagents run, until «выключить» (skill `ultracode-session`).
 - **The answer is the text you write, not what you think.** Nobody sees your thinking: print the answer in the terminal (in Telegram —
   send it with `reply`) and only then tell the node you are done (`/api/agents/done`).
 - **A finished task ends with the evidence, not a promise:** each check from your plan, what it showed (the command and its line, the
