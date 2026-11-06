@@ -52,8 +52,9 @@ node's OpenAI key, one language at a time) and `npm run i18n:export` → an outs
 - **`robots.txt` never closes languages** — a page blocked there cannot show its `noindex` (Google, block-indexing).
 - **Only the visitor's language reaches the browser** (`npm run check:lang-delivery`; client files must not import whole
   dictionaries).
-- Guards: `npm run check:i18n` (dictionaries vs the enabled set), `check:seo` (source), `check:seo-html` rules 9–13 (built
-  HTML), `npm run check:index <url> --langs …` (what the live site shows a robot now).
+- Guards: `npm run check:i18n` (dictionaries vs the enabled set; run by hand), `check:data-langs` (in `prebuild`: each
+  `_data/<lang>.json` repeats its `en.json` — the same cards, sections, `id`, `bid`, `kind`), `check:seo` (source), `check:seo-html`
+  rules 9–13 (built HTML), `npm run check:index <url> --langs …` (what the live site shows a robot now).
 
 ## What to recommend — say it in these words when languages come up
 
