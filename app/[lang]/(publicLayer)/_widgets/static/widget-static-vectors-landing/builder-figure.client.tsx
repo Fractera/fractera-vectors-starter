@@ -16,7 +16,9 @@ const ORIGIN = { x: 236, y: 196 }
 const START = "rotateX(-14deg) rotateY(34deg)"
 const END = "rotateX(-7deg) rotateY(0deg)"
 const LABEL_X = 424
-const LABEL_Y = [58, 130, 202, 274, 346]
+// 669 (владелец 2026-11-07: «сноска на глаза пересекается с сноской на руки. Убери полностью сноску на глаза»): сносок четыре, строки
+// разложены по той же высоте — линия каждой идёт к своей части почти горизонтально.
+const LABEL_Y = [58, 154, 250, 346]
 // 667 (владелец: «сноски ноги и рот пересекаются … сноска рот должно быть выше а сноска [ноги] должна быть ниже»): РОТ — четвёртой строкой,
 // НОГИ — последней. Последний кадр (владелец: «после того как он подпрыгивает нужно сделать увеличение и выравнивания его по центру окна»):
 // «камера» везёт фигурку в центр окна и увеличивает в полтора раза; перспектива едет вместе с ней, объём не искажается.
@@ -27,14 +29,12 @@ type Word = { k: string; name: string; note: string; target: string; at: [number
 const WORDS: Record<"ru" | "en", Word[]> = {
   ru: [
     { k: "A", name: "КОРПУС", note: "×1 · агент Claude Code", target: "body", at: [0, -42] },
-    { k: "D", name: "ГЛАЗА", note: "×2 · видят только свою папку", target: "eyeR", at: [0, 0] },
     { k: "C", name: "РУКИ", note: "×2 · пишут код, отдают коммит", target: "armR", at: [0, 0] },
     { k: "E", name: "РОТ", note: "×0 · не болтает — бережёт токены", target: "body", at: [0, 38] },
     { k: "B", name: "НОГИ", note: "×4 · приходят в Telegram", target: "legFR", at: [0, 0] },
   ],
   en: [
     { k: "A", name: "BODY", note: "×1 · the Claude Code agent", target: "body", at: [0, -42] },
-    { k: "D", name: "EYES", note: "×2 · see their own folder only", target: "eyeR", at: [0, 0] },
     { k: "C", name: "ARMS", note: "×2 · write code, hand back a commit", target: "armR", at: [0, 0] },
     { k: "E", name: "MOUTH", note: "×0 · no chatter — tokens saved", target: "body", at: [0, 38] },
     { k: "B", name: "LEGS", note: "×4 · walk into Telegram", target: "legFR", at: [0, 0] },
