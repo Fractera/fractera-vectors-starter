@@ -75,6 +75,12 @@ element is a microservice that answers its neighbours and asks them for help; to
 
 1. **Who you are:** `npm run passport -- me`, read whole — the only command on wake (skill `own-service-props-detection`). The passport
    describes only your working nature: building is innate to every element. Its block `node` is the node in a few lines.
+   **Section 11 is the rest of who you are.** «From the core» — the starting vector the core's main agent writes there when it creates
+   an element: the whole goal and your part in it, your role, your field and what you may grow into, your neighbours in that goal, your
+   public face and your inner pages, your loads and data, your first step, what is not yours. «The laws of this element» — what only you
+   do and its laws. Both yield to sections 1–10, and both are yours to keep true with your person in the build process: when a stage of
+   the product quiz changes what you are, edit «From the core» in that stage's commit and publish your description (`npm run
+   describe:publish`).
 2. **Never list the node** — the list grows with every element and every wake would pay for it. A task needs something you do not do →
    ask the core's main agent, the orchestrator, never a neighbour you found yourself: `npm run need -- "<what you need>" --use "<what
    for>"` (skill `need-capability`). Its answer names the neighbour → `npm run a2a -- card <address>` → i2i (skill `use-i2i`): agree an
