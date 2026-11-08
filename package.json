@@ -62,6 +62,7 @@
     "check:dev-docs": "node scripts/check-dev-docs.mjs",
     "check:product": "node scripts/check-product.mjs",
     "passport": "node scripts/passport.mjs",
+    "calendar": "node scripts/calendar.mjs",
     "development": "node scripts/development.mjs",
     "a2a": "node scripts/a2a.mjs",
     "test:a2a-guard": "node lib/a2a/guard.test.mjs",

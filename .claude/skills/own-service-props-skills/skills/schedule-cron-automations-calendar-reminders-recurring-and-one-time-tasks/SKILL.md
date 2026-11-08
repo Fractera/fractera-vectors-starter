@@ -44,7 +44,7 @@ through `npm run tell-core -- --alarm`.
 | What | Who | Where |
 |---|---|---|
 | turn the whole automation on or off | the person — the switch «Use automation» on this element's calendar page in the core — or you on the person's word | the passport field `automation.cron` |
-| add, change, pause, cancel an entry | you, on the person's word | `data/cron.json` |
+| add, change, pause, cancel an entry | you, on the person's word | `data/cron.json` through `npm run calendar` |
 | a new kind of event (code) | you, as building (section «When it is not a reminder») | `lib/cron/events/`, `OWN-SERVICE-PROPS/CRON.json` |
 
 The calendar page: a custom element — «Working process → Process → Cron automations»; a native element — «Cron events» (data,
@@ -64,6 +64,11 @@ nothing runs, whatever the entries say. Times are the **local time of the comput
 While the computer is off or the element is stopped, a run is skipped and **not made up later** (the calendar shows «skipped»).
 
 ## A reminder = one entry
+
+**Every change goes through `npm run calendar`** (core step 699) — `add`, `pause <id>`, `resume <id>`, `cancel <id>`, `repeats
+off|on`, `list`. It stamps `saidAt` with the moment of the change, checks the event against your catalog and the times, and writes the
+file whole; never edit `data/cron.json` by hand (the owner of the node, 2026-11-08: a hand-written `saidAt` at midnight made the core's
+canvas call an entry «missed» before it existed). The entry it writes:
 
 ```json
 {
@@ -89,7 +94,8 @@ While the computer is off or the element is stopped, a run is skipped and **not 
     you at that time — a check, a copy, a report. It costs a session; words for the person are never this event.
 - Write `name` and `message` in the **element's default language** (`npm run passport -- me` → `languages.default`), as the reminder
   itself («Завтра день рождения друга.» for `ru`): every entry of the calendar is in that language (owner of the node, 2026-10-20).
-- `saidAt` — when the person said it (ISO, now): the calendar shows it next to the time it is due.
+- `saidAt` — the moment of the change, stamped by `npm run calendar`: the calendar shows it next to the time it is due and never
+  calls a moment before it «missed».
 - `time` — `HH:MM`, 24 hours. `repeat` — `once` (on `start` only) · `daily` · `weekdays` (Mon–Fri) · `weekly` (the weekday of
   `start`) · `monthly` (the day of month of `start`) · `yearly` (the day and month of `start`). `start` — `YYYY-MM-DD`; `until` —
   optional last day.
@@ -100,17 +106,17 @@ While the computer is off or the element is stopped, a run is skipped and **not 
 
 ## What the person says → what you do → what you answer
 
-| The person | You (edit `data/cron.json`) | Your answer — one or two lines |
+| The person | You (`npm run calendar -- …`) | Your answer — one or two lines |
 |---|---|---|
-| «remind me tomorrow at 9 to call mum» | one `once` entry | «Готово: завтра, 13 октября, в 9:00 напомню позвонить маме.» |
+| «remind me tomorrow at 9 to call mum» | `add --event node-notice --name … --message … --time 09:00 --repeat once --start <tomorrow>` | «Готово: завтра, 13 октября, в 9:00 напомню позвонить маме.» |
 | «on weekdays at 9:30 …» | `repeat: weekdays` | «Готово: по будням в 9:30 — …» |
 | «every Monday at 9:30» | `repeat: weekly`, `start` = next Monday | «Готово: по понедельникам в 9:30, начиная с 19 октября.» |
 | «every year on 10 March — mum's birthday» | `repeat: yearly`, `start` = the next 10 March | «Готово: каждый год 10 марта в 9:00 напомню о дне рождения мамы.» |
-| «pause the Monday reminder» | `enabled: false` | «Поставил на паузу.» |
-| «turn off all repeating reminders» / «back on» | `repeatsPaused: true` / `false` | «Все повторяющиеся выключены; разовые сработают.» |
+| «pause the Monday reminder» | `pause <id>` | «Поставил на паузу.» |
+| «turn off all repeating reminders» / «back on» | `repeats off` / `repeats on` | «Все повторяющиеся выключены; разовые сработают.» |
 | «turn off the automation» / «turn it on» | passport `automation.cron: false` / `true` (only this field) | «Автоматизация выключена: ничего не выполняется, записи сохранены.» |
-| «delete it» | remove the entry | «Удалил.» |
-| «what do I have on Friday?» | read, do not edit | the times and texts, nothing else |
+| «delete it» | `cancel <id>` | «Удалил.» |
+| «what do I have on Friday?» | `list` — read, change nothing | the times and texts, nothing else |
 
 No restatement, no plan, no «yes?», no commit, no push, no rebuild, no «check the calendar» lecture. Ask one short question only
 when the request is truly ambiguous — which date («on the 10th» of which month?), which time («in the morning» → offer 9:00).

@@ -11,6 +11,9 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { ROOT, env, coreUrl, coreGet } from './core-door.mjs'
 
+// Core step 699: the head of the node's message protocol (the core's `lib/agent-kit/node-line.cjs`, catalogue `NODE-LINES.md`) —
+// `⟦node · <kind> · <this element> · HH:MM⟧`, right after the process word the bridge reads first.
+const nodeHead = (kind, element) => { const d = new Date(); const p = (n) => String(n).padStart(2, '0'); return `⟦node · ${kind} · ${element} · ${p(d.getHours())}:${p(d.getMinutes())}⟧ ` }
 const fail = (msg) => { console.log(`===NEED_FAIL=== ${msg}`); process.exit(1) }
 const args = process.argv.slice(2)
 const flag = (name) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] ?? '' : null }
@@ -43,7 +46,7 @@ try {
   if (!b.ok) fail(`the core answered ${r.status}: ${b.error ?? 'no reason'}`)
   const n = b.need
   // The process word opens the request (552-4): finding or building a capability is building work of the node.
-  const text = `Build process: Element ${id} needs a capability: «${need}»${use ? ` (what for: «${use}»)` : ''} — need ${n.id}. Find who does it, or ask the architect to build it (npm run needs -- show ${n.id}).`
+  const text = `Build process: ${nodeHead('need', id)}Element ${id} needs a capability: «${need}»${use ? ` (what for: «${use}»)` : ''} — need ${n.id}. Find who does it, or ask the architect to build it (npm run needs -- show ${n.id}).`
   const w = await fetch(`${core}/api/agents/wake`, {
     method: 'POST', headers: { 'content-type': 'application/json', 'x-node-key': key },
     body: JSON.stringify({ service: 'build', from: id, about: need.slice(0, 300), reason: 'element-need', text }), signal: AbortSignal.timeout(30000),

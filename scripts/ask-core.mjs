@@ -92,9 +92,12 @@ if (!key) fail('no node key here (SETTINGS_SECRET in .env.local)')
 // The answer carries its question (548-20): it may come into a fresh session that never asked.
 // 552-4: the request opens with its process (the core's bridge routes by the first word); asking the core is building work, passing
 // words on is not (636).
+// Core step 699: the head of the node's message protocol (the core's `lib/agent-kit/node-line.cjs`, catalogue `NODE-LINES.md`) —
+// `⟦node · <kind> · <this element> · HH:MM⟧`, right after the process word the bridge reads first.
+const nodeHead = (kind, element) => { const d = new Date(); const p = (n) => String(n).padStart(2, '0'); return `⟦node · ${kind} · ${element} · ${p(d.getHours())}:${p(d.getMinutes())}⟧ ` }
 const text = tell
-  ? `Working process: Element ${id} tells the architect: «${words}». Pass these words to the architect where they read you now, naming ${id} (skill answer-element). Nothing else: no plan, no build.`
-  : `Build process: Element ${id} asks about the node's architecture: «${words}». Answer from the core's instruction (skill answer-element) in at most 10 lines with: npm run task -- ${id} "Answer from the core to «${words}»: …". Do not build anything; if the core's instruction does not say, answer that the core does not know it and that the architect decides.`
+  ? `Working process: ${nodeHead('tell-core', id)}Element ${id} tells the architect: «${words}». Pass these words to the architect where they read you now, naming ${id} (skill answer-element). Nothing else: no plan, no build.`
+  : `Build process: ${nodeHead('ask-core', id)}Element ${id} asks about the node's architecture: «${words}». Answer from the core's instruction (skill answer-element) in at most 10 lines with: npm run task -- ${id} "Answer from the core to «${words}»: …". Do not build anything; if the core's instruction does not say, answer that the core does not know it and that the architect decides.`
 const reason = tell ? (alarm ? 'alarm' : 'element-message') : 'element-question'
 try {
   const r = await fetch(`${core}/api/agents/wake`, {
