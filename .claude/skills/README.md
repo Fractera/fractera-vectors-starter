@@ -61,6 +61,7 @@ skill itself: a `<!-- PROOF … -->` mark under its header). Vendored skills are
 | `ultracode-session` | ours, `build-skills` | a session your person confirmed as ultracode in Telegram: workflows and subagents only there, ended by the node at «выключить» | — not proven |
 | `add-door` | ours, `build-skills` | a door for a neighbour: `npm run door:add` writes the route, the key and the card — you write the work | the mark in its `SKILL.md` |
 | `ask-core` | ours, `own-service-props-skills` | ask the core how the node works — the last resort; tell the architect through the core's main agent (`npm run tell-core`, your alarm first of all) | the mark in its `SKILL.md` |
+| `answer-the-leader` | ours, `own-service-props-skills` | the core's main agent asks where your development stands — three lines from the passport fragment `development` and `current-step.md`, saved with `npm run reply-core`, nothing else | the mark in its `SKILL.md` |
 
 Vendored skills are copies, never symbolic links, and are never edited by hand: `SOURCE.md` next to each says where it came
 from and how to update it.

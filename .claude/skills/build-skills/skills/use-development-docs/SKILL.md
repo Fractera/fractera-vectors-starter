@@ -44,6 +44,11 @@ lost?» — and write that now. Update it when:
 - a long or irreversible operation is about to start — BEFORE it;
 - the next action changes.
 
+At each of these events write the passport fragment too, in the same minute: `npm run development -- --steps "21,22.1,24"
+--current 22.1 --state planning|building|checking|waiting|done|stopped [--next "<one line>"]`; no active step — `--none`. The
+core's main agent reads it by code without waking you (core step 686-3; the owner of the node, 2026-11-08: «текущий шаги разработки
+21, 22.1, 22.2, 24. – Текущий шаг 22.1, состояние: планирование»). Never edit the fragment by hand.
+
 Rewrite it over, do not append a diary: the active step, the last commit, the next action, the queue, the person's latest
 decisions. History lives in `steps-done/` and git. Nothing to do → «Active step: none» and the last change.
 
