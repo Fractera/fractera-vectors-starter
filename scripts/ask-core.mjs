@@ -2,6 +2,7 @@
 //   npm run ask-core -- "<one question in English>"
 //   npm run reply-core -- "<the result of a task the core's main agent gave you, a few lines>"
 //   npm run tell-core -- [--alarm] "<words for the architect, in the person's language>"
+//   npm run reset   — your own context reset (core step 700): the letter to your next session is written and committed first
 //
 // The owner of the node, 2026-10-20: «одним из аналогов должен быть навык спросить ядро … i2i должен всегда оставаться резервным
 // источником данных в случае крайней необходимости именно ядро может рассказать о архитектуре глубже». The question wakes the
@@ -60,6 +61,37 @@ function coreUrl() {
 const reply = process.argv.includes('--reply')
 const tell = process.argv.includes('--tell')
 const alarm = process.argv.includes('--alarm')
+
+// Core step 700 (the owner, 2026-11-08: «самопроизвольно сбросить контекст и с помощью функции пробудить себя прочитать переходной файл
+// … это действие должно жить … у каждого элемента»): the node counts your window and from 55 % tells you so; you decide. `--reset` asks
+// the core's door POST /api/agents/session { action: clear, continue: true } for THIS element: when your turn ends the bridge clears
+// the window and wakes your fresh session with `⟦node · context-reset …⟧` — it reads «## Letter to my next session» in
+// development-docs/current-step.md first. Nobody is asked; write and commit the letter before you run it.
+if (process.argv.includes('--reset')) {
+  const me = ownId()
+  const at = coreUrl()
+  const nodeKey = env.SETTINGS_SECRET?.trim()
+  if (!me) fail('this element has no id (OWN-SERVICE-PROPS/OWN-SERVICE-PROPS.json → id)')
+  if (!at || !nodeKey) fail('the core is unknown here (NODE_DOMAIN_FILE → logs/runtime.json, SETTINGS_SECRET in .env.local)')
+  try {
+    const letter = readFileSync(join(root, 'development-docs', 'current-step.md'), 'utf8')
+    if (!/^## Letter to my next session/m.test(letter)) fail('write «## Letter to my next session» at the top of development-docs/current-step.md and commit it first')
+  } catch (e) { if (e?.code === 'ENOENT') fail('no development-docs/current-step.md — write your letter there first') }
+  try {
+    const r = await fetch(`${at}/api/agents/session`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-node-key': nodeKey },
+      body: JSON.stringify({ service: me, action: 'clear', continue: true }),
+      signal: AbortSignal.timeout(15000),
+    })
+    const b = await r.json().catch(() => ({}))
+    if (!b.ok) fail(`the core answered ${r.status}: ${b.reason ?? 'no reason'}`)
+    console.log('===RESET_OK=== when this turn ends the node clears your window and wakes your next session with your letter. Say one line to your person now and end the turn.')
+    process.exit(0)
+  } catch (e) {
+    fail(`the core did not answer at ${at} — ${e instanceof Error ? e.message : e}`)
+  }
+}
 const words = process.argv.slice(2).filter((a) => !['--reply', '--tell', '--alarm'].includes(a)).join(' ').replace(/\s+/g, ' ').trim()
 const limit = reply ? 1500 : tell ? 1000 : 600
 if (words.length < (tell ? 2 : 10)) fail(reply ? 'reply-core -- "<the result of the task, a few lines>"' : tell ? 'tell-core -- [--alarm] "<the words for the architect>"' : 'ask-core -- "<one question in English, with the words of the area>"')

@@ -52,8 +52,15 @@ core's main agent reads it by code without waking you (core step 686-3; the owne
 Rewrite it over, do not append a diary: the active step, the last commit, the next action, the queue, the person's latest
 decisions. History lives in `steps-done/` and git. Nothing to do → «Active step: none» and the last change.
 
-Near the end of the context: write `current-step.md`, then tell the person that the session should be restarted — a new one
-reads the file first. Do not rely on automatic compaction: what it drops, nobody sees.
+**Your context window — you reset yourself (core step 700).** Compaction is off in every node session. The node counts your window:
+from 55 % a line `⟦node · context-window · …⟧` comes with the message. A judgement, not a threshold: a small last task that fits is
+finished first; a long or new piece of work starts in a clean window; from 85 % — now, at the nearest boundary. Three moves, asking nobody:
+1. `## Letter to my next session` at the top of `current-step.md`, rewritten whole, «written by me for myself»: where I stand (step,
+   substep, the last commit's hash) · the person's words of this session verbatim · what is half done and where it lies · the next
+   action, exactly · the clues to keep (what was measured, what failed and why).
+2. Commit it — a letter only in the working tree dies with a crash.
+3. `npm run reset` and one line to your person. When the turn ends the node clears the window and wakes your fresh session with
+   `⟦node · context-reset · …⟧`: it reads the letter first and goes on.
 
 ## A step
 
