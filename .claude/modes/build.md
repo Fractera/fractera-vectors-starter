@@ -40,7 +40,8 @@ term that two places use → into the glossary in the same commit.
    the node, 2026-10-19); each step is cheaper than the next, stop at the first that answers: yourself (`npm run passport -- me`)
    → a neighbour in the node, named by the core's main agent — never one you found yourself (`npm run need -- "<what>" --use
    "<what for>"`, skill `need-capability`; its door if it has one — a plain call, no model; no door — agree an API with its agent
-   once, `use-i2i`) → build it here when the need is your role:
+   once, `use-i2i`) → who already solved it — `skills_find` (each skill named with its stars and installs; its idea is taken, its
+   text only with its source) and your person's own idea or an analog they know (core step 671) → build it here when the need is your role:
    **a clear request** (input and output named, from a neighbour or your person) at once, the short way (2a), without the quiz
    (2026-10-20); a new product or «and also I need…» —
    `product-quiz`; copying how an existing site works — reverse engineering is under development in the core: say so and use the

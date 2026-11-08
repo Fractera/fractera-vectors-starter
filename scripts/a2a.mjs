@@ -50,20 +50,43 @@ async function registry(query) {
   return r.json()
 }
 
-/** A neighbour's base URL on this machine, from the core's registry. */
-async function urlOf(address) {
+/** A neighbour's registry entry on this machine (its base URL and whether it sleeps), from the core. */
+async function entryOf(address) {
   const b = await registry(`address=${encodeURIComponent(address)}`)
   if (!b.ok || !b.entry?.url) fail(`«${address}» is not in the node's A2A registry (no card yet, or no such element)`)
-  return b.entry.url
+  // Core step 671-3: a neighbour its person turned off never answers — say so at once, with its reason.
+  if (b.entry.sleep === 'off') fail(`«${address}» is turned off by its person${b.entry.reason ? ` (${b.entry.reason})` : ''} — it does not answer; ask the core's main agent: npm run need -- "<what you need>"`)
+  return b.entry
+}
+
+// Core step 671-3 (670-8, «the caller waits»): a neighbour asleep by the node's load rule is woken by the core's gatekeeper on the first
+// call, and a call that meets its cold start is refused (670-1: 1 s into a 2.9 s start — ECONNREFUSED). The first request — the card —
+// waits it out with a short backoff: up to 30 s for a neighbour asleep by the rule, 6 s for one the registry calls awake (someone else
+// may have just woken it); every later call meets an awake neighbour.
+const pause = (ms) => new Promise((r) => setTimeout(r, ms))
+const refused = (e) => [e?.cause?.code, e?.code].includes('ECONNREFUSED')
+async function patientFetch(url, init, { asleep, address }) {
+  const limit = Date.now() + (asleep ? 30_000 : 6_000)
+  let wait = 500
+  let told = false
+  for (;;) {
+    try { return await fetch(url, init) } catch (e) {
+      if (!refused(e) || Date.now() + wait > limit) throw e
+      if (!told) { console.error(`«${address}» is waking up (its cold start) — waiting up to ${asleep ? 30 : 6} s`); told = true }
+      await pause(wait)
+      wait = Math.min(wait * 2, 4000)
+    }
+  }
 }
 
 async function clientFor(address) {
   const headers = { 'X-Node-Key': KEY }
+  const entry = await entryOf(address)
   const factory = new ClientFactory(ClientFactoryOptions.createFrom(ClientFactoryOptions.default, {
-    cardResolver: new DefaultAgentCardResolver({ fetchImpl: (url, init = {}) => fetch(url, { ...init, headers: { ...(init.headers ?? {}), ...headers } }) }),
+    cardResolver: new DefaultAgentCardResolver({ fetchImpl: (url, init = {}) => patientFetch(url, { ...init, headers: { ...(init.headers ?? {}), ...headers } }, { asleep: entry.sleep === 'by-rule', address }) }),
     transports: [new JsonRpcTransportFactory()],
   }))
-  return factory.createFromUrl(await urlOf(address))
+  return factory.createFromUrl(entry.url)
 }
 
 const opts = { serviceParameters: { 'X-Node-Key': KEY } }

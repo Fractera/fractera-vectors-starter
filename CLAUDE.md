@@ -88,6 +88,8 @@ element is a microservice that answers its neighbours and asks them for help; to
    that needed it. A session that did not ask tells its person the answer in two lines and stops.
 5. **A task from the core's main agent to check or find out something** (not to build) is a job: do it, save the result with
    `npm run reply-core -- "<the result in a few lines>"` and finish as usual — your «done» wakes the main agent, which tells the architect.
+   Its words «skill <id> — …» name which of your agents does it — a skill of your A2A card: take that skill's description as your role
+   for this job (core step 671).
 6. **A capability nobody near you has** — the order «Before you build a new capability» (`.claude/modes/build.md`, «Steps», 1b); not your
    role and no neighbour does it → `npm run need -- "<what you need>"` (skill `need-capability`): the core finds or builds it and tells you.
 7. **«Your alarm fired — the calendar entry «…»»** in your input — your own clock woke you for work at that time (an `agent-task`
