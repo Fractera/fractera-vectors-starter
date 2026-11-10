@@ -63,5 +63,5 @@
       }
     }
   ],
-  "docs": "npx shadcn add @fractera/block-warning-card. In a page: { \"kind\": \"block-warning-card\", \"title\": \"…\", \"text\": \"…\" }."
+  "docs": "In a page: { \"kind\": \"block-warning-card\", \"title\": \"…\", \"text\": \"…\" }."
 }

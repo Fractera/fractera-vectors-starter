@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
 
-// ФАБРИКА СТРАНИЦЫ ИЗ БЛОКОВ (элемент «Блоки», шаг 297). Страница — список `{ kind, ...поля }`; набор (`set`) называет
+// ФАБРИКА СТРАНИЦЫ ИЗ БЛОКОВ (шаг 297; секции — собственный код элемента). Страница — список `{ kind, ...поля }`; набор (`set`) называет
 // ТОЛЬКО те блоки, что стоят в этом проекте. Контейнеры (`cards`, `card`) получают вложенные блоки в `children`.
-// Блок, которого в наборе нет, — ошибка сборки с командой установки: пустое место на странице хуже громкого отказа.
+// Блок, которого в наборе нет, — громкая ошибка: пустое место на странице хуже громкого отказа.
 export type BlockData = { kind: string; bid?: string; children?: BlockData[] | ReactNode; [field: string]: unknown }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type BlockSet = Record<string, (props: any) => ReactNode>
@@ -12,7 +12,7 @@ function render(b: BlockData, set: BlockSet, key: string): ReactNode {
   if (!Block) {
     const why = b.kind.startsWith('widget-')
       ? `Widget «${b.kind}» is not in this build: list it in the branch's _widgets/index.tsx and rebuild`
-      : `Block «${b.kind}» is not installed in this project: npx shadcn@latest add @fractera/${b.kind}`
+      : `Section «${b.kind}» is not in this element's set: write it in components/blocks/, list it in lib/content/blocks/registry.tsx and rebuild`
     // 426 (✗ 2026-10-07: данные страницы назвали новый виджет раньше пересборки — живая страница ответила 500): громко — только
     // на сборке (там же сторож check:page-sequence); на работающем сайте элемент пропускается с записью в журнал сервера, а
     // страница остаётся целой — данные читаются на ходу, код появится со следующей сборкой.

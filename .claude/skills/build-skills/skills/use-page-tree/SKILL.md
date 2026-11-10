@@ -84,8 +84,7 @@ A production build is always the whole app; the only lever is how many route fil
 - **Which `block-*` a page may name** = the keys of `BLOCK_SET` in `lib/content/blocks/registry.tsx` — read them before you
   propose a block. A component in `components/blocks/` is not enough (✗ node step 464: an agent offered `block-cta-button`, which
   lives only inside the hero and is not in the set — the guard would refuse the page).
-- **A block** the set does not have — skill `use-blocks`: by the node's mode it comes from the Blocks element (`npm run blocks --
-  find`, then `add`, or a request) or is built here among the element's own blocks; either way it is registered in
+- **A section** the set does not have — the design pass builds it here, as this element's own section; it is registered in
   `lib/content/blocks/registry.tsx`, `lib/content/blocks/types.ts` and `lib/aio/blocks-to-markdown.ts`. Never draw a section by hand.
   The blocks of this element, by section, with a Preview of each: `/<lang>/admin/blocks` (the architect opens it from the core,
   «Build → Blocks»).

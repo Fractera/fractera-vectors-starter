@@ -46,7 +46,7 @@ No private data: the file is public. A key is never here, not even its variable 
 | `longDescription` | agent | ≤ 10 000 characters: what it does, how one works with it, what it does not do |
 | `accepts` | agent | an example of what one sends it for its job |
 | `returns` | agent | an example of what it returns — the result of its job |
-| `designSkill` | agent (skill `custom-design`) | the design skill this element is built with (`impeccable`, `design-taste-frontend`, …), `""` when none — always present; the core takes it into its registry (owner 2026-10-07) |
+| `designSkill` | agent (the design pass) | the design skill this element is built with (`impeccable`, `design-taste-frontend`, …), `""` when none — always present; the core takes it into its registry (owner 2026-10-07) |
 | `isFracteraArchitecture` | birth (template), then agent | `true` when the element is built on the Fractera architecture (born from a Fractera starter), `false` for a custom template or a plain React/Express app — an agent knows which contracts (page tree, blocks, design, A2A doors) it can rely on (owner 2026-10-07) |
 | `framework` | birth (template), then agent | the framework inside: `next`, `react`, `express`, … — an agent decides whether to connect this element to its project (owner 2026-10-07) |
 | `elementType` | template | which template the element comes from: `native` — a root element of every node, added only from the Fractera repository (`fractera-native-item-starter`), never sold; `custom` — born by the node's button «Create WEB4 ITEM» from `fractera-custom-item-starter` |

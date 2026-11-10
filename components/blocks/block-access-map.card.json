@@ -5,7 +5,7 @@
   "categories": [
     "how-it-works"
   ],
-  "docs": "npx shadcn add @fractera/block-access-map. In a page: { \"kind\": \"block-access-map\", \"title\": \"…\", \"outer\": { \"title\", \"text\" }, \"spaces\": [ two to six { \"title\", \"text\" } ], \"between\": \"…\" }.",
+  "docs": "In a page: { \"kind\": \"block-access-map\", \"title\": \"…\", \"outer\": { \"title\", \"text\" }, \"spaces\": [ two to six { \"title\", \"text\" } ], \"between\": \"…\" }.",
   "role": "body",
   "placement": {
     "page": true,

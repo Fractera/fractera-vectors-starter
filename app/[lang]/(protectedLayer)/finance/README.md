@@ -66,6 +66,6 @@ app/[lang]/(protectedLayer)/finance/_pages/<slug>/ru.json
 }
 ```
 
-The page answers at `/<lang>/finance/<slug>`. Block kinds — `lib/content/blocks/types.ts`; a missing kind is taken from the Blocks
-element (`npx shadcn add @fractera/<name>`).
+The page answers at `/<lang>/finance/<slug>`. Block kinds — `lib/content/blocks/types.ts`; a missing kind is written in this element by its design pass
+(`components/blocks/README.md`).
 `roles` puts a second lock on the page on top of the branch lock; `{roles}` in a paragraph prints the same list. The architect always passes.

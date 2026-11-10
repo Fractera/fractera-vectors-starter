@@ -20,7 +20,7 @@ record is refreshed with `npm run describe:publish`. The standard is `lib/a2a/ST
 |---|---|
 | doors | `app/api/**/route.ts` (method — the exported `GET`/`POST`…, key — what the handler checks) |
 | the A2A endpoint and its skills | `app/api/a2a/route.ts`, `lib/a2a/endpoint.ts` (`A2A_SKILLS`) |
-| needs from neighbours | the `*_URL` variables in `.env.local` and where the code reads them (`AUTH_SERVICE_URL` → auth, `REMOTE_DATA_URL` → data, `CONFIG_SERVICE_URL` → config, `DESIGN_SERVICE_URL` → design) |
+| needs from neighbours | the `*_URL` variables in `.env.local` and where the code reads them (`AUTH_SERVICE_URL` → auth, `REMOTE_DATA_URL` → data, `CONFIG_SERVICE_URL` → config) |
 | a process of its own | `instrumentation.ts` (subscriptions to the settings signals at start), signals |
 | a catalogue | are there «find / get / add» doors |
 

@@ -46,7 +46,7 @@ person that, or deploy yourself if they ask. ✗ 2026-10-07: the page answered 5
 a line in `<branch>/_widgets/markdown.ts` — otherwise its words never reach the page's Markdown copy and `llms-full.txt`;
 `npm run check:aio` fails without them. How — skill `use-machine-copy`.
 
-A second route needs the same widget? Then it is no longer one route's — make it a block in the Blocks element, or a tool.
+A second route needs the same widget? Then it is no longer one route's — make it one of this element's sections (`components/blocks/README.md`), or a tool.
 
 ## What it is built from
 

@@ -166,20 +166,6 @@
               }
             },
             {
-              "skill": "design-tokens",
-              "from": "design",
-              "why": "colours, fonts and corners of every page",
-              "protocol": "i2i",
-              "via": {
-                "kind": "mcp",
-                "path": "/mcp",
-                "tool": "get_project_settings",
-                "base": "DESIGN_SERVICE_URL",
-                "key": "SETTINGS_SECRET",
-                "also": "subscribe"
-              }
-            },
-            {
               "skill": "node-registry",
               "from": "core",
               "why": "who in the node can do a job; the core wakes this element's agent and is told when it is done",

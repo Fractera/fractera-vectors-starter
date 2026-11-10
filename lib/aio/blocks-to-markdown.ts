@@ -109,9 +109,9 @@ export function blocksToMarkdown(blocks: Block[], siteName: string, widget?: Wid
 /**
  * Вопросы и ответы отдельным разделом.
  *
- * Форма пары — `{ q, a }` из общего каталога блоков (`FaqPair`), а не
+ * Форма пары — `{ q, a }` из набора секций (`FaqPair`), а не
  * `{ question, answer }`: типы поймали это на сборке, и подгонять надо код под
- * каталог, а не наоборот — каталог читают ещё и разметка страницы, и JSON-LD.
+ * набор, а не наоборот — набор читают ещё и разметка страницы, и JSON-LD.
  */
 export function faqToMarkdown(faq?: FaqPair[]): string {
   if (!faq?.length) return ''

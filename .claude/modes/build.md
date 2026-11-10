@@ -75,7 +75,7 @@ a commit message.
 
 | Group | Mode | Skills |
 |---|---|---|
-| build-skills | build | `use-blocks` (a section of a page is a block: from the catalogue or built in this element by the node's mode, taken once with a build, then reused in page data without one), `add-door` (a door for a neighbour: `npm run door:add` writes the route, the key and the card — you write the work), `backup-schedule` (backup of this memory element: the service is code, the schedule is data), `use-i2i`, `build-widget`, `cloudflare-connection`, `connect-google-analytics`, `connect-own-domain`, `custom-design` (the gate to `design-taste-frontend` and `impeccable`), `deploy-element`, `describe-element`, `github-element`, `github-repositories`, `own-domain-sign-in`, `page-snippet`, `passport-description`, `product-quiz` (the product in product words before code; every «and also I need…» goes through it), `project-origin`, `self-review`, `soft-navigation`, `temporary-domain`, `use-auth`, `use-development-docs`, `use-element-tree`, `use-highlight`, `use-languages`, `use-machine-copy`, `use-messenger` (the gate to `ai-elements`), `use-page-tree`, `use-shadcn` (the gate to `shadcn`), `use-site-menu`, `use-tests-before-dev-finish`, `use-tools`, `use-typography`, `ultracode-session` (a session your person confirmed as ultracode in Telegram — only there workflows and subagents, until «выключить») |
+| build-skills | build | `add-door` (a door for a neighbour: `npm run door:add` writes the route, the key and the card — you write the work), `backup-schedule` (backup of this memory element: the service is code, the schedule is data), `use-i2i`, `build-widget`, `cloudflare-connection`, `connect-google-analytics`, `connect-own-domain`, `deploy-element`, `describe-element`, `github-element`, `github-repositories`, `own-domain-sign-in`, `page-snippet`, `passport-description`, `product-quiz` (the product in product words before code; every «and also I need…» goes through it), `project-origin`, `self-review`, `soft-navigation`, `temporary-domain`, `use-auth`, `use-development-docs`, `use-element-tree`, `use-highlight`, `use-languages`, `use-machine-copy`, `use-messenger` (the gate to `ai-elements`), `use-page-tree`, `use-shadcn` (the gate to `shadcn`), `use-site-menu`, `use-tests-before-dev-finish`, `use-tools`, `use-typography`, `ultracode-session` (a session your person confirmed as ultracode in Telegram — only there workflows and subagents, until «выключить») |
 | vendored | build, name only (`SOURCE.md`) | `ai-elements`, `copy-editing`, `copywriting`, `design-taste-frontend`, `humanizer` (published texts only, section «Texts»), `impeccable`, `shadcn` |
 
 **A skill starts with its process and its group** (owner of the node, 2026-10-12 and 2026-10-20: an agent that creates a skill
@@ -92,7 +92,7 @@ skill (a `SOURCE.md` beside it) stays at the root and keeps its own text — its
 The design skill this element is built with lives in the passport `OWN-SERVICE-PROPS/OWN-SERVICE-PROPS.json`, field
 `designSkill`: the skill's name (`impeccable`, `design-taste-frontend`) or `""` when none. The field is always there; it is never
 written in `NODE-CONTRACT.json` (owner 2026-10-07). Read it before any design work and work in that skill's style; when the person
-picks another skill (`custom-design` asks which), write its name there and run `npm run describe:publish` — the core takes it
+picks another skill (the design pass asks which), write its name there and run `npm run describe:publish` — the core takes it
 into its registry («Take into core»).
 
 <!-- PROOF 5 START · «Page» · PARTIAL 2026-10-07: the tab is now named «Live site» (line about addresses) — not re-proven; the skill use-machine-copy added to the list (step 428) — not proven; PROVEN before it: a live agent built a page, two widgets and voice in a widget by these laws (data not route files, one sequence in en/ru, shadcn only, tools inside widgets, addresses with #block=) and refused a tool in page data and a raw button; guards spoiled → refused · report: development-docs/proofs/2026-10-07-page-skills.md -->
@@ -163,7 +163,6 @@ And the same evening: «любой код разрабатывать с этим
   arrives vague, and your answer cannot point at the place you changed.
 - After you write or change code, run `npm run widgets:ids` — it stamps every container that has no address; `npm run prebuild`
   refuses one without. Never remove or rename an address that stands.
-- A block of the catalogue arrives with its addresses (`npm run blocks -- add`, the Blocks element stamps them at the source); never
-  strip them. A container the stamp does not know (your own wrapper) passes `...props` to its DOM root, and its name goes into
+- A container the stamp does not know (your own wrapper) passes `...props` to its DOM root, and its name goes into
   `CONTAINERS` of `scripts/stamp-widget-ids.mjs`.
 - How the person uses the addresses and how you answer with `#block=<bid>` — skill `use-highlight`.

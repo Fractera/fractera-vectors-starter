@@ -51,7 +51,6 @@ advance. Use them in code, never through those agents:
 | auth | who the visitor is, sign-in | `GET {AUTH_SERVICE_URL}/api/session`; on its own domain `GET /api/auth/ticket` |
 | data | rows, files, vectors | its doors at `REMOTE_DATA_URL` with the header `X-Data-Secret` |
 | config | name, texts, languages of the project | MCP tools `settings_version`, `get_project_settings` at `CONFIG_SERVICE_URL` |
-| design | colours, fonts, corners | MCP tools `get_project_settings` (design), `subscribe` at `DESIGN_SERVICE_URL` |
 | the core | who can do a job; waking agents | `GET /api/node/a2a?q=` with the node key; `POST /api/agents/wake`, `POST /api/agents/done` |
 
 ## Answering about your links

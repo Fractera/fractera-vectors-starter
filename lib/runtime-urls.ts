@@ -65,15 +65,6 @@ export function projectsBase(): string {
   return `${protocol}//projects.${apexFrom(hostname)}`;
 }
 
-// Public base URL of the Design service (fractera-design :3004, step 197) — the future design-system
-// surface on its own process. IP → <host>:3004 ; domain → design.<apex>.
-export function designBase(): string {
-  if (typeof window === "undefined") return "http://localhost:3004";
-  const { protocol, hostname } = window.location;
-  if (isIpHost(hostname)) return `${protocol}//${hostname}:3004`;
-  return `${protocol}//design.${apexFrom(hostname)}`;
-}
-
 // Build the auth redirect for an unauthorized click on a protected destination.
 // `requireRole` lets the auth form know whether the target needs architect (Start
 // Coding → admin panel) or just any authenticated user (Dashboard).

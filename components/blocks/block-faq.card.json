@@ -80,5 +80,5 @@
       }
     }
   ],
-  "docs": "npx shadcn add @fractera/block-faq. In a page: { \"kind\": \"block-faq\", \"title\": \"…\", \"items\": [ { \"q\": \"…\", \"a\": \"…\" } ] } as the last block."
+  "docs": "In a page: { \"kind\": \"block-faq\", \"title\": \"…\", \"items\": [ { \"q\": \"…\", \"a\": \"…\" } ] } as the last block."
 }

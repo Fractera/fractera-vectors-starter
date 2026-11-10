@@ -1,9 +1,0 @@
-{
-  "block-access-map": {
-    "version": "1.0.0",
-    "files": {
-      "components/blocks/block-access-map.tsx": "f269fe0391902746",
-      "components/blocks/block-access-map.card.json": "3eaa0692eabd45da"
-    }
-  }
-}

@@ -24,10 +24,10 @@ export function nodeCoreOrigin(): string | null {
 
 // СВЯЗИ ЭЛЕМЕНТА С УЗЛОМ (шаг 324-7, решение владельца 2026-09-28: «новый раздел который отрубает синхронизацию проекта от
 // CONFIG, от блоков, от дизайна и позволяет проекту продолжить своё развитие абсолютно самостоятельно»). Переключатели — в
-// «Настройках» элемента у ядра; состояние узел пишет в `SERVICE_DATA_DIR/links.json` (`{ config, design, blocks }`).
+// «Настройках» элемента у ядра; состояние узел пишет в `SERVICE_DATA_DIR/links.json` (`{ config }`).
 // Нет файла или ключа — связь включена, как было всегда. Выключенная: CONFIG — копия настроек проекта не ложится поверх
 // своих файлов и не забирается; Дизайн — оформление не забирается. «Блоки» узел выключает в `components.json` сам.
-export type LinkKind = "config" | "design" | "blocks"
+export type LinkKind = "config"
 
 export function linkOn(kind: LinkKind): boolean {
   const dir = process.env.SERVICE_DATA_DIR?.trim()

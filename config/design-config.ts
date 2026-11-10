@@ -34,8 +34,7 @@ const CONFIG_PATH =
 export const getDesignConfig = cache((): DesignConfig => {
   try {
     // 299-6: решения владельца — из последней копии элемента «Настройки проекта»; копии нет — свой файл (посев).
-    // 309: оформление — из своего DESIGN-CONFIG, куда его кладёт элемент «Дизайн» (`lib/design-follow.ts`). Копия CONFIG
-    // оформления больше не несёт: у дизайна свой элемент.
+    // Оформление — собственный DESIGN-CONFIG элемента, его пишет сам элемент. Копия CONFIG оформления не несёт.
     const raw = JSON.parse(readFileSync(CONFIG_PATH, "utf8")) as Partial<DesignConfig>
     const merged: DesignConfig = {
       colors: {

@@ -63,7 +63,7 @@ for (const dir of pageDirs(LANG)) {
   for (const kind of seq) {
     if (typeof kind !== 'string') { fail(join(dir, 'en.json'), 'элемент без kind'); continue }
     if (kind.startsWith('tool-')) fail(join(dir, 'en.json'), `«${kind}» — инструмент на страницу не попадает, только изнутри виджета`)
-    else if (kind.startsWith('block-')) { if (!BLOCKS.has(kind) && kind !== 'block-faq') fail(join(dir, 'en.json'), `блока «${kind}» нет в наборе элемента — npx shadcn add @fractera/${kind} и строка в lib/content/blocks/registry.tsx`) }
+    else if (kind.startsWith('block-')) { if (!BLOCKS.has(kind) && kind !== 'block-faq') fail(join(dir, 'en.json'), `секции «${kind}» нет в наборе элемента — свой компонент в components/blocks/ и строка в lib/content/blocks/registry.tsx`) }
     else if (kind.startsWith('text-')) { if (!TEXTS.has(kind)) fail(join(dir, 'en.json'), `типографики «${kind}» нет в lib/content/text-set.tsx`) }
     else if (kind.startsWith('widget-')) { if (!branch || !widgetsOf(branch).has(kind)) fail(join(dir, 'en.json'), `виджета «${kind}» нет в _widgets/index.tsx своей ветки`) }
     else fail(join(dir, 'en.json'), `«${kind}» — не блок, не типографика и не виджет (block-* · text-* · widget-*)`)

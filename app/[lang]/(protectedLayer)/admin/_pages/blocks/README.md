@@ -7,11 +7,10 @@ The page lists every block a page of this element may name (node step 577-11, ow
 
 | What | Where |
 |---|---|
-| the code of a block | `components/blocks/<block>.tsx` (+ `<block>.card.json` when it came from the catalogue) |
+| the code of a block | `components/blocks/<block>.tsx` (+ `<block>.card.json`, its card) |
 | the blocks a page may name | `BLOCK_SET` in `lib/content/blocks/registry.tsx` — the rows of this table |
 | the shape of its data | `lib/content/blocks/types.ts` |
 | its text in the copy for agents | `lib/aio/blocks-to-markdown.ts` |
-| what came from the catalogue, at which version | `components/blocks/.blocks-lock.json` (written by `npm run blocks -- add`) |
 
 ## The table
 
@@ -24,4 +23,4 @@ its first place on a page of this element, else with the first case of its card;
 
 ## To add a block
 
-Skill `use-blocks`: `npm run blocks -- find "<need>"` → `show` → `add`. It appears here with the next build.
+A new block is written by the design pass (`.claude/modes/build-design.md`) with its card; it appears here with the next build.

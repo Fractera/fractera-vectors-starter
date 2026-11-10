@@ -6,7 +6,7 @@
   gpt, image-to-code…) are not vendored.
 - **Update:** clone the repository, copy `skills/taste-skill/SKILL.md` over this one, write the new commit here. Never edit the
   copy by hand: a hand edit disappears on the next update and nobody will know it existed.
-- **When it is used, and what our rules override:** skill `custom-design` next to this folder. It is the gatekeeper; this skill
-  answers only HOW to design.
+- **When it is used, and what our rules override:** the design pass `.claude/modes/build-design.md` (node step 716). It is the
+  gatekeeper; this skill answers only HOW to design.
 
 Process: build — a vendored design/text/UI skill, used only while building this element (node step 465-4).

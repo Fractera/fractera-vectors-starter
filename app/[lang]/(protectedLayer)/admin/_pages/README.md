@@ -33,6 +33,6 @@ app/[lang]/(protectedLayer)/admin/_pages/<slug>/ru.json
 }
 ```
 
-The page answers at `/<lang>/admin/<slug>`. Kinds — `block-*` (the block set), `text-*` (typography, `lib/content/text-set.tsx`), `widget-*` (this branch's `_widgets/index.tsx`), one sequence in every language (`lib/content/blocks/types.ts`); a missing kind is taken from the Blocks
-element (`npx shadcn add @fractera/<name>`).
+The page answers at `/<lang>/admin/<slug>`. Kinds — `block-*` (the block set), `text-*` (typography, `lib/content/text-set.tsx`), `widget-*` (this branch's `_widgets/index.tsx`), one sequence in every language (`lib/content/blocks/types.ts`); a missing kind is written in this element by its design pass
+(`components/blocks/README.md`).
 `roles` adds roles to the lock of the page (inside a role folder the folder's role and its heirs are already there); `{roles}` in a paragraph prints the whole list. The architect always passes.

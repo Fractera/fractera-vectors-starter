@@ -232,7 +232,7 @@ export async function GET(req: NextRequest) {
     longDescription,
     accepts,
     returns,
-    // The design skill this element is built with (custom-design): its name, or "" when none.
+    // The design skill this element is built with (the design pass): its name, or "" when none.
     designSkill: typeof designSkill === "string" ? designSkill : "",
     // Built on the Fractera architecture (a Fractera starter) or not (a custom template, plain React …) — owner 2026-10-07.
     isFracteraArchitecture: isFracteraArchitecture === true,

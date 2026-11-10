@@ -125,5 +125,5 @@
       }
     }
   ],
-  "docs": "npx shadcn add @fractera/block-hero-centered. In a page sequence: { \"kind\": \"block-hero-centered\", \"title\": \"…\", \"description\": \"…\", \"cta\": { \"label\": \"…\", \"href\": \"…\" } } as the first block (after breadcrumbs, if any)."
+  "docs": "In a page sequence: { \"kind\": \"block-hero-centered\", \"title\": \"…\", \"description\": \"…\", \"cta\": { \"label\": \"…\", \"href\": \"…\" } } as the first block (after breadcrumbs, if any)."
 }

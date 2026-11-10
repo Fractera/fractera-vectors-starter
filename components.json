@@ -22,7 +22,6 @@
   "menuColor": "default",
   "menuAccent": "subtle",
   "registries": {
-    "@ai-elements": "https://ai-sdk.dev/elements/api/registry/{name}.json",
-    "@fractera": "${BLOCKS_REGISTRY_URL}/r/{name}.json"
+    "@ai-elements": "https://ai-sdk.dev/elements/api/registry/{name}.json"
   }
 }

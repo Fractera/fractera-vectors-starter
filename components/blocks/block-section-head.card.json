@@ -63,5 +63,5 @@
       }
     }
   ],
-  "docs": "npx shadcn add @fractera/block-section-head. In a page: { \"kind\": \"block-section-head\", \"id\": \"roles\", \"title\": \"Roles\" }."
+  "docs": "In a page: { \"kind\": \"block-section-head\", \"id\": \"roles\", \"title\": \"Roles\" }."
 }
