@@ -14,7 +14,9 @@
     "keep": [
       "block-highlight",
       "block-indexing",
-      "block-task"
+      "block-task",
+      "block-start",
+      "block-end"
     ]
   },
   "pageKey": {

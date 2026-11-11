@@ -1078,7 +1078,7 @@ export const PromptInputHeader = ({
   ...props
 }: PromptInputHeaderProps) => (
   <InputGroupAddon
-    align="section-end"
+    align="block-end"
     className={cn("order-first flex-wrap gap-1", className)}
     {...props}
   />
@@ -1094,7 +1094,7 @@ export const PromptInputFooter = ({
   ...props
 }: PromptInputFooterProps) => (
   <InputGroupAddon
-    align="section-end"
+    align="block-end"
     className={cn("justify-between gap-1", className)}
     {...props}
   />
