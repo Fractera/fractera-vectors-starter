@@ -1,14 +1,10 @@
 ---
 name: use-tests-before-dev-finish
 description: >
-  Builder skill. Load it only when a building step is bigger than one change, before its «done», «ready», «it works»; when a
-  check gives an unexpected answer; and when the person asks «did you test it?». A small task (one door, one fix) proves itself
-  with the checks named in its three confirming lines («Plan the checks before the work») without this skill. How you prove
-  that a change to this Fractera element works before you say «done» — the checks you plan before building, the two kinds of
-  evidence every change needs, the spoil-and-restore control, the measurements that lie on this node, and what to say when a
-  check cannot be run. Not for a worker job (an order for another agent) — that is checked by its own skill. The thing
-  you cannot guess: a green build looks the same whether the feature works or not, and on this computer the owner passes every
-  lock — a page that answers 200 to you may answer 401 to a visitor.
+  Builder skill. Proving a change works before «done» — checks planned before building, two kinds of evidence, the
+  spoil-and-restore control, the measurements that lie here. Load it only when a step is bigger than one change, before its
+  «done», «ready», «it works»; when a check answers unexpectedly; and when the person asks «did you test it?». Not for a small
+  task or a worker job.
 ---
 
 <!-- PROOF · PARTIAL 2026-10-07: the law kept (planned checks, spoils), the skill never loaded · report: development-docs/proofs/2026-10-07-node-skills.md -->

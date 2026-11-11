@@ -93,3 +93,4 @@ believing the update went well. Putting it into `prebuild` is a separate decisio
 build time, and it is not taken here.
 
 Process: build — a vendored design/text/UI skill, used only while building this element (node step 465-4).
+Pass: main, design — chat components: the code of the main pass and the look of the design pass need them (node step 590-5).

@@ -11,14 +11,18 @@
 //      переставит части (перевод заменяет массив целиком — `lib/page-tree.ts`, `wordsIn`);
 //   3. секция есть в наборе элемента (`components/sections/index.ts`), типографика — в `lib/content/text-set.tsx`, виджет —
 //      в `_widgets/index.tsx` СВОЕЙ ветки (удалили ветку — её виджеты ушли вместе с ней).
+// 717-3: a design prototype's page (`prototypes/_pages/<id>/`) may also name the sections of its own set (`<id>/sections/index.ts`);
+// the prototypes' archive (`prototypes/_archive/`) is history, never drawn — not read.
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { join, relative, sep } from 'node:path'
+import { readSet } from './sections-lib.mjs'
 
 const ROOT = process.cwd()
 const LANG = join(ROOT, 'app', '[lang]')
 const read = (p) => readFileSync(p, 'utf8')
 const keysOf = (file, prefix) => new Set([...read(join(ROOT, file)).matchAll(new RegExp(`'(${prefix}[a-z0-9-]+)'\\s*:`, 'g'))].map((m) => m[1]))
 const SECTIONS = keysOf('components/sections/index.ts', 'section-')
+const PROTOTYPES = join(LANG, '(protectedLayer)', 'prototypes', '_pages')
 const TEXTS = keysOf('lib/content/text-set.tsx', 'text-')
 // `section-faq` рисует фабрика страницы из поля `faq`, его в данных нет — но если он там стоит, он законен.
 const OLD_KEY = 'blocks' // the key of a page's list before node step 717-2
@@ -47,7 +51,7 @@ function pageDirs(dir, out = []) {
   for (const name of readdirSync(dir)) {
     const p = join(dir, name)
     if (!statSync(p).isDirectory()) continue
-    if (name === 'node_modules' || name === '_widgets' || name === '_components' || name === '_libs') continue
+    if (name === 'node_modules' || name === '_widgets' || name === '_components' || name === '_libs' || name === '_archive') continue
     if (existsSync(join(p, 'en.json'))) out.push(p)
     pageDirs(p, out)
   }
@@ -62,11 +66,12 @@ for (const dir of pageDirs(LANG)) {
   if (!Array.isArray(en.body)) continue
   pages++
   const branch = branchOf(dir)
+  const own = join(dir, '..') === PROTOTYPES ? new Set(readSet(join(dir, 'sections'))?.lines.keys() ?? []) : new Set()
   const seq = en.body.map((b) => b.kind)
   for (const kind of seq) {
     if (typeof kind !== 'string') { fail(join(dir, 'en.json'), 'элемент без kind'); continue }
     if (kind.startsWith('tool-')) fail(join(dir, 'en.json'), `«${kind}» — инструмент на страницу не попадает, только изнутри виджета`)
-    else if (kind.startsWith('section-')) { if (!SECTIONS.has(kind) && kind !== 'section-faq') fail(join(dir, 'en.json'), `секции «${kind}» нет в наборе элемента — своя папка components/sections/${kind}/ и строка в components/sections/index.ts`) }
+    else if (kind.startsWith('section-')) { if (!SECTIONS.has(kind) && !own.has(kind) && kind !== 'section-faq') fail(join(dir, 'en.json'), `секции «${kind}» нет в наборе элемента${join(dir, '..') === PROTOTYPES ? ' и в своём наборе прототипа (sections/ его папки)' : ''} — своя папка components/sections/${kind}/ и строка в components/sections/index.ts`) }
     else if (kind.startsWith('text-')) { if (!TEXTS.has(kind)) fail(join(dir, 'en.json'), `типографики «${kind}» нет в lib/content/text-set.tsx`) }
     else if (kind.startsWith('widget-')) { if (!branch || !widgetsOf(branch).has(kind)) fail(join(dir, 'en.json'), `виджета «${kind}» нет в _widgets/index.tsx своей ветки`) }
     else fail(join(dir, 'en.json'), `«${kind}» — не секция, не типографика и не виджет (section-* · text-* · widget-*)`)

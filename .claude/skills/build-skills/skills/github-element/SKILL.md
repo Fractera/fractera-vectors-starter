@@ -1,12 +1,9 @@
 ---
 name: github-element
 description: >
-  Builder skill. How this Fractera element's work is saved to its own GitHub repository — when you send it, with which command,
-  what the answers mean and what only the person can do. Load it whenever you finish a task that came through Telegram, whenever
-  the person says "push", "send to GitHub", "save it", "is it on GitHub", "the repository", and when a push fails. The thing you
-  cannot guess: a commit lives only on this computer until it is sent; the node's own `git push` is not the way — the core sends
-  with the key the person gave it, and a task from Telegram is sent at once while a task typed in the terminal is sent only on
-  request.
+  Builder skill. Saving this element's work to its own GitHub repository — when, with which command, what the answers mean. Load
+  it when a task from Telegram is finished, when the person says «push», «send to GitHub», «save it», «is it on GitHub», «the
+  repository», and when a push fails.
 ---
 
 <!-- PROOF · NOT PROVEN yet: written, never checked by a live run (rules: development-docs/README.md, «Proof marks») -->

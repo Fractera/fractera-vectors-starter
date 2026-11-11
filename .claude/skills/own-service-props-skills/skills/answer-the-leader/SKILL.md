@@ -1,11 +1,9 @@
 ---
 name: answer-the-leader
 description: >
-  Work skill. The core's main agent — the leader of this node — asks where this element's development stands («where does development
-  stand?», «what step are you on?», a wake with the skill answer-the-leader), most often because your last turn was cut off or stopped
-  by a subscription limit. Answer in three lines from your passport fragment `development` and the head of `current-step.md`, save it
-  with npm run reply-core, read nothing else and build nothing. The thing you cannot guess: this wake costs your person's subscription,
-  so it must be the cheapest session of the day.
+  Work skill. The core's main agent asks where this element's development stands («where does development stand?», «what step are
+  you on?», a wake naming answer-the-leader), often after a turn cut by a limit. Answer in three lines from your passport's
+  `development` and the head of `current-step.md`, save with npm run reply-core, read and build nothing else.
 ---
 
 <!-- PROOF · NOT PROVEN yet: core step 686-3 (2026-11-08); proven by the first quick wake on the owner's node -->

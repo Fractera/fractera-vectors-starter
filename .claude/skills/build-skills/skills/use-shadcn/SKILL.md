@@ -1,13 +1,10 @@
 ---
 name: use-shadcn
 description: >
-  Builder skill. The gatekeeper of the vendored `shadcn` skill in this Fractera element: every widget, tool and section is built
-  only from shadcn components (`components/ui`) — nothing hand-made — and where our law is louder than the shadcn skill.
-  Load it before writing any button, input, select, textarea, table, tabs, dialog, toast, form or card; before adding a shadcn
-  component; whenever the person asks for "a form", "a table", "a modal", "a notification", "a toggle", "make it look like …";
-  and the moment the shadcn skill tells you to compose a Dialog or pick a toast. The thing you cannot guess: a raw `<button>` or
-  `<table>` looks fine and builds fine, but it leaves the node's design system — it does not re-skin with the design tokens,
-  does not keep keyboard and screen-reader behaviour, and gets no highlight address; `check-shadcn-rules` refuses it.
+  Builder skill, the gatekeeper of the vendored `shadcn`: every widget, tool and section is built only from `components/ui`. Load
+  it before writing any button, input, select, table, tabs, dialog, toast, form or card, before adding a shadcn component, when
+  the person asks for «a form», «a table», «a modal», «a notification», «a toggle», and when the shadcn skill suggests a Dialog or
+  a toast.
 ---
 
 <!-- PROOF · PARTIAL 2026-10-07: the law kept in four tasks (shadcn only, refusal of a raw button); the skill itself never loaded · report: development-docs/proofs/2026-10-07-page-skills.md -->

@@ -1,6 +1,9 @@
 ---
 name: describe-element
-description: Builder skill. Describe this element with an A2A card (Google A2A v1.0 + the Fractera extension) so that neighbours in the node and outside agents can find it and call it. Load it in the first session, on the task «Describe this WEB4 element…», and after any change to what the element can do — a new door in `app/api/**`, a new skill, a new need from a neighbour, a process of its own.
+description: >
+  Builder skill. Describe this element with an A2A card (A2A v1.0 + the Fractera extension) so neighbours and outside agents find
+  and call it. Load it in the first session, on «Describe this WEB4 element…», and after any change to what the element can do — a
+  new door, skill, need or process.
 ---
 
 <!-- PROOF · NOT PROVEN yet: written, never checked by a live run (rules: development-docs/README.md, «Proof marks») -->

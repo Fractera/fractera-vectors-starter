@@ -1,13 +1,9 @@
 ---
 name: deploy-element
 description: >
-  Builder skill. How a change of this Fractera element reaches visitors — what needs a build and what does not, the two ways to
-  look at the site (the tab «Live site» of the live version and the Preview before deploy), when to advise each, and what you may
-  and may not do on the «Preview & Deploy» page. Load it whenever you finish a change and are about to tell the person how to
-  see it; whenever the person says "deploy", "publish", "it does not show", "I want to see it first", "roll back", "preview";
-  and before you are tempted to run a build or a script of the core yourself. The thing you cannot guess: a code change is
-  invisible on the live site until a build, a text change is visible without one — and a build is the person's decision with a
-  cost in minutes and memory on their computer.
+  Builder skill. How a change reaches visitors — what needs a build, the «Live site» tab and the Preview before deploy, what you
+  may do on «Preview & Deploy». Load it when you finish a change and tell the person how to see it, when they say «deploy»,
+  «publish», «it does not show», «preview», «roll back», and before running any build yourself.
 ---
 
 <!-- PROOF · NOT PROVEN yet: written, never checked by a live run (rules: development-docs/README.md, «Proof marks») -->

@@ -1,6 +1,10 @@
 ---
 name: node-elements-detection
-description: Both natures (every element). How to reach another element of this node when a task needs something you do not do — sign-in, storing data or files, settings, design, or any ability a neighbour may already have — through the core's main agent, which names the neighbour; never by listing the node, never by a neighbour you picked yourself. Use it whenever a task touches something outside this element, even if the person does not name the other element, and before you think of building another element's job into yourself.
+description: >
+  Both natures (every element). Reaching another element of this node — sign-in, data or files, settings or any ability a
+  neighbour may have — only through the core's main agent, which names the neighbour; never by listing the node or picking one
+  yourself. Use it whenever a task touches something outside this element, and before building another element's job into
+  yourself.
 ---
 
 <!-- PROOF · CHANGED 2026-10-20 (node step 548-14): no list of the node; CHANGED 2026-11-03 (node step 636): the neighbour is named by the core's main agent — not proven again yet -->

@@ -54,6 +54,12 @@ export type ColorRole =
   // заливают поверхность под ним.
   | "warning"
   | "recording"
+  // 711-7 (the owner 2026-11-09: «шрифты и отступа воздух свет Background цвет рамок»): surfaces and the focus ring — the theme already
+  // declares them, a design skill's prototype could not set them until now.
+  | "card"
+  | "popover"
+  | "input"
+  | "ring"
 
 /** Роли шрифта: заголовки, текст, моноширинный. */
 export type FontRole = "heading" | "body" | "mono"
@@ -81,7 +87,12 @@ export type DesignConfig = {
   fonts: Partial<Record<FontRole, { family: string; import?: string }>>
 
   /** Шкала текста: множитель на весь набор и межстрочный интервал. */
-  type: { scale?: number; leading?: number }
+  type: {
+    scale?: number
+    leading?: number
+    /** 711-7: weight of the page headings (H1, hero, content H2), 300…900 in hundreds; the theme's is 700. */
+    headingWeight?: number
+  }
 
   /** Формы и отступы: скругление, рамка, плотность, ширина ленты и первого экрана. */
   shape: {
@@ -91,13 +102,18 @@ export type DesignConfig = {
     spaceScale?: number
     appWidth?: string
     heroWidth?: string
+    /** 711-7: elevation of cards — a preset, not a free shadow string (a free one is a way to break the page). */
+    shadow?: "none" | "soft" | "medium" | "strong"
   }
 
+  /** 711-7: how fast the interface moves — every Tailwind `transition` without its own duration follows it. */
+  motion?: { speed?: "none" | "fast" | "normal" | "slow" }
   /**
-   * Настройки блоков (шаг 308-1, владелец 2026-09-26): первый экран по центру — наибольшая ширина и размер заголовка
-   * на телефоне, планшете и компьютере, в пикселях. Приходят из CONFIG и применяются на лету (сигнал 306).
+   * Первый экран по центру (шаг 308-1, владелец 2026-09-26): наибольшая ширина и размер заголовка на телефоне, планшете и
+   * компьютере, в пикселях. Приходят из CONFIG и применяются на лету (сигнал 306).
    */
   blocks?: { heroOneWidth?: number; heroOneSize?: { mobile?: number; tablet?: number; desktop?: number } }
+
 }
 
 export const DEFAULT_DESIGN_CONFIG: DesignConfig = {
@@ -115,6 +131,7 @@ export function isDesignConfigEmpty(cfg: DesignConfig): boolean {
     Object.keys(cfg.fonts ?? {}).length === 0 &&
     Object.keys(cfg.type ?? {}).length === 0 &&
     Object.keys(cfg.shape ?? {}).length === 0 &&
+    Object.keys(cfg.motion ?? {}).length === 0 &&
     Object.keys(cfg.blocks ?? {}).length === 0
   )
 }

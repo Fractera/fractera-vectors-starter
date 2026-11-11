@@ -1,13 +1,12 @@
 ---
 name: product-quiz
 description: >
-  Builder skill. The product quiz of this element: what the product is, in product words, before code — `development-docs/product/`.
-  Load it when the person wants a new product («I want to make…», «let's plan it»); when a task comes from the core's quiz page
-  («Product quiz, item S-03 …», «Product quiz: let's continue…», «…start deep planning…»); when the person asks for something that
-  adds or changes what the product does («and also I need…»: a new role, a new kind of thing, a new money flow, an outside
-  service); after the node (i2i) and the network (f2f) found nothing ready for a new capability; and when a larger building step closes. Not for page texts, design, a bug inside a confirmed scenario, a clear request whose input and output are named (it is built the short way), or a worker job. The
-  thing you cannot guess: only the person confirms an item, in words — you never mark one confirmed yourself, and changing a
-  confirmed item turns it back into a draft.
+  Builder skill. The product quiz — what the product is, in product words, before code (`development-docs/product/`). Load it when
+  the person wants a new product («I want to make…», «let's plan it»), a task comes from the core's quiz page («Product quiz…»), a
+  request adds or changes what the product does (a role, a money flow, an outside service), and when a larger step closes. Not for
+  texts, design or a small fix.
+model: opus
+effort: max
 ---
 
 <!-- PROOF · NOT PROVEN yet: written 2026-10-19 (node step 536-4); no live run by an element agent — the person starts it from the quiz page -->
@@ -61,6 +60,15 @@ as `quiz.json`; module files come with the first scenarios:
 
 ✗ 2026-10-20 (node step 548-14): the first session of a new element took 11 model requests and 850 thousand tokens — it read its
 code, the media doors, the A2A card and two guards to learn where the quiz goes, before it asked the person anything.
+
+<!-- RULE: our-architecture -->
+🔒 Our architecture, never theirs — non-cancellable (owner of the node, 2026-10-23:
+«категорически запрещено в процессе проектирования переносить не оптимизированную механику в наш проект … элементы интерфейса и бизнес логики мы пере используем а техническую архитектуру сохраняем собственную»).
+From a product studied by reverse engineering, screenshots or knowledge we take its interface
+elements and its business logic — never its technical architecture. Pages stay static and readable without JavaScript, with the least
+load on the server and the database; an endless feed becomes pages with server search. Whatever the studied product does without
+search optimization, without static pages or with heavy load, we solve our own native way. Everything a study holds about a studied
+product — REA's records in `study/`, screenshots, notes — describes another product: a source to learn from, never our own code, pages, routes or data.
 
 ## 2. When to load it, and when not
 

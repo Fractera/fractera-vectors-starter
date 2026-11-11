@@ -1,12 +1,10 @@
 ---
 name: telegram-channel
 description: >
-  Both natures (every element). How this Fractera element's agent talks to its person through Telegram — a channel built into this very
-  terminal, not an outside service. Load it the moment a message arrives as `<channel source="plugin:telegram:telegram" …>`, when
-  the wake text says a message came from Telegram while you were off, before answering the person anywhere outside this terminal, and when you are
-  unsure how to reply, how long an answer may be, what may be sent or in which language. The thing you cannot guess: the person
-  sees only what you send with the channel's `reply` tool — text you print in the terminal never reaches Telegram — and the
-  plugin drops any buttons that are not its own, so a question with buttons silently becomes a question nobody can answer.
+  Both natures (every element). Talking to your person through the Telegram channel built into this terminal. Load it the moment a
+  message arrives as `<channel source="plugin:telegram:telegram" …>`, when the wake text says a Telegram message came while you
+  were off, before answering anywhere outside the terminal, and when unsure how to reply, how long, what may be sent or in which
+  language.
 ---
 
 <!-- PROOF · PROVEN 2026-10-07: loaded on a Telegram wake, answered with reply, first task read whole · report: development-docs/proofs/2026-10-07-page-skills.md -->

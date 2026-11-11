@@ -1,0 +1,9 @@
+{
+  "title": "Design prototypes",
+  "description": "Test pages of this element, each built by its own design skill with its own references and its own copy of the design tokens. Seen only by the architect.",
+  "keywords": "",
+  "body": [
+    { "kind": "text-p", "text": "Each prototype is the same page in another design direction. Open one, compare, and pin the winner in the core's Design tab — its tokens then become the design of the whole element.", "bid": "pq2r8" },
+    { "kind": "widget-dynamic-prototypes-list", "bid": "pq2r9" }
+  ]
+}

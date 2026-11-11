@@ -1,14 +1,10 @@
 ---
 name: use-typography
 description: >
-  Builder skill. How plain text is written on a page of this Fractera element — as `text-*` items of the page's sequence,
-  drawn by the element's own typography, not as sections and not as hand-styled markup. Load it whenever you write or change
-  words on a page: a paragraph, a heading, a list, a quote, a code sample, a table, an article, documentation, a legal page, "add a
-  section of text", "make this a list", "the heading is too small" — and before reaching for a section or a class to style text.
-  The thing you cannot guess: a text item has no look of its own; size, colour and font come from the node's design tokens
-  through `components/ui/typography`, so the same page re-skins itself when the design changes and stays readable with no
-  JavaScript. A hand-styled `<h2 className=…>` breaks both and the typography guard refuses the build.
-  Russian phrasings of the person: «текст», «абзац», «заголовок», «список», «таблица», «цитата», «код на странице».
+  Builder skill. Plain text on a page is `text-*` items of the page's sequence drawn by the element's typography, not sections and
+  not hand-styled markup. Load it when you write or change words on a page — a paragraph, heading, list, quote, code, table,
+  article, legal page, «make this a list», «the heading is too small» («текст», «абзац», «заголовок», «список») — and before
+  styling text with a class.
 ---
 
 <!-- PROOF · PROVEN 2026-10-07 and again 2026-10-12 with text-table (after the port to roman) · reports: development-docs/proofs/2026-10-07-page-skills.md, 2026-10-12-six-skills.md (in roman) -->

@@ -1,6 +1,9 @@
 ---
 name: passport-description
-description: Builder skill. Write this element's passport texts — name, short description, long description, what it accepts, what it returns — in OWN-SERVICE-PROPS/OWN-SERVICE-PROPS.json, so that the elements of the node find it by meaning. Use when the person presses «Generate description» on the passport page of the node core, or asks to describe the element or rewrite its description.
+description: >
+  Builder skill. Write this element's passport texts — name, short and long description, accepts, returns, Nostr tags — in
+  `OWN-SERVICE-PROPS/OWN-SERVICE-PROPS.json` for semantic search. Use on «Generate description» or «Describe with AI» in the core,
+  or when the person asks to describe the element or prepare it for search or a marketplace.
 ---
 
 <!-- PROOF · NOT PROVEN yet: written, never checked by a live run (rules: development-docs/README.md, «Proof marks») -->

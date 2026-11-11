@@ -1,6 +1,10 @@
 ---
 name: own-service-props-detection
-description: Both natures (every element). Learn who you are inside this node from the element's passport — your id and name, your address on the internet and on this machine, your port and folder, your version, what you are for, what you sell, and who you cooperate with. Use this at the start of every session (CLAUDE.md asks for it on wake), and any time you are about to state, use or guess your own port, address, domain, project, role, skills or partners — even inside another task, such as building a link, a redirect or a call to yourself.
+description: >
+  Both natures (every element). Who you are in this node, from your passport — id, name, addresses, port, folder, version,
+  purpose, what you sell, who you cooperate with. Use it at the start of every session and whenever you are about to state, use or
+  guess your own port, address, domain, role, skills or partners — even inside another task (a link, a redirect, a call to
+  yourself).
 ---
 
 <!-- PROOF · PROVEN 2026-10-06: npm run passport -- me run first on wake, read whole · report: development-docs/proofs/2026-10-06-wake-and-a2a-skills.md -->

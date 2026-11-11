@@ -1,14 +1,10 @@
 ---
 name: use-site-menu
 description: >
-  Builder skill. How the header menu and the footer links of this Fractera element are made — they are settings, not code: the
-  items in `APP-CONFIG` (`nav.top`, `nav.footer`), their translated labels, the switches «Top menu» and «Footer pages» in
-  `PLATFORM-CONFIG`, the copy from the node's CONFIG that overrides them when the element is linked, the four default legal
-  pages, how a link gets its language, and how to check a change live. Load it whenever a task touches the menu, the header,
-  the footer, «add a link to …», «put it in the menu», «remove the button», a new page that should be reachable, or the person
-  asks why a link does not show. The thing you cannot guess: the footer is OFF by default — items written into `nav.footer`
-  stay invisible until the switch is on, and switching it on is the person's decision; and no guard checks that a menu item
-  leads to a page that exists.
+  Builder skill. The header menu and footer links are settings, not code — `nav.top` and `nav.footer` in `APP-CONFIG`, the
+  switches «Top menu» and «Footer pages» in `PLATFORM-CONFIG`, the legal pages. Load it when a task touches the menu, the header
+  or the footer, «add a link to …», «put it in the menu», «remove the button», a new page that should be reachable, or a link that
+  does not show.
 ---
 
 <!-- PROOF · NOT PROVEN yet: written, never checked by a live run (rules: development-docs/README.md, «Proof marks») -->

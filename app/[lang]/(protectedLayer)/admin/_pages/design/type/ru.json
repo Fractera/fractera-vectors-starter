@@ -1,0 +1,11 @@
+{
+  "title": "Типографика",
+  "description": "Масштаб текста и межстрочный интервал — одно число на весь набор.",
+  "keywords": "",
+  "body": [
+    {
+      "kind": "widget-dynamic-design-type",
+      "bid": "w5r1h"
+    }
+  ]
+}

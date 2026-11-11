@@ -1,13 +1,9 @@
 ---
 name: use-development-docs
 description: >
-  Builder skill. Load it only when a building step is bigger than one change: a plan with more than one result, a step or
-  substep that closes, a new task arriving in the middle of a step, the context running out, or before you create any file or
-  folder to track work. A small task (one door, one fix) goes the short way of «Steps» 2a without it. How building this
-  Fractera element is carried in its development documents (`development-docs/`) so that no work is lost when the session
-  ends — planned or sudden (power, a crash, a closed terminal).
-  The thing you cannot guess: the next session knows only what `development-docs/current-step.md`
-  says — a commit tells what changed, never what was decided, what is half done or what comes next.
+  Builder skill. Carrying a building step in `development-docs/` so no work is lost when the session ends. Load it only when a
+  step is bigger than one change: a plan with several results, a step that closes, a new task in the middle of a step, the context
+  running out, or before creating any file to track work. Not for a small task or a worker job (`order-summary`).
 ---
 
 <!-- PROOF · PARTIAL 2026-10-07: loaded first after «yes», current-step.md kept on events; no plan in steps-new/; the pre-steps intake (added 2026-10-07) and glossary, backlog, cancelled, reports (added 2026-10-08, step 435-5) and the `Serves:` line (added 2026-10-18, node step 536-2) NOT proven · report: development-docs/proofs/2026-10-07-node-skills.md -->

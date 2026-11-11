@@ -7,6 +7,7 @@ import { alternatesLanguages, isIndexable, type TranslatedPage } from '@/lib/seo
 import { author, authorSameAs } from '@/lib/author'
 import { brand } from '@/lib/brand'
 import { StandardContentPage, type Breadcrumb } from '@/components/content-page/standard-content-page'
+import type { KindSet } from '@/components/sections/page-body'
 import { featureOn } from '@/config/platform-config'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -142,6 +143,8 @@ export type ContentPageConfig<C extends ContentPageContent> = {
   hero?: (lang: string) => ReactNode
   /** 423: виджеты ветки для `widget-*` в последовательности страницы (`<ветка>/_widgets/index.tsx`). */
   widgets?: Record<string, (lang: string) => ReactNode>
+  /** 717-3: sections this page draws besides the element's set — a design prototype's own, until the pin. */
+  moreSections?: KindSet
 }
 
 function abs(path: string): string {
@@ -149,7 +152,7 @@ function abs(path: string): string {
 }
 
 export function createContentPage<C extends ContentPageContent>(config: ContentPageConfig<C>) {
-  const { resolve, chrome, meta, jsonLdType = 'Article', sections, hero, afterHero, afterHeader, afterBody, widgets, titleInBody = false } = config
+  const { resolve, chrome, meta, jsonLdType = 'Article', sections, hero, afterHero, afterHeader, afterBody, widgets, moreSections, titleInBody = false } = config
 
   async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
     const { lang } = await params
@@ -291,6 +294,7 @@ export function createContentPage<C extends ContentPageContent>(config: ContentP
           afterBody={afterBody?.(lang)}
           body={c.body}
           widgets={widgets}
+          moreSections={moreSections}
           faq={faq}
           backHref={backHref}
           backLabel={backLabel}

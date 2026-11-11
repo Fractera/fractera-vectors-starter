@@ -1,6 +1,9 @@
 ---
 name: backup-schedule
-description: Both natures. Backup of this memory element — the copying service is code (build), its schedule is data (work). Load when the core sends a task from «Backup → Settings», when your person asks to copy, restore or reschedule copies of this element's data, or asks where the copies go.
+description: >
+  Both natures. Backup of this element: the copying service is code (build), its schedule is data (work). Load it when the core
+  sends a task from «Backup → Settings», when your person asks to copy, restore or reschedule copies of this element's data, or
+  asks where the copies go.
 ---
 
 <!-- PROOF · NOT PROVEN yet: written 2026-10-21 (node step 558-2); the clock is proven by its guard run, the skill by no live agent run yet -->

@@ -59,7 +59,7 @@ function luminance(hex: string): number | null {
  * Цвета, у которых есть ПАРНЫЙ цвет текста поверх них. Список закрыт: это ровно
  * те роли темы, что объявлены вместе с `--…-foreground`.
  */
-const PAIRED = new Set(["primary", "secondary", "accent", "destructive", "muted"])
+const PAIRED = new Set(["primary", "secondary", "accent", "destructive", "muted", "card", "popover"])
 
 /**
  * Строки `--role: value;` для одной темы, вместе с парным цветом текста.
@@ -96,7 +96,30 @@ function colorVars(map: Record<string, string | undefined>): string[] {
  * а `<link>` в шапке он видит сразу и загружает параллельно. Разница — целый
  * оборот сети на первой отрисовке.
  */
-export function buildDesignCss(cfg: DesignConfig = getDesignConfig()): {
+/**
+ * 711-4: где действуют токены. По умолчанию — весь сайт (`:root` и `.dark`). Прототип дизайна получает СВОЮ копию токенов, и она
+ * действует только на его странице: `:root:has([data-prototype="<id>"])` — тот же корень, но лишь когда на странице стоит метка
+ * прототипа, поэтому шапка и подвал сайта тоже показываются в облике прототипа, а остальные страницы его не видят. Селектор с `:has`
+ * сильнее простого `:root`, так что копия прототипа перекрывает оформление элемента без порядка подключения.
+ */
+export type DesignScope = { root: string; dark: string }
+export const SITE_SCOPE: DesignScope = { root: ":root", dark: ".dark" }
+export const prototypeScope = (id: string): DesignScope => ({
+  root: `:root:has([data-prototype="${id}"])`,
+  dark: `:root.dark:has([data-prototype="${id}"])`,
+})
+
+/** 711-7: тень карточек — четыре ступени; свободная строка тени была бы способом сломать страницу. */
+const SHADOW: Record<string, string> = {
+  none: "none",
+  soft: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+  medium: "0 4px 12px -2px rgb(0 0 0 / 0.10), 0 2px 4px -2px rgb(0 0 0 / 0.06)",
+  strong: "0 12px 32px -8px rgb(0 0 0 / 0.18), 0 4px 8px -4px rgb(0 0 0 / 0.08)",
+}
+/** 711-7: скорость интерфейса — переменная Tailwind 4, которую читает каждый `transition` без своей длительности. */
+const SPEED: Record<string, string> = { none: "0ms", fast: "100ms", normal: "150ms", slow: "300ms" }
+
+export function buildDesignCss(cfg: DesignConfig = getDesignConfig(), scope: DesignScope = SITE_SCOPE): {
   css: string
   fontLinks: string[]
 } {
@@ -165,6 +188,14 @@ export function buildDesignCss(cfg: DesignConfig = getDesignConfig()): {
   if (safe(cfg.shape?.appWidth)) root.push(`  --app-w: ${cfg.shape.appWidth};`)
   if (safe(cfg.shape?.heroWidth)) root.push(`  --hero-w: ${cfg.shape.heroWidth};`)
 
+  // 711-7: поверхности карточек, скорость, толщина заголовков. Ступени и границы — те же по смыслу, что у шкал выше.
+  const shadow = cfg.shape?.shadow
+  if (shadow && SHADOW[shadow]) root.push(`  --card-shadow: ${SHADOW[shadow]};`)
+  const speed = cfg.motion?.speed
+  if (speed && SPEED[speed]) root.push(`  --default-transition-duration: ${SPEED[speed]};`)
+  const weight = cfg.type?.headingWeight
+  if (typeof weight === "number" && weight >= 300 && weight <= 900 && weight % 100 === 0) root.push(`  --heading-weight: ${weight};`)
+
   // Настройки первого экрана (308-1; ветка CONFIG `blocks` — имя данных CONFIG, сменится вместе с ним): первый экран по центру. Пиксели владельца — в rem с общим множителем шрифтов, чтобы
   // `--type-scale` продолжал двигать и этот заголовок. Границы — вне их страница ломается, а не «становится другой».
   const w = cfg.blocks?.heroOneWidth
@@ -176,12 +207,12 @@ export function buildDesignCss(cfg: DesignConfig = getDesignConfig()): {
     if (typeof px === "number" && px >= 12 && px <= 120) root.push(`  ${v}: calc(${+(px / 16).toFixed(4)}rem * var(--type-scale));`)
   }
 
-  if (root.length) rules.push(`:root {\n${root.join("\n")}\n}`)
+  if (root.length) rules.push(`${scope.root} {\n${root.join("\n")}\n}`)
 
   // 🔒 ТЁМНАЯ ТЕМА — ОТДЕЛЬНЫМ БЛОКОМ И ТОЛЬКО ЦВЕТА. Класс `.dark` ставит
   // инлайн-скрипт; всё, что от темы не зависит (шрифт, скругление, ширина),
   // повторять здесь не нужно — оно уже стоит в `:root` и наследуется.
-  if (dark.length) rules.push(`.dark {\n${dark.join("\n")}\n}`)
+  if (dark.length) rules.push(`${scope.dark} {\n${dark.join("\n")}\n}`)
 
   return { css: rules.join("\n\n"), fontLinks: [...new Set(fontLinks)] }
 }

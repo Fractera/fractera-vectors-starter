@@ -12,6 +12,7 @@ import { ownId } from '@/lib/own-id'
 import { brand } from '@/lib/brand'
 import { ALL_ROLES, rolesThatSee } from '@/lib/roles'
 import { snippetPath } from '@/lib/snippet/page-snippet'
+import type { KindSet } from '@/components/sections/page-body'
 
 /** 458-3: картинка страницы для соцсетей — её свой сниппет рядом с ней (`<страница>/snippet.png`); своя картинка в `meta.ogImage`
  *  сильнее, а прежняя общая `/og-default.png` больше не подставляется (у публичной страницы всегда есть своя). Закрытые ветки
@@ -166,7 +167,8 @@ export function rootPage(opts: { segments: string[]; subPath: string; titleInBod
 type SlugParam = string | string[]
 const slugOf = (slug: SlugParam) => (Array.isArray(slug) ? slug.join('/') : slug)
 
-export function childRoute(opts: { segments: string[]; subPath: string; widgets?: WidgetSet }) {
+// 717-3: `moreSections` — the sections a child draws besides the element's set, by its slug (a design prototype's own, until the pin).
+export function childRoute(opts: { segments: string[]; subPath: string; widgets?: WidgetSet; moreSections?: (slug: string) => KindSet | undefined }) {
   function build(slug: string) {
     const page = branchChild(opts.segments, slug)
     if (!page) return null
@@ -180,6 +182,7 @@ export function childRoute(opts: { segments: string[]; subPath: string; widgets?
       meta: { subPath: `${opts.subPath}/${slug}`, ogImage: ogImageOf(page.meta.ogImage, opts.segments, `${opts.subPath}/${slug}`), service: page.meta.service },
       resolve: (lang) => contentOf(page, lang, opts.segments),
       widgets: opts.widgets,
+      moreSections: opts.moreSections?.(slug),
       chrome: (lang, c) => {
         const crumbs: Crumb[] = []
         if (root && opts.subPath) crumbs.push({ label: wordsIn(root, lang).title, href: `/${lang}${opts.subPath}` })

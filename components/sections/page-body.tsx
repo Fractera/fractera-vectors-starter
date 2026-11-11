@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { SECTIONS } from './index'
+import { SECTIONS, type SectionModule } from './index'
 import { TEXT_SET } from '@/lib/content/text-set'
 
 // ФАБРИКА СТРАНИЦЫ ИЗ СЕКЦИЙ (шаг 297; секции — собственный код элемента). Страница — список `{ kind, ...поля }`; набор (`set`) называет
@@ -40,7 +40,9 @@ export function PageBody({ body, set }: { body: ItemData[]; set: KindSet }) {
 
 // 717-2: what `components/sections/index.ts` did — the sections of this element (`./index.ts`), the element's typography and the
 // branch's widgets, drawn in the order of the page's body; `keyPrefix` keeps the keys unique between calls on one page.
-export const SECTION_SET: KindSet = Object.fromEntries(Object.entries(SECTIONS).map(([kind, m]) => [kind, m.Section]))
+/** A set of sections as the factory draws it — kind → its component (717-3: the element's set, and a design prototype's own). */
+export const kindsOf = (sections: Record<string, SectionModule>): KindSet => Object.fromEntries(Object.entries(sections).map(([kind, m]) => [kind, m.Section]))
+export const SECTION_SET: KindSet = kindsOf(SECTIONS)
 
 export function renderPage(body: ItemData[], keyPrefix = 'blk', widgets?: KindSet): ReactNode {
   return <PageBody key={keyPrefix} body={body} set={{ ...SECTION_SET, ...TEXT_SET, ...(widgets ?? {}) }} />

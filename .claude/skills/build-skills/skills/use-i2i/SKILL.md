@@ -1,6 +1,10 @@
 ---
 name: use-i2i
-description: Both natures. i2i — how the elements of one node and its core work together. The agents meet once over the A2A wire only to agree an API, the provider builds it, both record the link in their passports, and from then on the work runs over that API with no model; a new need grows the API. Load it when a job needs something you cannot do, when a neighbour asks you for something, when a new element appears in the node, when you record or answer about a link with auth, data, config, design, the core or any neighbour, and before you think of building another element's job into yourself.
+description: >
+  Both natures. i2i — the elements of one node and its core work together: the agents meet once over the A2A wire to agree an API,
+  then the work runs over it with no model. Load it when a job needs something you cannot do, a neighbour asks you for something,
+  a new element appears, you record a link with auth, data, config or the core, and before building another element's job
+  into yourself.
 ---
 
 # i2i — the elements of one node agree an API once

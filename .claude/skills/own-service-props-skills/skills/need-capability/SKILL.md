@@ -1,11 +1,9 @@
 ---
 name: need-capability
 description: >
-  Both natures. You need something this element does not do: a door, a function, a kind of data («refund a payment», «convert a
-  title to a slug») — a neighbour may have it, or nobody does. Load it before your first contact with any neighbour, before you build
-  a neighbour's job inside this element, before you give up: the first contact goes through the core's main agent, the orchestrator
-  (node step 636). What you cannot guess: one command records the need in the core with no model and wakes its main agent; it names
-  the neighbour by the A2A cards or asks the architect to build it, and the answer comes back into your input.
+  Both natures. You need something this element does not do — a door, a function, a kind of data («refund a payment», «convert a
+  title to a slug»). Load it before your first contact with any neighbour, before building a neighbour's job inside this element,
+  and before you give up: one command records the need in the core, its main agent names the neighbour or asks the architect.
 ---
 
 # Ask the node for a capability

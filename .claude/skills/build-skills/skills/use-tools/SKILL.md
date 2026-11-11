@@ -1,13 +1,10 @@
 ---
 name: use-tools
 description: >
-  Builder skill. How the ready capabilities of this Fractera element — voice input, image crop, video trim, code view, a
-  translations dialog, socials by AI, a chat, a draft from free words — are found, used inside widgets and added. Load it
-  before building anything that records, transcribes, crops, trims, chats or calls a model; whenever the person asks for
-  "voice", "dictation", "upload and crop", "a chat on the page", "translate these fields"; and whenever you are about to copy
-  such code from somewhere. The thing you cannot guess: a tool is never put on a page and never lives at its first caller —
-  it sits in `_tools/tool-<name>/` with a card, the list of tools is generated from those cards, and the passport tells other
-  agents what this element can do by that list. A capability built inside one widget is invisible to all of them.
+  Builder skill. The ready capabilities in `_tools/` — voice input, image crop, video trim, code view, translations, socials by
+  AI, a chat, a draft from free words. Load it before building anything that records, transcribes, crops, trims, chats or calls a
+  model, when the person asks for «voice», «dictation», «upload and crop», «a chat on the page», «translate these fields», and
+  before copying such code.
 ---
 
 <!-- PROOF · PROVEN 2026-10-07: loaded for voice in a widget; tool used only inside a dynamic widget · report: development-docs/proofs/2026-10-07-page-skills.md -->

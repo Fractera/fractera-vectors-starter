@@ -1,14 +1,10 @@
 ---
 name: use-languages
 description: >
-  Builder skill. How languages work in this Fractera element — the catalogue of 82 languages it is ready for, the enabled set,
-  the default language, the switcher, translations as files next to the base, the set open to search engines, and the
-  translation debt. Load it before you write any text a visitor or the person will see, add a page, a widget or a dictionary,
-  when the person asks about languages, translation, «make it in Spanish», the switcher, hreflang, «why is this page in
-  English», indexing in another country — and before you advise how many languages to launch with. The thing you cannot
-  guess: people see every enabled language, a search engine sees only the languages opened to it AND translated on that page;
-  the strategy is one language while building and as few as possible at launch, and every postponed translation is a written
-  debt.
+  Builder skill. Languages — the enabled set, the default, the switcher, translations as files next to the base, the set open to
+  search engines, the translation debt. Load it before writing any visible text, adding a page, a widget or a dictionary, and when
+  the person asks about translation, «make it in Spanish», «why is this page in English», hreflang, or how many languages to
+  launch with.
 ---
 
 <!-- PROOF · PROVEN 2026-10-07: loaded for «open ten languages», changed nothing, gave the strategy, asked · report: development-docs/proofs/2026-10-07-node-skills.md -->

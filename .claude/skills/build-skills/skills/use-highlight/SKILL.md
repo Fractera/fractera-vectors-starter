@@ -1,13 +1,10 @@
 ---
 name: use-highlight
 description: >
-  Builder skill. How everything this Fractera element draws stays findable by the highlight of the tab «Live site» of this element in the core — in both
-  directions: the person points at any container and gets its address to give you a precise task, and you finish a change by
-  returning the link `#block=<bid>` that scrolls the tab «Live site» to the place and frames it. Load it whenever you create or change
-  a section, a text item, a widget, a tool or any component a widget uses; whenever the person pastes an address
-  (`Page: … File: … Block: …`) or asks "where is this", "change this section", "show me what you changed"; and before you end an
-  answer about a page. The thing you cannot guess: the highlight sees only `[data-block]`; a container without it is invisible
-  to the person, so their task arrives vague and your answer cannot point anywhere — and nothing breaks visibly.
+  Builder skill. The highlight of the «Live site» tab — the person points at a container and gets its address; you answer with a
+  link `#block=<bid>`. Load it when you create or change a section, text, widget or component, when the person pastes `Page: …
+  File: … Block: …` or asks «where is this», «change this section», «show me what you changed», and before ending an answer about
+  a page.
 ---
 
 <!-- PROOF · PARTIAL 2026-10-07: the tab is now named «Live site» and «Open in a new tab» is named — that wording is not re-proven; proven before it: loaded for the Preview address question; links #block= ended tasks a and e · report: development-docs/proofs/2026-10-07-page-skills.md -->

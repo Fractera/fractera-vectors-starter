@@ -25,6 +25,8 @@ skill itself: a `<!-- PROOF … -->` mark under its header). Vendored skills are
 | `node-elements-detection` | ours, `own-service-props-skills` | a neighbour by need, named by the core's main agent (`npm run need`) — never a list of the node, never one you found yourself; working with it over i2i, never through its code | ⬜ changed 2026-11-03 |
 | `telegram-channel` | ours, `own-service-props-skills` | the person writes from Telegram into this terminal: how a message looks, answer with `reply`, text only, language, no secrets | ✅ 2026-10-07 |
 | `a2a-conversation` | ours, `own-service-props-skills` | the commands of the A2A wire (`npm run a2a`): find, call, continue in one `contextId`, carry the human's comment — i2i with neighbours, a2a with other nodes | ✅ 2026-10-06 |
+| `frontend-design` | Anthropic, vendored (`SOURCE.md`) | the default design skill: the look from the subject of the product, a small token system, a check against templated defaults (step 706-4) | 🟨 2026-11-09: vendored, not yet run live |
+| `frontend-design-deslop` | samber, vendored (`SOURCE.md`) | brief → `DESIGN.md` → the slop checklist before «done»; its questions come from the brief on the «Design» page (step 706-4) | 🟨 2026-11-09: vendored, not yet run live |
 | `use-highlight` | ours, `build-skills` | addresses for the Preview highlight in both directions: who puts `bid` / `data-block`, the link `#block=` in the answer | ✅ 2026-10-07 |
 | `deploy-element` | ours, `build-skills` | how a change reaches visitors: build or not, Preview in the core vs Preview before deploy, what to advise, never Accept/Deploy yourself | 🟨 2026-10-07: loaded, right; «Update» line changed after |
 | `github-element` | ours, `build-skills` | saving the work to the element's own repository: Telegram — at once, terminal — on request; the core's push command and its answers | 🟨 2026-10-07: loaded first, step kept; no plan in steps-new |
@@ -46,6 +48,7 @@ skill itself: a `<!-- PROOF … -->` mark under its header). Vendored skills are
 | `use-shadcn` | ours, `build-skills` | the gatekeeper: widgets, tools and sections only from shadcn; where our law beats the shadcn skill | 🟨 2026-10-07: law kept, skill not loaded |
 | `shadcn` | vendored, shadcn/ui, MIT | components, CLI, registries, composition rules — `SOURCE.md` | — not proven |
 | `design-taste-frontend` | vendored, Leon Lin, MIT | anti-generic landing design — `SOURCE.md` | — not proven |
+| `interface-design` | vendored, Damola Akinleye, MIT | craft of the screens a person works in — admin panel, dashboards, settings (main and design passes, step 714-4) — `SOURCE.md` | — not proven |
 | `impeccable` | vendored, Paul Bakaus, Apache-2.0 | design direction from the audience's world — `SOURCE.md` (without hooks and agents) | — not proven |
 | `copywriting` | vendored, Corey Haines, MIT | writes page copy: headlines, value, calls to action — `SOURCE.md` | — not proven |
 | `copy-editing` | vendored, Corey Haines, MIT | edits existing copy line by line — `SOURCE.md` | — not proven |

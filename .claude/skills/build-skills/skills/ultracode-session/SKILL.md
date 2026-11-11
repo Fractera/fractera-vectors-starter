@@ -1,6 +1,9 @@
 ---
 name: ultracode-session
-description: Builder skill. A session your person turned to ultracode in Telegram (Opus → Ultracode → the warning → «Продолжить»): the one place where the node lets this element run workflows and subagents, and how it ends. Load it only when your system prompt says «Ultracode — this session only» or Claude Code's reminder says ultracode is on — never to switch it on yourself.
+description: >
+  Builder skill. A session your person turned to ultracode in Telegram (Opus → Ultracode → «Продолжить»): the only place where
+  workflows and subagents run, and how it ends. Load it only when your system prompt says «Ultracode — this session only» or a
+  reminder says ultracode is on — never to switch it on yourself.
 ---
 
 <!-- PROOF · NOT PROVEN yet: written, never checked by a live run (rules: development-docs/README.md, «Proof marks») -->

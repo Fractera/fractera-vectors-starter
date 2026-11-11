@@ -1,13 +1,9 @@
 ---
 name: connect-own-domain
 description: >
-  Builder skill. Connecting the person's own domain to THIS element when they ask in chat: «connect my domain», «I bought mybrand.com»,
-  «put my site on mybrand.dev», «подключи мой домен». You lead the whole way in the conversation: the person buys the domain and
-  opens their registrar; you add the domain to the node and get the two Cloudflare name servers through the node's doors; you
-  guide (or, with a browser, fill) the name-server change at the registrar; you measure until the domain is active and attach it
-  to this element. The thing you cannot guess: everything on the Cloudflare side is done by the node's own doors with the node's
-  key — you never hold the key and never send the person to Cloudflare's dashboard; and an OLD domain whose name servers change
-  can take hours, so after ~5 minutes of old name servers you say so and suggest coming back in 3–4 hours.
+  Builder skill. Connecting the person's own domain to this element, led in the conversation through the node's doors (name
+  servers, activation, attaching). Load it when the person says «connect my domain», «I bought mybrand.com», «put my site on …»,
+  «подключи мой домен».
 ---
 
 <!-- PROOF · NOT PROVEN yet: written 2026-10-11 (step 444-1), never checked by a live run -->

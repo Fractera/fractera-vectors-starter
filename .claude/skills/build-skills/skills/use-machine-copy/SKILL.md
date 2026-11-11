@@ -1,13 +1,10 @@
 ---
 name: use-machine-copy
 description: >
-  Builder skill. What every public page of this Fractera element gives to machines — search engines and AI agents — and how
-  to keep it true: the Markdown copy of the page (`/<lang>/<page>/index.md`, linked from the page head), `llms.txt`,
-  `llms-full.txt`, the sitemap, robots.txt and the A2A card. Load it whenever a task adds or changes a public page or a widget on
-  it, adds a new section, or the person asks about SEO, AI search, llms.txt, «the text version of the page», markup in the
-  head, or what agents see. The thing you cannot guess: a widget's words are NOT in the page's body — without its own
-  `markdown.ts` they never reach the Markdown copy (the home page once gave agents 159 bytes in English while showing ~16 000
-  characters), and the copy on the own domain changes only after «Deploy».
+  Builder skill. What every public page gives to search engines and AI agents — its Markdown copy (`/<lang>/<page>/index.md`),
+  `llms.txt`, `llms-full.txt`, the sitemap, robots.txt, the A2A card — and how to keep it true. Load it when a task adds or
+  changes a public page, a widget or a section on it, or the person asks about SEO, AI search, llms.txt, «the text version of the
+  page» or what agents see.
 ---
 
 <!-- PROOF · NOT PROVEN yet: written, never checked by a live run (rules: development-docs/README.md, «Proof marks») -->

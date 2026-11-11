@@ -24,11 +24,22 @@ const KIND = { 'Builder skill': 'build', 'Work skill': 'working', 'Both natures'
 const GROUPS = ['build-skills', 'workspace-skills', 'messenger-skills', 'own-service-props-skills']
 
 const problems = []
+// 717-4: Claude Code gives the skill list 1 % of the window at 4 characters a token — 40,000 characters at 1M, 8,000 at 200k (2.1.322,
+// read from its binary); over it the descriptions collapse to bare names and a skill stops waking. Measured at 069311a: the main pass
+// 39,963, the design pass 42,111. The ceiling here keeps 40 % of the 1M budget free; one description at most DESC_MAX characters.
+const DESC_MAX = 440
+const PASS_MAX = 24000
+const DESCS = []
+const descOf = (fm) => {
+  const lines = fm.split('\n'); const i = lines.findIndex((l) => /^description:/.test(l)); if (i < 0) return ''
+  let j = i + 1; while (j < lines.length && /^\s/.test(lines[j])) j++
+  return [lines[i].replace(/^description:\s*([>|]-?)?\s*/, ''), ...lines.slice(i + 1, j)].map((l) => l.trim()).filter(Boolean).join(' ').replace(/^["']|["']$/g, '')
+}
 const seen = new Map()
 let count = 0
 // Таблица групп — вторая половина знания: навык без строки в таблице агент не найдёт по режиму. С 552-5 строки живут там, где
 // их читает сессия: общие группы — в CLAUDE.md («Skills by group»), группа режима — в его файле `.claude/modes/<режим>.md`.
-const TABLE_FILES = ['CLAUDE.md', '.claude/modes/build.md']
+const TABLE_FILES = ['CLAUDE.md', '.claude/modes/build.md', '.claude/modes/work.md']
 const tableIn = (f) => {
   const text = existsSync(join(ROOT, f)) ? readFileSync(join(ROOT, f), 'utf8').replace(/\r\n/g, '\n') : ''
   const at = text.indexOf('| Group | Mode | Skills |')
@@ -55,6 +66,14 @@ function own(dir, name, group) {
   if (!body) problems.push(`${name}: в теле нет строки «**Process: build|working|both**»`)
   if (lead && body && KIND[lead] !== body) problems.push(`${name}: description говорит «${lead}», а тело — «Process: ${body}»`)
   if (!inRow(group, name)) problems.push(`${name}: нет в строке «${group}» таблицы групп (CLAUDE.md или .claude/modes/<режим>.md)`)
+  // 717-4: the head must parse and the description must be short. A plain one-line description with «: » inside is not YAML, and
+  // three skills carried that (take-card-payment, ultracode-session, order-summary); a folded scalar (`description: >`) cannot break.
+  const fm = text.match(/^---\n([\s\S]*?)\n---\n/)?.[1] ?? ''
+  if (!new RegExp(`^name: ${name}$`, 'm').test(fm)) problems.push(`${name}: в заголовке нет «name: ${name}» — имя навыка равно его папке`)
+  if (!/^description: [>|]-?\n(  .*\n?)+/m.test(fm + '\n')) problems.push(`${name}: description не сложенной строкой «description: >» с отступом в два пробела — однострочное с «: » внутри ломает YAML`)
+  const d = descOf(fm)
+  DESCS.push({ group, name, len: name.length + d.length + 4 })
+  if (d.length > DESC_MAX) problems.push(`${name}: description ${d.length} знаков, предел ${DESC_MAX} — подробности в тело навыка (717-4)`)
 }
 
 for (const name of dirs(DIR)) {
@@ -75,7 +94,13 @@ for (const name of dirs(DIR)) {
   if (existsSync(join(dir, 'SOURCE.md'))) {
     count++
     note(name, 'корне')
-    if (!/^Process: (build|working|both)\b/m.test(readFileSync(join(dir, 'SOURCE.md'), 'utf8'))) problems.push(`${name}: чужой навык без строки «Process: build|working|both» в SOURCE.md`)
+    const source = readFileSync(join(dir, 'SOURCE.md'), 'utf8')
+    if (!/^Process: (build|working|both)\b/m.test(source)) problems.push(`${name}: чужой навык без строки «Process: build|working|both» в SOURCE.md`)
+    // 590-5: в каком проходе строительства мост включает чужой навык — строка `Pass: main|design|texts` (один или несколько, до тире).
+    const pass = /^Pass:\s*(.+)$/m.exec(source)?.[1]?.split(' — ')[0].split(/[\s,;]+/).filter(Boolean) ?? []
+    if (!pass.length || pass.some((p) => !['main', 'design', 'texts', 'study'].includes(p))) problems.push(`${name}: чужой навык без строки «Pass: main|design|texts|study» в SOURCE.md — узел не знает, в каком проходе его включать`)
+    const vfm = (existsSync(join(dir, 'SKILL.md')) ? readFileSync(join(dir, 'SKILL.md'), 'utf8').replace(/\r\n/g, '\n') : '').match(/^---\n([\s\S]*?)\n---/)?.[1] ?? ''
+    DESCS.push({ group: 'vendored', name, passes: pass, len: name.length + Math.min(descOf(vfm).length, 1536) + 4 })
     if (!inRow('vendored', name)) problems.push(`${name}: нет в строке «vendored» таблицы групп (CLAUDE.md или .claude/modes/<режим>.md)`)
     continue
   }
@@ -105,9 +130,12 @@ for (const f of tracked) {
 // Навыки главного агента ядра (`lib/main-agent/skills/` ядра) — чужие, но настоящие: текст, адресованный ядру, их называет.
 const CORE_SKILLS = ['answer-element', 'ask-element', 'create-element', 'route-to-element', 'supervise-element']
 const reads = (f) => f === 'CLAUDE.md' || f.startsWith('.claude/') || f.startsWith('scripts/') || f === 'development-docs/README.md'
+// 706-4: текст ПРИВЕЗЁННОГО навыка (папка с `SOURCE.md` в корне `.claude/skills/`) не правится руками и называет навыки своего мира
+// (у deslop — поле `allowed-tools`); он не проверяется на имена этого элемента.
+const vendoredText = (f) => { const p = f.split('/'); return p[0] === '.claude' && p[1] === 'skills' && p.length > 3 && existsSync(join(ROOT, '.claude', 'skills', p[2], 'SOURCE.md')) }
 const named = (f, name, how) => { if (!seen.has(name) && !CORE_SKILLS.includes(name)) problems.push(`${f}: ${how} называет навык «${name}», которого нет`) }
 const KEBAB = '([a-z0-9]+(?:-[a-z0-9]+)+)'
-for (const f of tracked.filter(reads)) {
+for (const f of tracked.filter((x) => reads(x) && !vendoredText(x))) {
   let text = ''
   try { text = readFileSync(join(ROOT, f), 'utf8') } catch { continue }
   for (const m of text.matchAll(new RegExp(String.raw`\b[Ss]kills?\s+` + '`?' + KEBAB + String.raw`\b`, 'g'))) named(f, m[1], 'текст')
@@ -121,9 +149,17 @@ for (const row of table.split('\n').filter((l) => l.startsWith('| '))) {
   for (const m of row.matchAll(/`([a-z0-9][a-z0-9-]*)`/g)) named('CLAUDE.md', m[1], 'таблица «Skills by group»')
 }
 
+// 717-4: the list a build session sees — the groups whose row says `build` plus the vendored skills of that pass.
+const buildGroups = table.split('\n').filter((l) => /^\| [a-z-]+ \| [^|]*\b(build|every mode)\b/.test(l) && !l.startsWith('| vendored ')).map((l) => l.split('|')[1].trim())
+const listSize = {}
+for (const p of ['main', 'design', 'texts', 'study']) {
+  listSize[p] = DESCS.filter((s) => (s.group === 'vendored' ? s.passes?.includes(p) : buildGroups.includes(s.group))).reduce((a, s) => a + s.len, 0)
+  if (listSize[p] > PASS_MAX) problems.push(`проход ${p}: список навыков ${listSize[p]} знаков, предел ${PASS_MAX} (40 000 при окне 1M, 8 000 при 200k) — сократите описания`)
+}
+
 if (problems.length) {
   console.error(`===SKILL_PROCESS_FAIL=== навык без процесса или вне своей группы (CLAUDE.md, «Skills by group»):`)
   for (const p of problems) console.error(`  ${p}`)
   process.exit(1)
 }
-console.log(`===SKILL_PROCESS_OK=== процесс и группа названы у всех навыков: ${count}; названные в текстах навыки существуют`)
+console.log(`===SKILL_PROCESS_OK=== процесс и группа названы у всех навыков: ${count}; названные в текстах навыки существуют; список строительства: ${Object.entries(listSize).map(([p, n]) => `${p} ${n}`).join(', ')} из ${PASS_MAX}`)

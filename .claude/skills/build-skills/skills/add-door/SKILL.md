@@ -1,6 +1,9 @@
 ---
 name: add-door
-description: Builder skill. A door for the other elements of this node (i2i) — POST or GET /api/<name> with the node key. One command makes the route, the key check, the closed-list line, a test and the card entry; you write only handle(input). Load when a neighbour or your person asks this element for an API door.
+description: >
+  Builder skill. A door for the other elements of this node (i2i) — POST or GET /api/<name> with the node key; one command writes
+  the route, the key check, the test and the card entry, you write only handle(input). Load when a neighbour or your person asks
+  this element for an API door.
 ---
 
 <!-- PROOF · NOT PROVEN yet: written 2026-10-20 (node step 548-16); the recipe is checked by its guards, the skill by the live run of 548-19 -->

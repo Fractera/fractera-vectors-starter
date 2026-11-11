@@ -1,6 +1,9 @@
 ---
 name: use-h2a
-description: Both natures. H2A — your person and you, their own agent, through Telegram, the core's native chat or your terminal — and the media rule for every protocol (a voice note, a photo, a video is saved to storage and from then on passed and returned as a link, never as the file). Load it whenever your person writes to you, sends a file, asks you to send one, asks how to reach you, and whenever any file must travel to a person, a neighbour or another agent.
+description: >
+  Both natures. H2A — your person and you, through Telegram, the core's chat or the terminal — and the media rule of every
+  protocol: a voice note, photo or video is saved to storage and passed as a link, never as the file. Load it when your person
+  writes to you, sends or asks for a file, asks how to reach you, and whenever a file must travel to anyone.
 ---
 
 # H2A — your person and you; media as links

@@ -1,20 +1,10 @@
 ---
 name: schedule-cron-automations-calendar-reminders-recurring-and-one-time-tasks
 description: >
-  Work skill — never for building. Schedules, reminders and cron automations of this element: put something on the calendar, remind the person at a
-  time, repeat it every day, on weekdays, every week, every month or every year, do it once on a date, pause one reminder, turn off all
-  repeating reminders, turn them back on, turn the whole automation off or on, say what is scheduled for a day — and what to do when
-  your own clock wakes you («Your alarm fired — the calendar entry …»). Load it whenever the person — in this terminal or from
-  Telegram — asks to remind, notify, schedule, repeat, «every morning», «at 10», «on Fridays», «every year», «stop the reminders»,
-  «turn off the automation», «what do I have tomorrow», whenever your alarm wakes you, and whenever you touch `data/cron.json`,
-  `OWN-SERVICE-PROPS/CRON.json`, the passport field `automation` or `lib/cron/`. The thing you cannot guess: a
-  reminder is DATA — one entry in `data/cron.json` (outside git) with its own text; no code, no commit, no push, no rebuild, and a
-  one-line answer. A reminder for the person is the event `node-notice`: at its minute the words surface in the node's main chat
-  by themselves — «⏰ Reminder · <this element>» — no model, no agent woken. The core draws the entries as this element's calendar;
-  the element's server reads them once a minute.
-  Russian phrasings of the person: «напомни», «напомни мне через неделю», «напоминай каждый день», «по будням», «раз в неделю»,
-  «каждый месяц», «каждый год», «поставь на паузу», «выключи все напоминания», «включи напоминания», «выключи автоматизацию»,
-  «включи автоматизацию», «что у меня по расписанию», «крон», «расписание», «календарь».
+  Work skill — an entry is data, never code. Reminders, schedules and cron automations — once or repeating, paused, off, on —
+  and what to do when your alarm wakes you. Load it when the person asks to remind, schedule, repeat or stop reminders («напомни»,
+  «каждое утро», «по будням», «выключи напоминания», «что у меня завтра»), when your alarm fires, when a build needs a clock, and when
+  you touch `data/cron.json` or `lib/cron/`.
 ---
 
 <!-- PROOF · NOT PROVEN · written 2026-10-12, rewritten in node step 465-4, the automation switch added in node step 551-3, the alarm, the yearly repeat and the group of every mode in node step 636, `node-notice` in 636-8; proven only when the agent of this element has done it on the person's word -->

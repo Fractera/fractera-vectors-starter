@@ -21,6 +21,11 @@ const colorRoles = z.looseObject({
   muted: z.string().optional(),
   border: z.string().optional(),
   destructive: z.string().optional(),
+  // 711-7: surfaces and the focus ring
+  card: z.string().optional(),
+  popover: z.string().optional(),
+  input: z.string().optional(),
+  ring: z.string().optional(),
 });
 
 const fontRole = z.looseObject({
@@ -39,6 +44,7 @@ export const designConfigSchema = z.looseObject({
   type: z.looseObject({
     scale: z.number().optional(),
     leading: z.number().optional(),
+    headingWeight: z.number().optional(),
   }),
   shape: z.looseObject({
     radius: z.string().optional(),
@@ -46,8 +52,12 @@ export const designConfigSchema = z.looseObject({
     spaceScale: z.number().optional(),
     appWidth: z.string().optional(),
     heroWidth: z.string().optional(),
+    // 711-7: elevation of cards — a preset, never a free shadow string.
+    shadow: z.enum(["none", "soft", "medium", "strong"]).optional(),
   }),
-  // 308-1: настройки блоков — первый экран по центру, пиксели.
+  // 711-7: the interface's speed; the body branch of 308-1 went with the catalogue (706, 711-7).
+  motion: z.looseObject({ speed: z.enum(["none", "fast", "normal", "slow"]).optional() }).optional(),
+  // 308-1: первый экран по центру из CONFIG, пиксели (ветка CONFIG `blocks` — имя данных CONFIG).
   blocks: z
     .looseObject({
       heroOneWidth: z.number().optional(),

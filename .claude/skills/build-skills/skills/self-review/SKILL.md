@@ -1,6 +1,9 @@
 ---
 name: self-review
-description: Builder skill. A review of your own work at the person's request — find in your session where you stumbled and propose at most three changes to your skills, checked against the log of earlier decisions. Load it ONLY when the person asked for a review (the word «review» — in their own language, e.g. «разбор» — in the terminal or in this element's Telegram). Never without that request.
+description: >
+  Builder skill. A review of your own work at the person's request — where you stumbled, at most three changes to your skills,
+  checked against earlier decisions. Load it ONLY when the person asked for a review («review», «разбор» — in any language), in
+  the terminal or in Telegram. Never without that request.
 ---
 
 <!-- PROOF · NOT PROVEN yet: written, never checked by a live run (rules: development-docs/README.md, «Proof marks») -->

@@ -31,6 +31,18 @@
             },
             "destructive": {
               "type": "string"
+            },
+            "card": {
+              "type": "string"
+            },
+            "popover": {
+              "type": "string"
+            },
+            "input": {
+              "type": "string"
+            },
+            "ring": {
+              "type": "string"
             }
           },
           "additionalProperties": {}
@@ -60,6 +72,18 @@
               "type": "string"
             },
             "destructive": {
+              "type": "string"
+            },
+            "card": {
+              "type": "string"
+            },
+            "popover": {
+              "type": "string"
+            },
+            "input": {
+              "type": "string"
+            },
+            "ring": {
               "type": "string"
             }
           },
@@ -131,6 +155,9 @@
         },
         "leading": {
           "type": "number"
+        },
+        "headingWeight": {
+          "type": "number"
         }
       },
       "additionalProperties": {}
@@ -152,6 +179,30 @@
         },
         "heroWidth": {
           "type": "string"
+        },
+        "shadow": {
+          "type": "string",
+          "enum": [
+            "none",
+            "soft",
+            "medium",
+            "strong"
+          ]
+        }
+      },
+      "additionalProperties": {}
+    },
+    "motion": {
+      "type": "object",
+      "properties": {
+        "speed": {
+          "type": "string",
+          "enum": [
+            "none",
+            "fast",
+            "normal",
+            "slow"
+          ]
         }
       },
       "additionalProperties": {}

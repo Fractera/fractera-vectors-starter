@@ -1,0 +1,15 @@
+{
+  "title": "Design",
+  "description": "The look of this element: first the brief (who it is for, character, references, what to avoid, the design skill), then fonts, colours of both themes, type and shapes. Fonts and colours apply on every page at once, without a build.",
+  "keywords": "",
+  "body": [
+    {
+      "kind": "widget-dynamic-design-brief",
+      "bid": "b7r1f"
+    },
+    {
+      "kind": "widget-dynamic-design-overview",
+      "bid": "k7d2m"
+    }
+  ]
+}

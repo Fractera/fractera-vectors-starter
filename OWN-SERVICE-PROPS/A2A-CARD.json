@@ -206,7 +206,11 @@
             "/api/settings/platform",
             "/api/settings/design",
             "/api/a2a/tasks",
-            "/api/own-service-props"
+            "/api/own-service-props",
+            "/api/prototypes",
+            "/api/settings/brief",
+            "/[lang]/admin/api/settings/design",
+            "/[lang]/admin/api/settings/brief"
           ],
           "a2aEndpoint": "/api/a2a",
           "a2aSkills": [

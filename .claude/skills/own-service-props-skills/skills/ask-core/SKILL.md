@@ -1,6 +1,10 @@
 ---
 name: ask-core
-description: Both natures. Ask the node's core how something in the node works — a door of the core, the deploy, the node key, the contract of a neighbour — when your own files, npm run passport -- me and your skills do not say; the core's main agent answers into your input as «Answer from the core to «…»». And the way back — a check the core's main agent gives you is saved with npm run reply-core, and your usual done wakes the main agent, which reads it and tells the architect. And words for the architect — your alarm first of all — go through the core's main agent with npm run tell-core. i2i with the core is the backup source of knowledge about the architecture; a question costs your person's subscription, so it is the last resort, never a habit.
+description: >
+  Both natures. The core's main agent as your link: ask how the node works (a core door, the deploy, the node key, a neighbour's
+  contract) when your files, `.claude/node-knowledge/`, `npm run passport -- me` and skills do not say; save a check it gave you
+  with npm run reply-core; send words for the architect, an alarm first, with npm run tell-core. A question costs the subscription
+  — the last resort.
 ---
 
 <!-- PROOF · NOT PROVEN yet in full: the question and the answer proven live 2026-10-20 (node step 548-19); the way back (548-20) — by its live round -->

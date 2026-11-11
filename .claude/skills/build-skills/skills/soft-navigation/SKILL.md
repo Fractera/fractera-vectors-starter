@@ -1,14 +1,10 @@
 ---
 name: soft-navigation
 description: >
-  Builder skill. How moving between pages of this Fractera element stays a soft, client-side Next navigation — the header, the
-  menu, fonts and islands stay mounted and nothing blinks — and how to prove it, at home and on the own domain. Load it whenever a
-  task adds or changes a link, a menu, a header, a footer, a layout, a redirect or a button that leads to another page; whenever
-  the person says «the menu blinks», «the page reloads», «the header flickers», «state is lost when I switch pages»; and before
-  you report that navigation works. The thing you cannot guess: correct code is not enough — on the own domain every request passes the core's Cloudflare
-  Worker (home first, the copy when home is silent — node step 458-10), and if anything on that path answers Next's navigation
-  request with HTML, every click becomes a full reload although every link in the code is a `Link`.
-  Russian phrasings of the person: «меню моргает», «страница перезагружается», «шапка мигает», «переход без перезагрузки».
+  Builder skill. Moving between pages stays a soft client-side Next navigation — header, menu and islands stay mounted — and how
+  to prove it, at home and on the own domain. Load it when a task adds or changes a link, a menu, a layout, a redirect, when the
+  person says «the menu blinks», «the page reloads», «state is lost between pages», «меню моргает», and before reporting
+  navigation works.
 ---
 
 <!-- PROOF · PROVEN 2026-10-12 · report: development-docs/proofs/2026-10-12-six-skills.md (in roman) -->

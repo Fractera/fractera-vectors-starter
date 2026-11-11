@@ -10,3 +10,4 @@
   file is optional: without it the skill asks its questions.
 
 Process: build — a vendored design/text/UI skill, used only while building this element (node step 465-4).
+Pass: texts — a text skill: it lives only in the texts pass (node step 590-5).

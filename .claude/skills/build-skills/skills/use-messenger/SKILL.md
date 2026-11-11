@@ -1,11 +1,9 @@
 ---
 name: use-messenger
 description: >
-  Builder skill, the gatekeeper of the vendored skill `ai-elements`. Load it whenever a task touches a messenger or a chat window of
-  this element — the protected branch `messenger-h2a`, the account-drawer button «H2A Messenger», `components/messenger/`, a conversation, a message list, a prompt input — and before you add any chat UI anywhere.
-  Russian phrasings of the person: «мессенджер», «чат», «переписка», «H2A», «окно беседы».
-  The thing you cannot guess: the UI of a messenger is built ONLY from ai-elements components; the vendored skill says HOW, this one
-  says WHEN and which rules of this element win.
+  Builder skill, the gatekeeper of the vendored `ai-elements`. Load it when a task touches a messenger or a chat window — the
+  branches `messenger-h2h` and `messenger-h2a`, the buttons «H2H Messenger» and «H2A Messenger», `components/messenger/`, a
+  message list, a prompt input («мессенджер», «чат», «переписка») — and before adding any chat UI anywhere.
 ---
 
 <!-- PROOF · PROVEN 2026-10-12 · report: development-docs/proofs/2026-10-12-six-skills.md (in roman) -->

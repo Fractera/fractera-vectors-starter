@@ -9,6 +9,7 @@
   это также в равной степени будет использоваться для квиза» — every text a person or a visitor reads goes through it, the
   product quiz too.
 - **Update:** download `SKILL.md` of the wanted commit over this one and change the line «From». Never edit by hand.
-- **In this element:** the order and the laws that are stronger than the skill are in `.claude/modes/build.md`, section «Texts».
+- **In this element:** the order and the laws that are stronger than the skill are in `.claude/modes/build-texts.md`, section «Texts».
 
 Process: both — it edits words: page copy while building, review pages and messages in a job.
+Pass: texts — a text skill: it lives only in the texts pass (node step 590-5).

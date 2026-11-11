@@ -7,6 +7,7 @@ import { author as projectAuthor } from '@/lib/author'
 import { getPostBodyUi } from '@/lib/content/post-body-ui'
 import { renderPage } from '@/components/sections/page-body'
 import { PostBody, type WidgetSet } from './post-body'
+import type { KindSet } from '@/components/sections/page-body'
 import { PageHeader } from './page-header.server'
 import { PageCover } from './page-cover.server'
 import { BackLink } from './back-link.server'
@@ -115,6 +116,8 @@ export type StandardContentPageProps = {
   body: PageItem[]
   /** 423: виджеты ветки для `widget-*` в последовательности страницы. */
   widgets?: WidgetSet
+  /** 717-3: sections this page draws besides the element's set — a design prototype's own, until the pin. */
+  moreSections?: KindSet
   faq?: FaqPair[]
   /** Ссылка «назад» — на уровень выше. Нет уровня выше — нет и ссылки. */
   backHref?: string
@@ -147,6 +150,7 @@ export function StandardContentPage({
   afterBody,
   body,
   widgets,
+  moreSections,
   faq,
   backHref,
   backLabel,
@@ -210,7 +214,7 @@ export function StandardContentPage({
     <PageShell
       top={titleInBody ? "work" : "content"}
       columnAs="article"
-      hero={heroItem ? <PostBody body={[heroItem]} lang={lang} widgets={widgets} /> : undefined}
+      hero={heroItem ? <PostBody body={[heroItem]} lang={lang} widgets={widgets} moreSections={moreSections} /> : undefined}
       afterHero={afterHero}
       afterBody={afterBody}
     >
@@ -251,7 +255,7 @@ export function StandardContentPage({
         {/* 4–7, 9. Body body (callout, H2/H3, quote, CTA, docref download, …).
             Без первого экрана и завершающей секции: они нарисованы снаружи этой
             колонки, потому что подчиняются другой ширине. */}
-        <PostBody body={bodyItems} lang={lang} widgets={widgets} />
+        <PostBody body={bodyItems} lang={lang} widgets={widgets} moreSections={moreSections} />
 
         {/* Open sections slot — page-specific sections injected by the route entry
             (e.g. the VPS deploy form / the MCP connector + the founder quote). The
