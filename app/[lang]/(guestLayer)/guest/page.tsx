@@ -1,7 +1,7 @@
 import { rootPage } from '@/lib/branch-page'
 import { WIDGETS } from './_widgets'
 
-// Корень гостевой ветки — /<lang>/guest: текст и тревожная карточка (блок warning-card из «Блоков»). Слова — ./_data.
+// Корень гостевой ветки — /<lang>/guest: текст и тревожная карточка (секция `section-warning-card`). Слова — ./_data.
 const page = rootPage({ segments: ['(guestLayer)', 'guest'], subPath: '/guest', widgets: WIDGETS })
 
 export const revalidate = 300

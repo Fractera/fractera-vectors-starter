@@ -23,7 +23,7 @@ export type PageRequestWords = {
   label: string
   title: string
   lead: string
-  /** Поле, кнопки, тост — то же, что у заявки из каталога блоков. */
+  /** Поле, кнопки, тост — то же, что у заявки из каталога секций. */
   whatLabel: string
   whatPlaceholder: string
   send: string

@@ -2,7 +2,7 @@
   "title": "Accessibility",
   "description": "How this site tries to stay usable for everyone, and where to write if something here gets in your way.",
   "keywords": "accessibility, screen reader, keyboard navigation, contrast",
-  "blocks": [
+  "body": [
     {
       "kind": "text-p",
       "text": "We want this site to be usable by everyone — including people who read it with a screen reader, move through it with a keyboard alone, or enlarge the text. Its public pages are ordinary server-rendered HTML and keep working with JavaScript switched off. Back to [%SITE%](/en).",

@@ -2,7 +2,7 @@
   "title": "Настройки сайта",
   "description": "Название, описание, настройки для поиска, картинки и языки этого сайта.",
   "keywords": "",
-  "blocks": [
+  "body": [
     {
       "kind": "widget-dynamic-site-settings",
       "bid": "mdh3z"

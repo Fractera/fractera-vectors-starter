@@ -4,8 +4,8 @@ description: >
   Builder skill. What every public page of this Fractera element gives to machines — search engines and AI agents — and how
   to keep it true: the Markdown copy of the page (`/<lang>/<page>/index.md`, linked from the page head), `llms.txt`,
   `llms-full.txt`, the sitemap, robots.txt and the A2A card. Load it whenever a task adds or changes a public page or a widget on
-  it, adds a new block kind, or the person asks about SEO, AI search, llms.txt, «the text version of the page», markup in the
-  head, or what agents see. The thing you cannot guess: a widget's words are NOT in the page's blocks — without its own
+  it, adds a new section, or the person asks about SEO, AI search, llms.txt, «the text version of the page», markup in the
+  head, or what agents see. The thing you cannot guess: a widget's words are NOT in the page's body — without its own
   `markdown.ts` they never reach the Markdown copy (the home page once gave agents 159 bytes in English while showing ~16 000
   characters), and the copy on the own domain changes only after «Deploy».
 ---
@@ -22,7 +22,7 @@ description: >
 
 | What | Where it comes from | Address |
 |---|---|---|
-| Markdown copy of the page | `lib/aio/surfaces.ts` → `blocksToMarkdown` (`lib/aio/blocks-to-markdown.ts`) | `/<lang>/index.md`, `/<lang>/<page>/index.md` |
+| Markdown copy of the page | `lib/aio/surfaces.ts` → `blocksToMarkdown` (`lib/aio/page-to-markdown.ts`) | `/<lang>/index.md`, `/<lang>/<page>/index.md` |
 | link to it in `<head>` | `lib/seo/alternates.ts` (`mdUrlFor`) | `<link rel="alternate" type="text/markdown" href="…">` |
 | map for agents | `lib/aio/llms.ts`, from the same list of pages | `/llms.txt`, `/<lang>/llms.txt` |
 | every page's full text in one file | the same list, the same copies | `/llms-full.txt` |
@@ -36,13 +36,13 @@ public page folder appears in all of these by itself; a page behind a role never
 
 ## Your part: every public widget brings its own text
 
-A widget draws words that are not in the page's blocks (the landing's `landing` field, a form's labels). The builder of the copy
+A widget draws words that are not in the page's body (the landing's `landing` field, a form's labels). The builder of the copy
 cannot see inside a widget, so the widget hands its text over:
 
 1. `markdown.ts` in the widget's folder: `export function markdown(lang: string): string` — built from the **same source the
    widget renders** (its words file, its i18n strings), never a second copy of the text.
 2. One line in the branch's `<branch>/_widgets/markdown.ts` (`WIDGET_MARKDOWN`), the pair of `_widgets/index.tsx`.
-3. The builder calls it where the page's sequence has the `widget-*` block — the copy keeps the page's order.
+3. The builder calls it where the page's sequence has the `widget-*` item — the copy keeps the page's order.
 
 Write only words from the data: headings `##`/`###`, paragraphs, lists, `**who:** text` for a dialogue, `[label](href)` for a
 link. **No labels of your own** («Fields:», «Question:») — an English word in the Russian copy is a foreign language for the
@@ -51,7 +51,8 @@ reader. Leave out what is decoration (an image's scene, «turn the TV on»), kee
 A widget with nothing to read (a pure animation, a map) says so in its `index.tsx`: `// @machine-text none: <reason>` — the
 guard prints it as a warning instead of failing.
 
-A new block kind in the registry → a `case` in `blocks-to-markdown.ts` in the same edit, or its text silently leaves the copy.
+A new section brings its own words — `markdown.ts` in its folder `components/sections/<kind>/`; the set (`components/sections/index.ts`)
+does not compile without it, so a section's text never silently leaves the copy.
 
 `npm run check:aio` fails on a public widget without `markdown.ts` and on one listed in `index.tsx` but not in `WIDGET_MARKDOWN`.
 
@@ -69,7 +70,7 @@ language, the offer only when both price and currency are set) and `og:type` `we
 `service` — an ordinary article. The provider is written as an organization with that name.
 
 Given to every page without your work: `og:type` `website` on the home page and `article` on the others; breadcrumbs with the
-current page as the last item (no link); FAQ markup from the block `faq` next to the visible questions; robots.txt lets search
+current page as the last item (no link); FAQ markup from the section `section-faq` next to the visible questions; robots.txt lets search
 and AI bots in, `Google-Extended` (whether Gemini learns from the pages; it does not affect Search) included — closing any of
 them is the person's decision.
 
@@ -90,7 +91,7 @@ them is the person's decision.
 
 **Head and structured data — the order that proved itself (node step 431, 2026-10-07):**
 1. Before «Accept», on the preview: the same page from the running build (`127.0.0.1:<port>`) and from the preview
-   (`127.0.0.1:<preview port>` on «Deployments») — `<title>`, `meta description`, `og:type`, every `application/ld+json` block. The
+   (`127.0.0.1:<preview port>` on «Deployments») — `<title>`, `meta description`, `og:type`, every `application/ld+json` script. The
    running build is the control: the change must be on the preview only.
 2. A page kind the site does not have yet (a service page) is proven with a temporary page folder that is never committed — the
    preview builds the working tree; delete it and reject that preview before building the one to accept.

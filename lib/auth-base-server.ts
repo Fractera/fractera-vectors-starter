@@ -56,7 +56,7 @@ export function authBaseFromHost(host: string | null, proto: string): string {
   const publicBase = publicAuthBaseFor(host);
   if (publicBase) return publicBase;
   // 🔒 257-6: РЕЕСТР ИМЕЕТ ПРИОРИТЕТ НАД ИМЕНЕМ ХОСТА. На узле служба стоит на
-  // назначенном порту из блока 24680-25679, и собрать её адрес из имени хоста
+  // назначенном порту из диапазона 24680-25679, и собрать её адрес из имени хоста
   // нельзя в принципе — получится `<host>:3001`, порт серверной линии, то есть
   // стук в пустоту. Реестра нет только на линии `aifa.dev`, и там работает
   // прежняя ветка ниже.
@@ -81,7 +81,8 @@ export function projectsBaseFromHost(host: string | null, proto: string): string
   const scheme = proto === "https" ? "https" : "http";
   if (isIpHost(hostname)) return `${scheme}://${hostname}:3003`;
   return `${scheme}://projects.${apexFrom(hostname)}`;
-}import { authUrl as nodeAuthUrl } from "@/lib/microservices/urls";
+}
+import { authUrl as nodeAuthUrl } from "@/lib/microservices/urls";
 
 
 import { publicAuth } from "@/lib/domain/public-auth.cjs";

@@ -1,7 +1,7 @@
 {
   "title": "Страница роли subscriber_standard",
   "description": "Страница, защищённая авторизацией: она предоставляет доступ для роли subscriber_standard.",
-  "blocks": [
+  "body": [
     {
       "kind": "text-p",
       "text": "Вы находитесь на странице, которая защищается авторизацией. Она предоставляет доступ для роли **subscriber_standard**.",

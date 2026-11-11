@@ -9,7 +9,7 @@ import type { TaskReportWords } from "./task-report.i18n"
 // Закрытие этого окна удаляет данный параметр». Открывается, только если в адресе есть `?report=` и страница открыта на этой машине
 // (127.0.0.1 / localhost — так открывается предпросмотр); отчёт берётся у двери `/api/task-report` (вшит в сборку). До оживления
 // ничего не рисует — статике и поиску не мешает. Закрытие убирает `report` из адреса, якорь и прочие параметры остаются, и страница
-// встаёт у блока из якоря (356-4).
+// встаёт у места из якоря (356-4).
 type Report = { task: string; done?: string[]; check?: string[] }
 
 export function TaskReport({ words, dialogUi }: { words: TaskReportWords; dialogUi: AppDialogUi }) {
@@ -31,7 +31,7 @@ export function TaskReport({ words, dialogUi }: { words: TaskReportWords; dialog
     url.searchParams.delete("report")
     window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash)
     // 356-4 (замерено: `#<data-block>` браузер сам не прокручивает — страница стояла наверху). Закрыл отчёт — страница у изменённого
-    // блока: якорь ищется по `id` и по `data-block`. 🛑 Прокрутка мгновенная и только своего документа (уроки 318: плавная в браузере
+    // места: якорь ищется по `id` и по `data-block`. 🛑 Прокрутка мгновенная и только своего документа (уроки 318: плавная в браузере
     // владельца не доходила, `scrollIntoView` двигал и окно ядра).
     const anchor = decodeURIComponent(url.hash.slice(1))
     const el = anchor ? (document.getElementById(anchor) ?? document.querySelector(`[data-block="${CSS.escape(anchor)}"]`)) : null

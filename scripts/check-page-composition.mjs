@@ -39,7 +39,7 @@ const LANG_DIR = path.join(ROOT, "app", "[lang]")
 
 // Источники, каждый из которых делает страницу законной.
 const FACTORY = /createContentPage|createContentPost/
-const BLOCKS = /PostBody|renderBlocks|from ["']@\/sections|SPECIMEN/
+const SECTIONS_USED = /PostBody|renderPage|from ["']@\/sections|SPECIMEN/
 
 // 🔒 ВИДЖЕТ ЗАСЧИТЫВАЕТСЯ ПО ПРИМЕНЕНИЮ, А НЕ ПО ИМПОРТУ, И ЭТО НЕ ПРИДИРКА.
 // ✗ оплачено 2026-08-31, негативным контролем шага 64: я убрал вызов виджета,
@@ -65,11 +65,11 @@ function widgetUsed(text) {
 // Отступ внутри примитива сюда не попадает намеренно — ищется РАСКЛАДКА.
 const OWN_LAYOUT = /className=["'{][^"'}]*\b(grid|flex|max-w-|space-[xy]-|gap-\d|columns-)/
 
-// 🔒 ИСКЛЮЧЕНИЯ — слои, к которым закон о списке блоков не относится, и почему.
+// 🔒 ИСКЛЮЧЕНИЯ — слои, к которым закон о списке секций не относится, и почему.
 const EXEMPT = [
   {
     match: "(protectedLayer)",
-    why: "рабочие экраны прав: их содержимое — записи из базы и островки, а не список блоков; их раскладку держит общая оболочка рабочего экрана",
+    why: "рабочие экраны прав: их содержимое — записи из базы и островки, а не список секций; их раскладку держит общая оболочка рабочего экрана",
   },
   {
     match: "(architectLayer)",
@@ -129,12 +129,12 @@ for (const page of pages.sort()) {
   const files = entryFiles(page)
   const text = files.map(f => fs.readFileSync(f, "utf8")).join("\n")
 
-  if (FACTORY.test(text) || BLOCKS.test(text) || widgetUsed(text)) {
+  if (FACTORY.test(text) || SECTIONS_USED.test(text) || widgetUsed(text)) {
     ok++
     continue
   }
 
-  // Ни блока, ни виджета. Законно, только если страница вообще не раскладывает
+  // Ни секции, ни виджета. Законно, только если страница вообще не раскладывает
   // ничего своими руками — тогда она собрана из примитивов и это третий источник.
   const guilty = files.filter(f => OWN_LAYOUT.test(fs.readFileSync(f, "utf8")))
   if (guilty.length === 0) {
@@ -151,7 +151,7 @@ for (const page of pages.sort()) {
   for (const f of guilty) {
     if (KNOWN_DEBT.some(d => d.file === rel(f))) continue
     problems.push(
-      `${rel(f)}\n    страница не берёт ни блок каталога, ни виджет, а раскладывает содержимое сама.\n    Три законных источника: вид каталога (можно через createContentPage), виджет маршрута, платформенный примитив.`
+      `${rel(f)}\n    страница не берёт ни секцию набора, ни виджет, а раскладывает содержимое сама.\n    Три законных источника: секция набора (можно через createContentPage), виджет маршрута, платформенный примитив.`
     )
   }
 }

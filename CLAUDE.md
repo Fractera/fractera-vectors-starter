@@ -27,12 +27,23 @@ element is a microservice that answers its neighbours and asks them for help; to
 - **People.** The architect owns the node and sees everything. Your person is whoever talks to you — often the architect. In the app
   factory mode an element has its own people and settings; in a single project everything follows the core's CONFIG
   (`development-docs/glossary.md`).
+- **The map of this folder** — where each thing lives; a folder where work happens carries a short `CLAUDE.md` with its own rules,
+  read when you work there. Pages — data folders `<branch>/_pages/<slug>/`, a branch's own page in its
+  `_data/` (the home page: `app/[lang]/(publicLayer)/_data/`; inner branches under `app/[lang]/(protectedLayer)/`), one route template
+  reads them (skill `use-page-tree`); sections — one folder named by its kind,
+  `components/sections/section-<name>/`, the set `components/sections/index.ts`; widgets — `<branch>/_widgets/` (skill
+  `build-widget`); tools — `_tools/`; doors for neighbours — `app/api/<name>/` (`npm run door:add`); your data — the node's stores with
+  your `ELEMENT_KEY`; the look — `DESIGN-CONFIG/` (a sibling's look arrives as a copy in your intake, `npm run design:take`); the site settings — `APP-CONFIG/`, `PLATFORM-CONFIG/`; the
+  passport and the A2A card — `OWN-SERVICE-PROPS/`; the work records — `development-docs/`; the node around you — `.claude/node-knowledge/`.
+- **A job that needs a neighbour** — pictures, video or texts for a channel, a payment, sign-in, storage: never build it into yourself.
+  The core's main agent names the neighbour (section 5, 2) → its card `npm run a2a -- card <address>` → you agree an API once (i2i) →
+  its agent builds the door, and you call `http://127.0.0.1:<its port>/api/<name>` with the header `X-Node-Key`, with no model.
 - **On or off.** The node holds the switch; you declare your default in the passport and pass requests.
 - **Your boundary is this folder.** Every file in it — `package.json` (`npm run` lists your commands) and `proxy.ts` too — you read
-  without asking. The node you know from `npm run passport -- me` (block `node`), the core's main agent and the core's doors — never
-  from the core's files or a neighbour's. Reading or changing anything outside this folder waits for your architect's explicit «yes»: the
-  node makes Claude Code ask in your terminal, and when you were woken from Telegram it sends them the link. Your own data
-  (`SERVICE_DATA_DIR`) is yours.
+  without asking. The node you know from `npm run passport -- me` (its part `node`), the core's main agent and the core's doors — never
+  from the core's files or a neighbour's. Reading or changing anything outside this folder is decided by the core's main agent (the owner,
+  2026-11-09): the node's guard asks it, and your call gets its «yes» or its «no» with the way inside your folder — the node's keys and a
+  neighbour's code or keys are never opened. Your own data (`SERVICE_DATA_DIR`) is yours.
 
 ## 3. Your session
 
@@ -74,7 +85,7 @@ element is a microservice that answers its neighbours and asks them for help; to
 ## 5. On wake — know yourself; find a neighbour only when a task needs one
 
 1. **Who you are:** `npm run passport -- me`, read whole — the only command on wake (skill `own-service-props-detection`). The passport
-   describes only your working nature: building is innate to every element. Its block `node` is the node in a few lines.
+   describes only your working nature: building is innate to every element. Its part `node` is the node in a few lines.
    **Section 11 is the rest of who you are.** «From the core» — the starting vector the core's main agent writes there when it creates
    an element: the whole goal and your part in it, your role, your field and what you may grow into, your neighbours in that goal, your
    public face and your inner pages, your loads and data, your first step, what is not yours. «The laws of this element» — what only you
@@ -123,11 +134,12 @@ element is a microservice that answers its neighbours and asks them for help; to
   (section 5); you and the neighbour then agree an API (i2i), and only that agreed API is called by code directly. The core's notice
   door is such an API for every element: a reminder of your calendar (`node-notice`) surfaces in the node's main chat at its minute,
   with no model. A shortcut around an agent is a catastrophic error (the owner of the node, 2026-11-03).
-- **A request against a provider's rules** (Anthropic, OpenAI), or a refusal or block of your own call: name the rule and what it risks
+- **A request against a provider's rules** (Anthropic, OpenAI), or a refused or blocked call of your own: name the rule and what it risks
   — a warning, limits, the account suspended or closed, payments not refunded (anthropic.com/legal/aup, anthropic.com/legal/consumer-terms)
   — and the lawful way to the same goal. Never help to reword it, never retry the blocked call in another form; insisted on — one short
   warning again, then stop.
-- **Never recommend an Anthropic API key:** the project's AI work goes through the node's OpenAI key.
+- **Never recommend an Anthropic API key:** the project's AI work goes through the node's OpenAI key. When this element calls a
+  model itself and when pictures, video or texts are a neighbour's job — skill `use-ai-generation`; a person's data in it — `use-personal-data`.
 - **No subagents.** You work alone, one task at a time; a subagent only when a skill explicitly allows it — `context: fork` in its
   frontmatter and «Subagent: allowed — <why>» in its body — or in a session your person confirmed as ultracode in Telegram (Opus →
   Ultracode → «Продолжить»): only there workflows and subagents run, until «выключить» (skill `ultracode-session`).
@@ -149,7 +161,7 @@ session shares; the group of the build session is in `.claude/modes/build.md`. A
 
 | Group | Mode | Skills |
 |---|---|---|
-| own-service-props-skills | every mode | `own-service-props-detection`, `node-elements-detection`, `ask-core` (the core answers how the node works — the last resort; `npm run tell-core` — words for the architect through it), `answer-the-leader` (the core's main agent asks where your development stands — three lines, nothing built), `computer-off`, `local-node`, `a2a-conversation`, `telegram-channel` (your person writes to you from Telegram, right into this terminal), `need-capability` (anything a neighbour or nobody has: `npm run need` — the core names who does it, or builds it, and tells you), `schedule-cron-automations-calendar-reminders-recurring-and-one-time-tasks` (your calendar: an entry is data; your alarm wakes you) |
+| own-service-props-skills | every mode | `own-service-props-detection`, `node-elements-detection`, `ask-core` (the core answers how the node works — the last resort; `npm run tell-core` — words for the architect through it), `answer-the-leader` (the core's main agent asks where your development stands — three lines, nothing built), `a2a-conversation`, `telegram-channel` (your person writes to you from Telegram, right into this terminal), `need-capability` (anything a neighbour or nobody has: `npm run need` — the core names who does it, or builds it, and tells you), `schedule-cron-automations-calendar-reminders-recurring-and-one-time-tasks` (your calendar: an entry is data; your alarm wakes you) |
 | messenger-skills | messenger | `use-h2a` (with the media rule) |
 
 ## 9. Glossary
@@ -162,7 +174,9 @@ another element of this node · **passport** — `OWN-SERVICE-PROPS/` · **pass*
 ## 10. Where the details are
 
 The laws of a mode or a pass — `.claude/modes/`; what this element is and how to call it — `README.md`; development documents and their
-rules — `development-docs/README.md`; what was proven live and how — `development-docs/proofs/`; how the node works — skill `ask-core`.
+rules — `development-docs/README.md`; what was proven live and how — `development-docs/proofs/`; how the node around you works — the
+internet and Cloudflare, the temporary address, the fork and updates, GitHub repositories, the computer off, a private node — the texts
+of `.claude/node-knowledge/`, read on need (they are not skills and cost nothing until read); what they do not say — skill `ask-core`.
 
 ## 11. This element
 

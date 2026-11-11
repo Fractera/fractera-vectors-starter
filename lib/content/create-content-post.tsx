@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
-import type { Block, FaqPair } from '@/lib/content/blocks/types'
+import type { PageItem, FaqPair } from '@/lib/content/page-items'
 import { buildAlternates } from '@/lib/seo/alternates'
 import { alternatesLanguages, isIndexable, type TranslatedPage } from '@/lib/seo/translation-state'
 import { author, authorSameAs } from '@/lib/author'
@@ -18,13 +18,13 @@ import { featureOn } from '@/config/platform-config'
 //
 // The `format` parameter selects a preset that carries the only real per-type
 // differences (structured-data type + author kind); everything else renders
-// through the SAME block, StandardContentPage. i18n is orthogonal: `resolve(lang)`
+// through the SAME template, StandardContentPage. i18n is orthogonal: `resolve(lang)`
 // is the co-located resolver — news is localized (resolveEntry, en + <lang>),
 // EN-only formats ignore `lang`. The factory never reads or changes a data file.
 // ─────────────────────────────────────────────────────────────────────────────
 
 // 🔒 В СТРУКТУРИРОВАННЫЕ ДАННЫЕ ОТВЕТ ЕДЕТ БЕЗ РАЗМЕТКИ (2026-08-29, шаг 38).
-// С этого дня ответ FAQ может нести ссылку (`sections/blocks/faq.server.tsx`
+// С этого дня ответ FAQ может нести ссылку (вид `faq` прежнего каталога секций
 // разбирает `[подпись](адрес)`), а `FAQPage` поисковик читает ДОСЛОВНО — и
 // напечатал бы квадратные скобки в выдаче. Снимаем разметку здесь, а не в
 // словах: словам ссылка нужна, поисковику — нет.
@@ -57,7 +57,7 @@ export type ContentPost = {
   readingMinutes: number
   /** Visible byline name; omit to show no author in the byline (e.g. docs). */
   authorName?: string
-  blocks: Block[]
+  body: PageItem[]
   faq?: FaqPair[]
   /** og:image / structured-data image — absolute or site-root-relative. */
   ogImage?: string
@@ -188,11 +188,11 @@ export function createContentPost(config: ContentPostConfig) {
 
     // 🔒 ВЫКЛЮЧАТЕЛЬ FAQ БЫЛ МЁРТВЫМ (шаг 522, 2026-08-20). Панель его предлагала,
     // конфиг хранил, а страница рисовала вопросы всегда: проверено браузером —
-    // при `faq: false` на живом сервере стояли и блок «Frequently asked questions»,
+    // при `faq: false` на живом сервере стояли и раздел «Frequently asked questions»,
     // и разметка `FAQPage`.
     //
     // 🔒 ГЕЙТ У ИСТОЧНИКА, А НЕ У ДВУХ ПОТРЕБИТЕЛЕЙ. Вопросы уходят в ДВА места —
-    // видимый блок и структурированные данные. Закрыть только видимое значит
+    // видимый раздел и структурированные данные. Закрыть только видимое значит
     // пообещать машине то, чего на странице нет; закрывать оба по отдельности —
     // оставить третье место следующему, кто добавит потребителя. Гасится массив:
     // оба потребителя уже проверяют его длину.
@@ -220,7 +220,7 @@ export function createContentPost(config: ContentPostConfig) {
       },
       // 🪦 458-4: здесь стояла вторая разметка `BreadcrumbList` — её уже ставят видимые крошки (`components/nav/breadcrumbs.server.tsx`,
       // с главной сайта первым пунктом). Две разметки одного пути спорили бы друг с другом в выдаче.
-      // 🪦 314-2: разметку `FAQPage` ставит сам блок `faq` из «Блоков» рядом с видимыми вопросами; здесь она была бы второй.
+      // 🪦 314-2: разметку `FAQPage` ставит сама секция `section-faq` рядом с видимыми вопросами; здесь она была бы второй.
     ]
 
     // Сведения поста ЧАСТЯМИ: раскладку и разделители рисует `PageHeader`
@@ -246,7 +246,7 @@ export function createContentPost(config: ContentPostConfig) {
           metaItems={metaItems}
           heroImage={post.heroImage}
           hero={post.hero}
-          blocks={post.blocks}
+          body={post.body}
           faq={faq}
           backHref={backHref}
           backLabel={backLabel}

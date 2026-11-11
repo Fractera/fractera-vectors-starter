@@ -108,7 +108,7 @@ export function LanguagesEditor({
   /** С каким набором проект СОБРАН. Расхождение и есть «ждёт пересборки». */
   built: readonly string[]
   ui: GroupsUi
-  /** 340-3: блок «Языки для поисковых систем» под списком. */
+  /** 340-3: раздел «Языки для поисковых систем» под списком. */
   search?: { w: SearchLanguagesWords; initialUnlocked: readonly string[]; builtUnlocked: readonly string[]; deployHref?: string }
 }) {
   const t = ui.langs
@@ -365,7 +365,7 @@ export function LanguagesEditor({
         {!changed && <P data-block="lmwr8" className="text-[length:var(--fs-small)] text-muted-foreground">{ui.nothingToSave}</P>}
       </div>
 
-      {/* 340-3: разблокировка работает по СОХРАНЁННОМУ набору языков — открыть поисковику можно только язык сайта. Блок
+      {/* 340-3: разблокировка работает по СОХРАНЁННОМУ набору языков — открыть поисковику можно только язык сайта. Раздел
           сохраняется сам, поэтому стоит после кнопки набора, а не между списком и ею. */}
       {search && (() => {
         const [savedSet, savedDef] = JSON.parse(saved) as [string[], string]

@@ -104,7 +104,7 @@ export function catalogContribute(input: Json, from: string) {
   if (typeof u.title !== "string" || !u.title.trim()) throw refuse("unit.title is required")
   if (typeof u.words !== "string" || u.words.trim().length < 10) throw refuse("unit.words: one or two plain sentences are required")
   if (!Array.isArray(u.tags) || u.tags.length === 0 || !u.tags.every((t) => typeof t === "string")) throw refuse("unit.tags is required")
-  if (typeof u.schema !== "object" || u.schema === null) throw refuse("unit.schema (fields of the block) is required")
+  if (typeof u.schema !== "object" || u.schema === null) throw refuse("unit.schema (fields of the section) is required")
   if (typeof u.example !== "object" || u.example === null) throw refuse("unit.example (a filled example) is required")
   const files = Array.isArray(u.files) ? (u.files as CatalogFile[]) : []
   if (files.length === 0 || files.length > MAX_FILES) throw refuse(`unit.files: 1–${MAX_FILES} files are required`)

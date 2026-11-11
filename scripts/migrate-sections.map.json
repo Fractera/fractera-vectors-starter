@@ -1,0 +1,273 @@
+{
+  "step": "717-2 of the node: the word «section» instead of «block»; a section is one folder",
+  "registry": "lib/content/blocks/registry.tsx",
+  "types": "lib/content/blocks/types.ts",
+  "markdown": "lib/aio/blocks-to-markdown.ts",
+  "pageBody": "components/blocks/page-body.tsx",
+  "sectionsReadme": "components/blocks/README.md",
+  "kinds": {
+    "from": "block-",
+    "to": "section-",
+    "special": {
+      "block-section-head": "section-head"
+    },
+    "keep": [
+      "block-highlight",
+      "block-indexing",
+      "block-task"
+    ]
+  },
+  "pageKey": {
+    "from": "blocks",
+    "to": "body"
+  },
+  "moves": [
+    [
+      "lib/content/blocks/types.ts",
+      "lib/content/page-items.ts"
+    ],
+    [
+      "lib/content/blocks/links.ts",
+      "lib/content/links.ts"
+    ],
+    [
+      "lib/blocks/inline.tsx",
+      "lib/content/inline.tsx"
+    ],
+    [
+      "lib/blocks/tone.ts",
+      "lib/content/tone.ts"
+    ],
+    [
+      "lib/aio/blocks-to-markdown.ts",
+      "lib/aio/page-to-markdown.ts"
+    ],
+    [
+      "components/blocks/page-body.tsx",
+      "components/sections/page-body.tsx"
+    ],
+    [
+      "components/blocks/block-toc.tsx",
+      "components/content-page/toc.tsx"
+    ],
+    [
+      "components/blocks/README.md",
+      "components/sections/README.md"
+    ]
+  ],
+  "modules": [
+    [
+      "lib/content/blocks/registry",
+      "components/sections/page-body"
+    ]
+  ],
+  "deadIfUnused": [
+    "lib/content/blocks/inline.tsx"
+  ],
+  "removeAfter": [
+    "lib/content/blocks/registry.tsx"
+  ],
+  "oldDirs": [
+    "components/blocks",
+    "lib/content/blocks",
+    "lib/blocks"
+  ],
+  "paths": [
+    [
+      "components/blocks/block-toc.tsx",
+      "components/content-page/toc.tsx"
+    ],
+    [
+      "lib/content/blocks/registry.tsx",
+      "components/sections/index.ts"
+    ],
+    [
+      "lib/content/blocks/types.ts",
+      "lib/content/page-items.ts"
+    ],
+    [
+      "lib/content/blocks/links.ts",
+      "lib/content/links.ts"
+    ],
+    [
+      "lib/content/blocks/registry",
+      "components/sections"
+    ],
+    [
+      "lib/content/blocks/types",
+      "lib/content/page-items"
+    ],
+    [
+      "lib/content/blocks/",
+      "lib/content/"
+    ],
+    [
+      "lib/aio/blocks-to-markdown.ts",
+      "lib/aio/page-to-markdown.ts"
+    ],
+    [
+      "blocks-to-markdown",
+      "page-to-markdown"
+    ],
+    [
+      "lib/blocks/tone.ts",
+      "lib/content/tone.ts"
+    ],
+    [
+      "lib/blocks/inline.tsx",
+      "lib/content/inline.tsx"
+    ],
+    [
+      "lib/blocks/inline",
+      "lib/content/inline"
+    ],
+    [
+      "lib/blocks/",
+      "lib/content/"
+    ],
+    [
+      "components/blocks/",
+      "components/sections/"
+    ],
+    [
+      "components/blocks",
+      "components/sections"
+    ],
+    [
+      "'components', 'blocks'",
+      "'components', 'sections'"
+    ],
+    [
+      "\"components\", \"blocks\"",
+      "\"components\", \"sections\""
+    ]
+  ],
+  "names": [
+    [
+      "renderBlocks",
+      "renderPage"
+    ],
+    [
+      "blocksToMarkdown",
+      "pageToMarkdown"
+    ],
+    [
+      "BLOCK_SET",
+      "SECTION_SET"
+    ],
+    [
+      "BlockSet",
+      "KindSet"
+    ],
+    [
+      "BlockData",
+      "ItemData"
+    ],
+    [
+      "blockKey",
+      "itemKey"
+    ],
+    [
+      "enBlocks",
+      "enBody"
+    ],
+    [
+      "heroBlock",
+      "heroItem"
+    ],
+    [
+      "bodyBlocks",
+      "bodyItems"
+    ],
+    [
+      "Block",
+      "PageItem"
+    ]
+  ],
+  "keepBlocksWord": {
+    "files": [
+      "lib/design-css.ts",
+      "lib/site-settings/fields.ts",
+      "lib/sibling-origin.ts",
+      "scripts/check-seo-html.mjs"
+    ],
+    "why": "there «blocks» is a CSS rule, a key of the shared CONFIG (`blocks.heroOneWidth` — renamed only together with the core's CONFIG) or a host name — not a page's body"
+  },
+  "allowed": {
+    "why": "«block» keeps one meaning — the address of a container (the highlight's whole folder speaks of it) — and a few words of other trades",
+    "patterns": [
+      "data-block",
+      "#block=",
+      "blocks:ids",
+      "check-block-ids",
+      "BLOCK_IDS",
+      "block-highlight",
+      "BlockHighlight",
+      "blockquote",
+      "inline-block",
+      "display:\\s*block",
+      "\\bcode blocks?\\b",
+      "блок(а|и|ов)? кода",
+      "blocks\\.hero[A-Za-z.]*",
+      "\\bbid\\b",
+      "block id",
+      "block-indexing",
+      "block-task",
+      "blocks\\.example\\.com",
+      "\\bunblock",
+      "блокиров",
+      "разблокир",
+      "блокир",
+      "code-block-writer",
+      "PORT_BLOCK_(START|END)",
+      "registry:block",
+      "group: \"blocks\"",
+      "\\b(un)?block\\b(?=\\s*:)",
+      "\"(Un)?[Bb]lock\"",
+      "Block: [a-z0-9]{5}",
+      "Block: …",
+      "\\bblock, unblock\\b",
+      "блокчейн",
+      "blockchain",
+      "на вкладке блок",
+      "/[a-z]{2}/blocks\\b",
+      "do block auth",
+      "вкладку блоки",
+      "от блоков, от дизайна",
+      "инструментов или блоков",
+      "build-blocks-map",
+      "check-blocks-map",
+      "дизайне для блоков",
+      "Blocks я не видел подходящих блоков",
+      "расширь блок портов",
+      "распространяется на блоке",
+      "OLD_KEY = 'blocks'",
+      "`block`",
+      "\\bself-block\\b",
+      "\\bwe block\\b",
+      "sign-in events, block",
+      "\\bblocks the server\\b",
+      "MCP у блоков",
+      "нижний блок с информации"
+    ],
+    "files": [
+      "components/block-highlight/"
+    ]
+  },
+  "skip": [
+    "node_modules/",
+    ".next/",
+    "scripts/migrate-sections.mjs",
+    "scripts/migrate-sections.map.json",
+    "development-docs/reports/migration-sections-",
+    "app/[lang]/(protectedLayer)/prototypes/_archive/",
+    "config/design-config.ts",
+    "config/design-config.schema.ts",
+    "config/design-config.defaults.ts",
+    "DESIGN-CONFIG/schema.json",
+    "lib/design-css.ts",
+    "lib/memory/",
+    "settings/design/"
+  ],
+  "vendoredSkillsRoot": ".claude/skills/"
+}

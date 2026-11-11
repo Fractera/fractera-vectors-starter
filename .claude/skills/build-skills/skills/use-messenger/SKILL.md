@@ -23,7 +23,7 @@ description: >
   component from `components/ai-elements/`. A missing one: `npx ai-elements@latest add <name>` (then the skill `ai-elements`, its
   `references/<name>.md`).
 - No own chat primitives, no hand-made bubbles, no other chat library. Layout around the window (a page frame) is the element's
-  typography and blocks as everywhere else.
+  typography and sections as everywhere else.
 
 ## Where things are
 | Piece | Path |

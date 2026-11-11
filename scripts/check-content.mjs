@@ -138,7 +138,7 @@ function unclassifiedRoutes(langDir) {
 //
 // Anything else relative is rejected.
 // Подпись и адрес не переносятся на новую строку — иначе выражение цепляет
-// открывающую скобку массива `blocks: [` и «ссылкой» становится вся статья.
+// открывающую скобку массива `body: [` и «ссылкой» становится вся статья.
 const LINK_IN_TEXT = /\[([^\]\n]+)\]\(([^)\n]+)\)/g
 const HREF_FIELD = /href:\s*'([^']+)'|href:\s*"([^"]+)"/g
 const ROOT_LINK = /^\/[a-z]{2}$/
@@ -272,7 +272,7 @@ function checkPost(dataDir) {
     }
     for (const m of text.matchAll(HREF_FIELD)) {
       const href = (m[1] ?? m[2]).trim()
-      // Корневая форма разрешена и в полях `href` — у блока-кнопки (`cta`) и у
+      // Корневая форма разрешена и в полях `href` — у секции-кнопки (`cta`) и у
       // ссылки на иллюстрации (шаг 507. Прежде поле принимало ТОЛЬКО абсолютный
       // адрес, поэтому единственной законной целью кнопки был чужой сайт: обе
       // посланные со стартером статьи вели ею на домен платформы. Кнопка,
@@ -394,7 +394,7 @@ function languageCells(files) {
 // Красный гейт, который все привыкли игнорировать, хуже отсутствующего: он
 // обесценивает и те проверки, что говорят правду.
 const DYNAMIC_MARKERS = /force-dynamic|export const dynamic\s*=\s*["'](?!force-static)[^"']*["']|cookies\(\)|headers\(\)|auth\(\)/
-const ENGINE_FILES = ["post-body", "registry", "resolve", "create-content-post", "create-content-page"]
+const ENGINE_FILES = ["post-body", "page-body", "resolve", "create-content-post", "create-content-page"]
 
 /** Убрать комментарии, чтобы проверка смотрела на код, а не на объяснения к нему. */
 // 🔒 СТРОЧНЫЕ СНИМАЮТСЯ ПЕРВЫМИ, И ПОРЯДОК — ВЕСЬ СМЫСЛ (найдено 2026-08-14).

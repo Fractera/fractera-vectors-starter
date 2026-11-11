@@ -1,7 +1,7 @@
 import 'server-only'
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
-import type { Block, FaqPair } from '@/lib/content/blocks/types'
+import type { PageItem, FaqPair } from '@/lib/content/page-items'
 
 // ДЕРЕВО СТРАНИЦ ЭЛЕМЕНТА (node step 314-2). Страница — папка данных, а не файл маршрута:
 //
@@ -22,9 +22,9 @@ export type PageMeta = {
   order?: number
   /** Роли, которые открывают страницу (второй замок поверх замка ветки). Архитектор проходит всегда. */
   roles?: string[]
-  /** 423: страница без рамки (лендинг на весь экран): рисуются только её виджеты (`widget-*` последовательности), а блоки и
+  /** 423: страница без рамки (лендинг на весь экран): рисуются только её виджеты (`widget-*` последовательности), а секции и
    *  текст остаются её словами — виджет читает их — и текстовым близнецом для агентов (`index.md`); метаданные — из заголовка
-   *  и описания. Виджет обычной страницы просто стоит в последовательности `blocks` на своём месте. */
+   *  и описания. Виджет обычной страницы просто стоит в последовательности `body` на своём месте. */
   bare?: boolean
   /** Картинка для соцсетей. */
   ogImage?: string
@@ -48,7 +48,7 @@ export type PageWords = {
   title: string
   description: string
   keywords?: string
-  blocks: Block[]
+  body: PageItem[]
   faq?: FaqPair[]
 }
 
@@ -128,7 +128,7 @@ export function wordsIn(page: TreePage, lang: string): PageWords {
     title: o.title ?? page.en.title,
     description: o.description ?? page.en.description,
     keywords: o.keywords ?? page.en.keywords ?? '',
-    blocks: o.blocks ?? page.en.blocks,
+    body: o.body ?? page.en.body,
     faq: o.faq ?? page.en.faq,
   }
 }

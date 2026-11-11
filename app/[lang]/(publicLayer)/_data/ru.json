@@ -2,13 +2,13 @@
   "title": "Поиск по смыслу для каждого элемента вашего узла",
   "description": "Векторное хранилище узла Fractera держит куски текста в именованных коллекциях и находит самые близкие по смыслу к вопросу, на любом языке, на вашем компьютере.",
   "keywords": "векторное хранилище, поиск по смыслу, семантический поиск, эмбеддинги, sqlite-vec, коллекции",
-  "blocks": [
+  "body": [
     {
       "kind": "widget-static-vectors-landing",
       "bid": "vwl01"
     },
     {
-      "kind": "block-hero-centered",
+      "kind": "section-hero-centered",
       "pill": "OpenSource Web4 agent & app starter kit",
       "title": "Поиск по смыслу для каждого элемента вашего узла",
       "description": "Каждый элемент хранит здесь свои тексты векторами и просит самые близкие к вопросу, на любом языке. Смысл считается на вашем компьютере, без ключа и без интернета.",
@@ -23,7 +23,7 @@
       "bid": "vhr01"
     },
     {
-      "kind": "block-section-head",
+      "kind": "section-head",
       "id": "route",
       "title": "Как идёт поиск",
       "bid": "vsr01"
@@ -74,7 +74,7 @@
       "bid": "vrs01"
     },
     {
-      "kind": "block-section-head",
+      "kind": "section-head",
       "id": "power",
       "title": "Включён, засыпает только при нехватке памяти",
       "bid": "q0000"
@@ -85,7 +85,7 @@
       "bid": "q0001"
     },
     {
-      "kind": "block-section-head",
+      "kind": "section-head",
       "id": "solves",
       "title": "Что меняется для вас",
       "bid": "vss01"
@@ -117,13 +117,13 @@
       "bid": "vst01"
     },
     {
-      "kind": "block-section-head",
+      "kind": "section-head",
       "id": "spaces",
       "title": "Чьи это векторы",
       "bid": "vsp01"
     },
     {
-      "kind": "block-access-map",
+      "kind": "section-access-map",
       "outer": {
         "title": "Главный агент узла",
         "text": "Ищет во всех коллекциях всех элементов и видит, чья каждая находка."
@@ -161,7 +161,7 @@
       "bid": "vsp05"
     },
     {
-      "kind": "block-section-head",
+      "kind": "section-head",
       "id": "connect",
       "title": "Подключите свой элемент",
       "bid": "vsc01"
@@ -182,7 +182,7 @@
       "bid": "vsc04"
     },
     {
-      "kind": "block-section-head",
+      "kind": "section-head",
       "id": "hood",
       "title": "Что под капотом",
       "bid": "vsh01"
@@ -218,7 +218,7 @@
       "bid": "vsh02"
     },
     {
-      "kind": "block-section-head",
+      "kind": "section-head",
       "id": "builder",
       "title": "Свой строитель в комплекте",
       "bid": "q0002"
@@ -243,7 +243,7 @@
       "bid": "q0005"
     },
     {
-      "kind": "block-section-head",
+      "kind": "section-head",
       "id": "credits",
       "title": "Открытый код",
       "bid": "vsx01"
@@ -254,13 +254,13 @@
       "bid": "vxp01"
     },
     {
-      "kind": "block-section-head",
+      "kind": "section-head",
       "id": "faq",
       "title": "Вопросы и ответы",
       "bid": "q0006"
     },
     {
-      "kind": "block-faq",
+      "kind": "section-faq",
       "title": "Вопросы и ответы",
       "items": [
         {

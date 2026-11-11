@@ -15,7 +15,7 @@ site only after a new build (the element's «Deployments» page in the core — 
 People see the site in every language above; search engines only in the open ones:
 
 - **English and the default language are always open** — they cannot be closed here.
-- **Any other language is unlocked by the person, one at a time, at their own risk** (confirmation inside the block) and
+- **Any other language is unlocked by the person, one at a time, at their own risk** (confirmation inside that part of the page) and
   can be closed again. Saved as APP-CONFIG `languages.indexed` (only the unlocked ones) → the node writes
   `NEXT_PUBLIC_INDEXED_LANGUAGES` into the build.
 - «Waiting for deployment» appears while the saved set differs from the built one, with «Start a new deployment» leading to

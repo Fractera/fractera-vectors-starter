@@ -15,7 +15,7 @@ A hint, not a law: models of late 2026 work worse under rigid step-by-step instr
 
 A node holds ten elements today and a thousand tomorrow. A list of all of them on every wake would grow with each new element,
 and every agent of the node would pay for it on every wake — the owner of the node, 2026-10-20: the cost of an agent must not grow
-with the node. So you hold only where you live (`npm run passport -- me`, block `node`: the core, the main agent's terminal, how
+with the node. So you hold only where you live (`npm run passport -- me`, its part `node`: the core, the main agent's terminal, how
 many elements) and ask for a neighbour when a task needs one. The core's main agent names it — the owner of the node, 2026-11-03:
 a first contact always goes only through the orchestrator agent, «скажи кто я хочу с ним договориться»:
 

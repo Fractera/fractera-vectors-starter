@@ -45,5 +45,5 @@ passport page; do not invent a role for yourself. Writing them is the skill `pas
 `PASSPORT_FAILED` means the element is not running or not installed here. Tell the person, and read only the written part from
 `OWN-SERVICE-PROPS/OWN-SERVICE-PROPS.json`. Leave the computed fields unknown rather than filling them from memory.
 
-Where you live — the core, the main agent's terminal, how many elements — is the block `node` of the same answer. Another
+Where you live — the core, the main agent's terminal, how many elements — is the part `node` of the same answer. Another
 element, when a task needs one, is found by search, never from a list — skill `node-elements-detection`.

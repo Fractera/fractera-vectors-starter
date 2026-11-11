@@ -102,14 +102,14 @@ export function buildDesignCss(cfg: DesignConfig = getDesignConfig()): {
 } {
   if (isDesignConfigEmpty(cfg)) return { css: "", fontLinks: [] }
 
-  const blocks: string[] = []
+  const rules: string[] = []
   const fontLinks: string[] = []
 
   // ── Цвета ──────────────────────────────────────────────────────────────────
   const light = colorVars(cfg.colors?.light ?? {})
   const dark = colorVars(cfg.colors?.dark ?? {})
 
-  // ── Шрифты, шкала, формы — всё это от темы не зависит и живёт в светлом блоке
+  // ── Шрифты, шкала, формы — всё это от темы не зависит и живёт в светлом правиле
   const root: string[] = [...light]
 
   // 🔒 ИМЕНА ПЕРЕМЕННЫХ ЗАДАНЫ ТАБЛИЦЕЙ, А НЕ СКЛЕЙКОЙ ИЗ РОЛИ. Шаблон
@@ -165,7 +165,7 @@ export function buildDesignCss(cfg: DesignConfig = getDesignConfig()): {
   if (safe(cfg.shape?.appWidth)) root.push(`  --app-w: ${cfg.shape.appWidth};`)
   if (safe(cfg.shape?.heroWidth)) root.push(`  --hero-w: ${cfg.shape.heroWidth};`)
 
-  // Настройки блоков (308-1): первый экран по центру. Пиксели владельца — в rem с общим множителем шрифтов, чтобы
+  // Настройки первого экрана (308-1; ветка CONFIG `blocks` — имя данных CONFIG, сменится вместе с ним): первый экран по центру. Пиксели владельца — в rem с общим множителем шрифтов, чтобы
   // `--type-scale` продолжал двигать и этот заголовок. Границы — вне их страница ломается, а не «становится другой».
   const w = cfg.blocks?.heroOneWidth
   if (typeof w === "number" && w >= 600 && w <= 2400) root.push(`  --hero-one-w: ${w}px;`)
@@ -176,12 +176,12 @@ export function buildDesignCss(cfg: DesignConfig = getDesignConfig()): {
     if (typeof px === "number" && px >= 12 && px <= 120) root.push(`  ${v}: calc(${+(px / 16).toFixed(4)}rem * var(--type-scale));`)
   }
 
-  if (root.length) blocks.push(`:root {\n${root.join("\n")}\n}`)
+  if (root.length) rules.push(`:root {\n${root.join("\n")}\n}`)
 
   // 🔒 ТЁМНАЯ ТЕМА — ОТДЕЛЬНЫМ БЛОКОМ И ТОЛЬКО ЦВЕТА. Класс `.dark` ставит
   // инлайн-скрипт; всё, что от темы не зависит (шрифт, скругление, ширина),
   // повторять здесь не нужно — оно уже стоит в `:root` и наследуется.
-  if (dark.length) blocks.push(`.dark {\n${dark.join("\n")}\n}`)
+  if (dark.length) rules.push(`.dark {\n${dark.join("\n")}\n}`)
 
-  return { css: blocks.join("\n\n"), fontLinks: [...new Set(fontLinks)] }
+  return { css: rules.join("\n\n"), fontLinks: [...new Set(fontLinks)] }
 }

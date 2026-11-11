@@ -13,7 +13,7 @@ A hint, not a law: models of late 2026 work worse under rigid step-by-step instr
 
 ## Asking
 
-1. Your own first: the files of this folder, `npm run passport -- me` (block `node`), the skill of the area. Still unclear how
+1. Your own first: the files of this folder, `npm run passport -- me` (its part `node`), the skill of the area. Still unclear how
    the node does it → ask.
 2. `npm run ask-core -- "<one question in English, with the words of the area>"` wakes the core's main agent (if it has a Telegram
    bot, your person is asked first) and prints whether the question went.

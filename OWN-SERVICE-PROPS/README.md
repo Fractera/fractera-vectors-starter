@@ -47,7 +47,7 @@ No private data: the file is public. A key is never here, not even its variable 
 | `accepts` | agent | an example of what one sends it for its job |
 | `returns` | agent | an example of what it returns — the result of its job |
 | `designSkill` | agent (the design pass) | the design skill this element is built with (`impeccable`, `design-taste-frontend`, …), `""` when none — always present; the core takes it into its registry (owner 2026-10-07) |
-| `isFracteraArchitecture` | birth (template), then agent | `true` when the element is built on the Fractera architecture (born from a Fractera starter), `false` for a custom template or a plain React/Express app — an agent knows which contracts (page tree, blocks, design, A2A doors) it can rely on (owner 2026-10-07) |
+| `isFracteraArchitecture` | birth (template), then agent | `true` when the element is built on the Fractera architecture (born from a Fractera starter), `false` for a custom template or a plain React/Express app — an agent knows which contracts (page tree, sections, design, A2A doors) it can rely on (owner 2026-10-07) |
 | `framework` | birth (template), then agent | the framework inside: `next`, `react`, `express`, … — an agent decides whether to connect this element to its project (owner 2026-10-07) |
 | `elementType` | template | which template the element comes from: `native` — a root element of every node, added only from the Fractera repository (`fractera-native-item-starter`), never sold; `custom` — born by the node's button «Create WEB4 ITEM» from `fractera-custom-item-starter` |
 | `visibility` | person | `network` — seen outside the node; `node` — through the tunnel it answers as absent |
@@ -104,7 +104,7 @@ The node key is the header `X-Node-Key` (`SETTINGS_SECRET` of the node). The cor
 ## How the element's own agent reads it
 
 `npm run passport` — asks the running door on this machine with the node key from `.env.local` and prints the whole passport.
-The agent learns itself from it (skill `own-service-props-detection`; the block `node` says where it lives) and finds a neighbour by need (skill `node-elements-detection`):
+The agent learns itself from it (skill `own-service-props-detection`; the part `node` says where it lives) and finds a neighbour by need (skill `node-elements-detection`):
 how to work with another element is agreed over i2i (skill `use-i2i`) and the agreed API is written in the card `consumes`.
 
 ## How the texts are written

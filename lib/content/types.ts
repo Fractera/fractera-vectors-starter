@@ -3,17 +3,17 @@
 // TBase = the base-language document (all translatable fields required).
 // TOverride = a partial per-language override (same translatable fields, all optional),
 // plus an optional `headings` map for swapping individual h2 text without
-// replacing the whole `blocks` array.
+// replacing the whole `body` array.
 
-import type { Block, FaqPair } from './blocks/types'
+import type { PageItem, FaqPair } from '@/lib/content/page-items'
 
 export type LocalizedBody = {
-  blocks: Block[]
+  body: PageItem[]
   faq?: FaqPair[]
 }
 
 export type LocalizedBodyOverride = {
   headings?: Record<string, string>
-  blocks?: Block[]
+  body?: PageItem[]
   faq?: FaqPair[]
 }

@@ -7,7 +7,7 @@
     "tipInsecure": "Voice input needs HTTPS (or localhost). Connect your domain to enable it — or dictate with your system keyboard.",
     "micDenied": "Microphone access is blocked — allow it for this site and hold the button again.",
     "micNoDevice": "No microphone was found on this device.",
-    "frame": "The browser blocks the microphone inside the preview — open this page in its own tab to record.",
+    "frame": "The browser keeps the microphone off inside the preview — open this page in its own tab to record.",
     "failed": "Could not transcribe the recording.",
     "nothing": "Nothing was recognised — try again, closer to the microphone.",
     "noKey": "Voice input needs the OpenAI key — add it in the workspace settings.",

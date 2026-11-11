@@ -242,8 +242,8 @@ for (const [dir, typeFile, type, want] of CELLS) {
     continue
   }
   const typeSrc = fs.readFileSync(typeFile, "utf8")
-  const block = typeSrc.match(new RegExp(`export type ${type} = \\{([\\s\\S]*?)\\n\\}`))
-  const keys = block ? [...block[1].matchAll(KEY_RE)].map(m => m[1]) : []
+  const typeBody = typeSrc.match(new RegExp(`export type ${type} = \\{([\\s\\S]*?)\\n\\}`))
+  const keys = typeBody ? [...typeBody[1].matchAll(KEY_RE)].map(m => m[1]) : []
   const cells = fs.readdirSync(dir).filter(f => /^[a-z]{2}\.ts$/.test(f)).map(f => f.replace(".ts", ""))
 
   const holes = []

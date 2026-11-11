@@ -36,7 +36,7 @@ async function wakeAgent(task: Task, from: string, text: string) {
   // Владелец 2026-10-06: в живом прогоне 418-5 агент пропустил правило пробуждения из CLAUDE.md и сразу взялся за задачу —
   // поручение в руках сильнее правила в инструкции, поэтому «сначала узнай себя» стоит первой строкой поручения.
   const prompt = [
-    `Сначала узнай себя: npm run passport -- me (навык own-service-props-detection; вывод читай целиком, не режь head; блок node — где ты живёшь). Соседа ищи только по нужде: npm run a2a -- find <английские слова>.`,
+    `Сначала узнай себя: npm run passport -- me (навык own-service-props-detection; вывод читай целиком, не режь head; часть node — где ты живёшь). Соседа ищи только по нужде: npm run a2a -- find <английские слова>.`,
     `Задача A2A ${task.id} от ${from} (беседа ${task.contextId}).`,
     `Текст задачи: ${text}`,
     `Выполни по навыку a2a-conversation и ответь командой: npm run a2a -- reply ${task.id} "<ответ человеческим языком>"`,

@@ -100,9 +100,7 @@ description: >
     │   └── admin/
     │       ├── layout.tsx · page.tsx · _data/ · [...slug]/page.tsx · README.md
     │       ├── _components/README.md · _libs/README.md · _widgets/README.md
-    │       ├── _pages/ admin/ · users/ · site-settings/ · blocks/ (14 section folders, a README each)
-    │       ├── _libs/element-blocks.ts · _components/element-blocks-pages.tsx · _widgets/static/widget-static-element-blocks/
-    │       └── blocks/[section]/page.tsx · blocks/[section]/[name]/page.tsx   ← 577-11: the page of a section and the Preview of one block
+    │       ├── _pages/ admin/ · users/ · site-settings/
     │   └── messenger-h2a/          ← 459: H2A Messenger — only the architect; UI only from ai-elements (skill use-messenger)
     │       ├── layout.tsx · page.tsx (list of conversations) · _data/ {meta,en,ru}.json · README.md
     │       ├── _components/README.md · _libs/README.md · _widgets/README.md
@@ -124,7 +122,7 @@ A branch = `layout.tsx` + `page.tsx` + one child route. Everything below the bra
 🔒 Every branch root has three required folders, each with a README that says what goes in it (owner 2026-10-07):
 `_components/` — the branch's own components (server by default, islands `*.client.tsx`; shared ones go to `components/`);
 `_libs/` — the branch's own logic without markup (shared logic goes to `lib/`); `_widgets/` — the branch's widgets,
-`static/widget-static-<name>` or `dynamic/widget-dynamic-<name>`, listed in the branch's `_widgets/index.tsx` (the only own blocks a page may show — `scripts/check-page-composition.mjs`). Code of a
+`static/widget-static-<name>` or `dynamic/widget-dynamic-<name>`, listed in the branch's `_widgets/index.tsx` (the only own pieces of a branch a page may show — `check:page-sequence`). Code of a
 branch lives only there. `scripts/check-routes.mjs` refuses the build when a branch lacks one of them or its README.
 Every route folder and every `_pages/` has a `README.md` with a full example of a page folder — enough to add a page.
 
@@ -132,7 +130,7 @@ Every route folder and every `_pages/` has a `README.md` with a full example of 
 
 - `scripts/check-routes.mjs` — every route file is in its closed list (a new page is a data folder, never a `page.tsx`); every
   branch root has `_components/`, `_libs/`, `_widgets/` with a README.
-- `scripts/check-page-sequence.mjs` — a page names only `block-*`, `text-*` and its own branch's `widget-*`.
+- `scripts/check-page-sequence.mjs` — a page names only `section-*`, `text-*` and its own branch's `widget-*`.
 - `scripts/check-protected.mjs` — under `_widgets/` only `static/`, `dynamic/` and `index.tsx`.
 - A new branch, a new top-level folder or a moved one — ask the person first (`.claude/modes/build.md`, «Page»: a route owns its own).
 - `scripts/check-tree.mjs` (node step 462) — compares this element with the starting tree of its template

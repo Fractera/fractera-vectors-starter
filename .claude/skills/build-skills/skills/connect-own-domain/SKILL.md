@@ -93,7 +93,7 @@ card, «Update key»), `bad-account-id` / `no-account`.
 ## When the domain does not open although the node says it is fine
 
 - **The person is in Spain and it is a match day.** Not a cache and not Cloudflare: the access providers themselves refuse
-  connections to listed IP addresses. Spanish ISPs (Movistar, Orange, Vodafone, DIGI, mobile too) block Cloudflare IP
+  connections to listed IP addresses. Spanish ISPs (Movistar, Orange, Vodafone, DIGI, mobile too) cut off Cloudflare IP
   addresses during LaLiga broadcasts; a domain that shares such an address stops opening in Spain for hours. Measured 2026-10-11:
   a sample element domain (188.114.96.5, 188.114.97.5) hung on TCP from Spain while it answered 200 from outside. Check, do not guess:
   `curl -s https://hayahora.futbol/estado/blocked-any.txt | grep <IP of the domain>` (the domain's IPs: DNS `A` record). A hit

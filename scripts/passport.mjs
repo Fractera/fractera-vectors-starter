@@ -1,7 +1,7 @@
 // npm run passport — this element's passport as its own node sees it (OWN-SERVICE-PROPS/README.md).
 //   npm run passport            — the whole passport
-//   npm run passport -- me      — only who I am: identity, job, addresses, where it runs, this machine, ties, and the block `node`
-//   npm run passport -- project — only the block `node`: the core, the main agent, how many elements, how to find one (fixed size)
+//   npm run passport -- me      — only who I am: identity, job, addresses, where it runs, this machine, ties, and the part `node`
+//   npm run passport -- project — only the part `node`: the core, the main agent, how many elements, how to find one (fixed size)
 // The short modes exist because the whole answer is long (routes, descriptions): an agent cutting it with head missed the
 // node's elements and went around the passport to the core's files (live run 2026-10-06).
 // Asks the running element's door on this machine with the node key from .env.local, so the answer carries the node-only parts:
@@ -49,7 +49,7 @@ try {
     !native && m.h2h && 'H2H — people through their agents',
   ].filter(Boolean)
   const lang = env.NEXT_PUBLIC_LANG || 'en'
-  // 548-14 (owner 2026-10-20: the cost of an agent must not grow with the node): where this element lives, in a block of fixed
+  // 548-14 (owner 2026-10-20: the cost of an agent must not grow with the node): where this element lives, in a part of fixed
   // size — never the list of elements. Measured: the list was ~230 bytes per element (1000 elements → ~250 KB on every wake).
   // A neighbour is found by need: npm run a2a -- find <English words> (at most five).
   const core = p.project?.core

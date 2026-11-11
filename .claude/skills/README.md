@@ -13,7 +13,7 @@ skill itself: a `<!-- PROOF … -->` mark under its header). Vendored skills are
 |---|---|---|---|
 | `humanizer` | vendored, blader, MIT | removes the signs of AI writing from any text a person reads, the product quiz too — `SOURCE.md`, `.claude/modes/build.md` «Texts» | — not proven |
 | `backup-schedule` | ours, `build-skills` | backup of this memory element: the copying service is code, its schedule is data in `data/cron.json` (node step 558) | — not proven |
-| `use-page-tree` | ours, `build-skills` | pages as data folders; a page is one sequence of block-* · text-* · widget-*; blocks from the registry | ✅ 2026-10-07 |
+| `use-page-tree` | ours, `build-skills` | pages as data folders; a page is one sequence of section-* · text-* · widget-*; sections from their folders `components/sections/<kind>/` | ✅ 2026-10-07 |
 | `use-typography` | ours, `build-skills` | plain text on a page as `text-*`, drawn by the element typography | ✅ 2026-10-07 |
 | `build-widget` | ours, `build-skills` | a widget inside its route: static or dynamic, the branch list, its door in the branch, its skeleton | ✅ 2026-10-07 |
 | `use-tools` | ours, `build-skills` | tools: find, use only inside widgets, add with a card; the generated list | ✅ 2026-10-07 |
@@ -33,15 +33,9 @@ skill itself: a `<!-- PROOF … -->` mark under its header). Vendored skills are
 | `product-quiz` | ours, `build-skills` | the product quiz in `development-docs/product/`: when to load it, the interview one question at a time, the impact form before code, only the person confirms, `npm run check:product` | — not proven |
 | `use-auth` | ours, `build-skills` | sign-in by the node's auth element, roles and inheritance, locks of a branch, a page and a door, bypasses, guests, a new role | ✅ 2026-10-07 (report 2026-10-07-node-skills.md) |
 | `use-element-tree` | ours, `build-skills` | the exact file tree of the element and the folders every branch must have; the guards that keep it | ✅ 2026-10-12 |
-| `cloudflare-connection` | ours, `build-skills` | the tunnel, the temporary address, the own domain with subdomains, the copy in Workers — gains and limits | — not proven |
 | `connect-google-analytics` | ours, `build-skills` | the person gives a Google tag or a Search Console code: only the ID into «Site settings», banner + footer + policy pages turn on by themselves, check the page and GA Realtime of the property with THAT stream | 🟨 the steps were done live on lagrix 2026-10-11 by the node agent; not run by an element agent |
 | `connect-own-domain` | ours, `build-skills` | the person asks «connect my domain»: buy it, the node adds the zone and gives two name servers, the registrar step (browser or words), measure ≤5 min, old domain → come back in 3–4 h, attach to this element | — not proven |
 | `own-domain-sign-in` | ours, `build-skills` | sign-in on this element's own domain goes through the node's sign-in center — why, what to tell the person, the cost of direct sign-in, how to check it is alive and the env marker that breaks it | — not proven |
-| `computer-off` | ours, `own-service-props-skills` | what still works with the computer off (the Cloudflare copy) and what waits for it | ✅ 2026-10-07 (report 2026-10-07-node-skills.md) |
-| `project-origin` | ours, `build-skills` | a project only from the person's own fork of Fractera/web4-node-starter-kit; updates; moving to a new computer | — not proven |
-| `github-repositories` | ours, `build-skills` | one private repository per element: created by a button, renamed with the element, tokens, import, restore | — not proven |
-| `temporary-domain` | ours, `build-skills` | the free trycloudflare address: not permanent, read-only panel, when it dies, switch to an own domain early | — not proven |
-| `local-node` | ours, `own-service-props-skills` | a private node at home: agents, data, automations, Telegram as the remote, a buyer node over a2a | ✅ 2026-10-07 (report 2026-10-07-node-skills.md) |
 | `use-languages` | ours, `build-skills` | 82-language catalogue, enabled set, switcher, translations as files, search-open set and its guards, one language while building, the translation debt | ✅ 2026-10-07 (report 2026-10-07-node-skills.md) |
 | `use-machine-copy` | ours, `build-skills` | what a public page gives machines: Markdown copy, llms.txt, llms-full.txt; a widget's own markdown.ts; first-source facts about head markup | — not proven |
 | `use-site-menu` | ours, `build-skills` | header and footer menus as settings: nav.top/footer, labels, topMenu/footerPages switches, CONFIG copy, links and language, no build, live check | — not proven |
@@ -49,7 +43,7 @@ skill itself: a `<!-- PROOF … -->` mark under its header). Vendored skills are
 | `use-messenger` | ours, `build-skills` | the gatekeeper of ai-elements: messenger branches messenger-h2h / messenger-h2a and the drawer buttons; 🔒 messenger UI only from ai-elements; what is not built | ✅ 2026-10-12 |
 | `ai-elements` | vendored (Vercel) | how to install and use ai-elements components; `SOURCE.md` — origin and update | — vendored |
 | `page-snippet` | ours, `build-skills` | every public page has its own 1200×630 snippet at `<page>/snippet.png`, drawn on the first request (no rebuild) from title, description and the project background, tinted with the design primary; the background script asks the customer, names the price, or makes a free pattern | ✅ 2026-10-12 (after a fix) |
-| `use-shadcn` | ours, `build-skills` | the gatekeeper: widgets, tools and blocks only from shadcn; where our law beats the shadcn skill | 🟨 2026-10-07: law kept, skill not loaded |
+| `use-shadcn` | ours, `build-skills` | the gatekeeper: widgets, tools and sections only from shadcn; where our law beats the shadcn skill | 🟨 2026-10-07: law kept, skill not loaded |
 | `shadcn` | vendored, shadcn/ui, MIT | components, CLI, registries, composition rules — `SOURCE.md` | — not proven |
 | `design-taste-frontend` | vendored, Leon Lin, MIT | anti-generic landing design — `SOURCE.md` | — not proven |
 | `impeccable` | vendored, Paul Bakaus, Apache-2.0 | design direction from the audience's world — `SOURCE.md` (without hooks and agents) | — not proven |
@@ -64,3 +58,7 @@ skill itself: a `<!-- PROOF … -->` mark under its header). Vendored skills are
 
 Vendored skills are copies, never symbolic links, and are never edited by hand: `SOURCE.md` next to each says where it came
 from and how to update it.
+
+
+Six facts about the node are not skills any more (node step 717-4a) and live in `.claude/node-knowledge/`, read on need:
+`cloudflare-connection.md`, `temporary-domain.md`, `project-origin.md`, `github-repositories.md`, `computer-off.md`, `local-node.md`.

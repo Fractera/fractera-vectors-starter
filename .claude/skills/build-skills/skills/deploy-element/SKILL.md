@@ -24,7 +24,7 @@ description: >
 | Change | Visible on the live site |
 |---|---|
 | page data — texts, order of a sequence (`<lang>.json`, `meta.json`) | without a build on this computer: `npm run pages:refresh`, or by itself within 5 minutes; on the own domain the Cloudflare copy keeps the old page until «Deploy» or «Update copies» |
-| code — a widget, a component, a tool, a block, styles, a door | only after a build: «Deploy», or «Preview» → «Accept» |
+| code — a widget, a component, a tool, a section, styles, a door | only after a build: «Deploy», or «Preview» → «Accept» |
 
 A page that names a widget not built yet: the running site skips that item (a server log line) until the build — tell the person.
 
@@ -32,13 +32,13 @@ A page that names a widget not built yet: the running site skips that item (a se
 
 | | Where | Shows | For |
 |---|---|---|---|
-| **Tab «Live site»** («Живой сайт») of this element in the core | `/<lang>/<element>/preview` | the **live** version, with «Highlight», the link field and «Find», tasks to you; «Open in a new tab» → the development preview or the live site, without the frame | always: look, point at a block |
+| **Tab «Live site»** («Живой сайт») of this element in the core | `/<lang>/<element>/preview` | the **live** version, with «Highlight», the link field and «Find», tasks to you; «Open in a new tab» → the development preview or the live site, without the frame | always: look, point at a place on the page |
 | **Preview before deploy** | button «Preview» on «Preview & Deploy» → `http://127.0.0.1:<spare port>/<lang>` | the **new** version, built next to the live one, before visitors see it | doubt or risk (below) |
 | **Live site** | the element's address | what visitors see | after «Accept» or «Deploy» |
 
 **Preview before deploy is a full production build** (minutes) plus a second server of this element (~120 MB) kept until the
 person decides. It is not a development mode: a code change made after it needs a new build. It answers only on this computer.
-Its window has no highlight — to point at a block, use the tab «Live site» after «Accept».
+Its window has no highlight — to point at a place on the page, use the tab «Live site» after «Accept».
 
 ## What to advise the person
 
@@ -48,12 +48,12 @@ Its window has no highlight — to point at a block, use the tab «Live site» a
   stays on the same page.
 - **Nothing** on this computer for a data change: `npm run pages:refresh` and «reload the page». Visitors of the own domain see it
   after «Deploy» or «Update copies» on the core's «Domain activation».
-- Do not leave a preview hanging: until «Accept» or «Reject» it holds memory and blocks the next deploy.
+- Do not leave a preview hanging: until «Accept» or «Reject» it holds memory and stops the next deploy.
 
 ## What you do — and do not
 
 - **You:** commit, with `TASK-REPORT.json` at the element root in the same commit — it is built into that version and «Open
-  preview» shows it next to the block:
+  preview» shows it next to that place:
   ```json
   { "task": "what was asked", "done": ["what changed"], "check": ["how to check it"], "path": "/ru/docs", "anchor": "k3f9a" }
   ```
@@ -65,4 +65,4 @@ Its window has no highlight — to point at a block, use the tab «Live site» a
 
 ## How you know it worked
 
-After the person's «Accept»: the live address shows the change; for a block, the link `#block=<bid>` pasted into the field of the tab «Live site» and «Find» frames it.
+After the person's «Accept»: the live address shows the change; for a place on the page, the link `#block=<bid>` pasted into the field of the tab «Live site» and «Find» frames it.

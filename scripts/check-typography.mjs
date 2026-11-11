@@ -18,7 +18,7 @@ import fs from "fs"
 import path from "path"
 
 const ROOT = process.cwd()
-// 314-2: `sections/` удалён из шаблона — блоки «Блоков» лежат в `components/blocks/` и проверяются вместе с `components`.
+// 314-2: `sections/` удалён из шаблона — секции элемента лежат в `components/sections/` и проверяются вместе с `components`.
 const SCAN = ["app", "components"]
 const SKIP = new Set(["node_modules", ".next", ".git", ".swc"])
 
@@ -38,7 +38,7 @@ const SKIP = new Set(["node_modules", ".next", ".git", ".swc"])
 //
 // 🔒 Это ИСКЛЮЧЕНИЕ, а не прощённое нарушение: правило сюда не относится, потому
 // что файл не наш. Своего кода в этой папке у шаблона нет (314-2: `_tools/` удалён).
-// 314-2: вендоренный AI Elements удалён из шаблона вместе с блоком чата; список пуст, механизм оставлен.
+// 314-2: вендоренный AI Elements удалён из шаблона вместе с секцией чата; список пуст, механизм оставлен.
 // 333-12: AI Elements вернулись в шаблон для чата агентов на главной (слово владельца: «используй как можно больше элементов из
 // ui elements») — чужой исходник из реестра @ai-elements, та же причина, что у прежней записи.
 const VENDORED = new Set([path.join("components", "ai-elements")])

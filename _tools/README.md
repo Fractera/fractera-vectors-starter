@@ -8,7 +8,7 @@ socials by AI, a chat, a draft from free words. **Look here before building anyt
 
 Every tool folder is `tool-<name>` (owner 2026-10-07): `tool-voice-input`, `tool-image-crop`. The name tells what the thing is
 in any search or import without opening it. The same family across the element: widgets `widget-static-<name>` /
-`widget-dynamic-<name>`, blocks `block-<name>`. `check:tools-map` refuses a folder with another name.
+`widget-dynamic-<name>`, sections `section-<name>`. `check:tools-map` refuses a folder with another name.
 
 ## Tool or widget — decide before the first line
 

@@ -309,10 +309,9 @@
     {
       "id": "catalog-find",
       "name": "Find in the catalog",
-      "description": "Finds sections and blocks in this element's catalog by words or tags; an empty answer means there is none yet.",
+      "description": "Finds sections in this element's catalog by words or tags; an empty answer means there is none yet.",
       "tags": [
         "catalog",
-        "blocks",
         "sections",
         "find"
       ],
@@ -329,10 +328,10 @@
     {
       "id": "catalog-get",
       "name": "Get from the catalog",
-      "description": "Gives a block of the catalog in full: shadcn registry item files, its fields and a filled example.",
+      "description": "Gives a section of the catalog in full: shadcn registry item files, its fields and a filled example.",
       "tags": [
         "catalog",
-        "blocks",
+        "sections",
         "get",
         "shadcn"
       ],
@@ -349,10 +348,10 @@
     {
       "id": "catalog-contribute",
       "name": "Contribute to the catalog",
-      "description": "Takes a block another element made, checks it and stores it as the next version so anyone can reuse it.",
+      "description": "Takes a section another element made, checks it and stores it as the next version so anyone can reuse it.",
       "tags": [
         "catalog",
-        "blocks",
+        "sections",
         "contribute",
         "save"
       ],

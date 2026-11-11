@@ -2,8 +2,8 @@
   "title": "Политика cookie",
   "description": "Какие cookie и записи в браузере использует сайт, зачем каждая и как изменить свой выбор.",
   "keywords": "политика cookie, файлы cookie, согласие, Google Analytics",
-  "blocks": [
-    { "kind": "block-section-head", "id": "cookies-h1", "title": "Cookie на сайте %SITE%", "bid": "t4l3z" },
+  "body": [
+    { "kind": "section-head", "id": "cookies-h1", "title": "Cookie на сайте %SITE%", "bid": "t4l3z" },
     { "kind": "text-lead", "text": "Cookie — небольшая запись, которую сайт хранит в вашем браузере. Ниже перечислены все, что ставит этот сайт, — зачем и на какой срок.", "bid": "kgakq" },
     { "kind": "text-h2", "text": "Нужны для работы сайта", "bid": "ck2nd" },
     { "kind": "text-p", "text": "Ставятся без вопроса: без них сайт забывал бы ваш язык и настройки на следующей странице. Ни одна не используется, чтобы следить за вами на других сайтах.", "bid": "ck3nw" },

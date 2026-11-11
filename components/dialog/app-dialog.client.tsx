@@ -82,7 +82,7 @@ export type AppDialogProps = {
   bodyClassName?: string
   /**
    * Классы подвала. По умолчанию подвал раскладывает КНОПКИ в строку; если туда
-   * едет не ряд кнопок, а блок (итог заказа, например), раскладку переопределяют
+   * едет не ряд кнопок, а целый фрагмент (итог заказа, например), раскладку переопределяют
    * здесь, а не разметкой внутри.
    */
   footerClassName?: string
@@ -117,7 +117,7 @@ export function AppDialog({
   // Запрет закрытия — это ТРИ разных пути, а не один. Погасив только Escape,
   // получаем окно, которое всё равно закрывается нажатием мимо, и запрет
   // выглядит работающим ровно до первого промаха мышью.
-  const block = dismissible
+  const keepOpen = dismissible
     ? undefined
     : (e: Event) => {
         e.preventDefault()
@@ -130,9 +130,9 @@ export function AppDialog({
         showCloseButton={dismissible}
         closeLabel={ui.close}
         aria-describedby={description ? descId : undefined}
-        onEscapeKeyDown={block}
-        onPointerDownOutside={block}
-        onInteractOutside={block}
+        onEscapeKeyDown={keepOpen}
+        onPointerDownOutside={keepOpen}
+        onInteractOutside={keepOpen}
       >
         <DialogHeader className="shrink-0 gap-1 border-b border-border px-5 py-4 pr-12 text-left">
           <DialogTitle className={titleClassName}>{title}</DialogTitle>

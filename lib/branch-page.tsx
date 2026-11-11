@@ -6,7 +6,7 @@ import { AccessGate } from '@/components/auth/access-gate.client'
 import { accessGateUi } from '@/components/auth/access-gate.i18n'
 import { appDialogUi } from '@/components/dialog/app-dialog.i18n'
 import { createContentPage } from '@/lib/content/create-content-page'
-import type { Block } from '@/lib/content/blocks/types'
+import type { PageItem } from '@/lib/content/page-items'
 import { branchChild, branchRoot, wordsIn, type TreePage } from '@/lib/page-tree'
 import { ownId } from '@/lib/own-id'
 import { brand } from '@/lib/brand'
@@ -27,12 +27,12 @@ const ogImageOf = (own: string | undefined, segments: string[], subPath: string)
 // 🔒 ЗАМОК РЕБЁНКА — ИЗ ЕГО ДАННЫХ (`meta.roles`) поверх замка ветки в `layout.tsx`; архитектор проходит всегда.
 
 /** Виджеты ветки: имя (`widget-*`) → отрисовка. Список живёт в `<ветка>/_widgets/index.tsx` (владелец 2026-10-07: «удалили
- *  маршрут — проект чистый»); страница ставит виджет в последовательность `blocks` на своё место (423). */
+ *  маршрут — проект чистый»); страница ставит виджет в последовательность `body` на своё место (423). */
 export type { WidgetSet }
 
 /** 423: страница без рамки — только её виджеты, по порядку последовательности. */
 function bareWidgets(page: TreePage, lang: string, set: WidgetSet | undefined) {
-  return wordsIn(page, lang).blocks
+  return wordsIn(page, lang).body
     .filter((b) => b.kind.startsWith('widget-'))
     .map((b, i) => <Fragment key={`${b.kind}-${i}`}>{set?.[b.kind]?.(lang) ?? null}</Fragment>)
 }
@@ -40,15 +40,15 @@ function bareWidgets(page: TreePage, lang: string, set: WidgetSet | undefined) {
 const ARCHITECT_PAGE = /^\/([a-z]{2})\/architect\/(build\/[a-z-]+)$/
 
 /** Ссылки на страницы ЭТОГО элемента в слое архитектора: в данных без имени, имя — из паспорта при отрисовке. */
-function fillElementLinks(blocks: Block[]): Block[] {
+function fillElementLinks(body: PageItem[]): PageItem[] {
   const at = (href: string) => {
     const m = href.match(ARCHITECT_PAGE)
     if (!m) return href
     const id = ownId()
     return id ? `/${m[1]}/architect/${id}/${m[2]}` : '#'
   }
-  return blocks.map((b) =>
-    b.kind === 'block-hero-centered'
+  return body.map((b) =>
+    b.kind === 'section-hero-centered'
       ? {
           ...b,
           ...(b.cta ? { cta: { ...b.cta, href: at(b.cta.href) } } : {}),
@@ -83,7 +83,7 @@ function allowedRoles(page: TreePage, segments: string[]): string[] | null {
 function contentOf(page: TreePage, lang: string, segments: string[]) {
   const w = wordsIn(page, lang)
   const roles = allowedRoles(page, segments)?.join(', ')
-  // `%SITE%` в тексте — имя сайта (соглашение данных; прежний каталог подставлял его сам, блок `p` из «Блоков» — нет).
+  // `%SITE%` в тексте — имя сайта (соглашение данных; прежний каталог подставлял его сам, вид `p` прежнего каталога — нет).
   // Узел, шаг 450-1: подставляется в КАЖДУЮ строку страницы — заголовок, описание, заголовки секций, lead, h2, пункты списков, FAQ.
   // ✗ До этого — только в `text-p`, и на странице «Cookie» в заголовке так и стояло «%SITE%».
   const site = brand().name
@@ -93,12 +93,12 @@ function contentOf(page: TreePage, lang: string, segments: string[]) {
     if (v && typeof v === 'object') return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, fill(x)])) as T
     return v
   }
-  const blocks = fill(fillElementLinks(w.blocks)).map((b) => {
+  const body = fill(fillElementLinks(w.body)).map((b) => {
     if (b.kind !== 'text-p' || !roles) return b
     const text = b.text.replace('{roles}', roles)
     return text === b.text ? b : { ...b, text }
   })
-  return { title: fill(w.title), description: fill(w.description), keywords: w.keywords ?? '', blocks, faq: fill(w.faq) }
+  return { title: fill(w.title), description: fill(w.description), keywords: w.keywords ?? '', body, faq: fill(w.faq) }
 }
 
 type Crumb = { label: string; href?: string }
@@ -106,7 +106,7 @@ type Crumb = { label: string; href?: string }
 /**
  * АДРЕС СТРАНИЦЫ ДЛЯ ПОДСВЕТКИ (317-2): обёртка `display: contents` (на вёрстку не влияет) с `data-page` — адрес страницы —
  * и `data-file` — файл данных, из которого нарисован этот язык. Рамка подсветки берёт отсюда «страница · файл», а из
- * блока — его `bid`; этого достаточно, чтобы агент открыл ровно тот абзац.
+ * части — её `bid`; этого достаточно, чтобы агент открыл ровно тот абзац.
  */
 function PageAddress({ page, file, children }: { page: string; file: string; children: React.ReactNode }) {
   return <div data-page={page} data-file={file} style={{ display: 'contents' }}>{children}</div>
@@ -132,7 +132,7 @@ export function rootPage(opts: { segments: string[]; subPath: string; titleInBod
       closedBranch: !isPublic(opts.segments),
       meta: { subPath: opts.subPath, ogImage: ogImageOf(page.meta.ogImage, opts.segments, opts.subPath), service: page.meta.service },
       resolve: (lang) => contentOf(page, lang, opts.segments),
-      // 423: виджеты ветки рисуются там, где стоят в последовательности `blocks`.
+      // 423: виджеты ветки рисуются там, где стоят в последовательности `body`.
       widgets: opts.widgets,
       titleInBody: opts.titleInBody,
       chrome: opts.crumbs === false ? undefined : (_lang, c) => ({ breadcrumbs: [{ label: c.title }] }),

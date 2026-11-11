@@ -2,8 +2,8 @@
   "title": "Privacy Policy",
   "description": "What personal data this site processes, why, who else receives it, and how to ask for it to be deleted.",
   "keywords": "privacy policy, personal data, GDPR, Google Analytics",
-  "blocks": [
-    { "kind": "block-section-head", "id": "privacy-h1", "title": "Privacy on %SITE%", "bid": "wpj2y" },
+  "body": [
+    { "kind": "section-head", "id": "privacy-h1", "title": "Privacy on %SITE%", "bid": "wpj2y" },
     { "kind": "text-lead", "text": "This site runs on its owner's own computer. Your data is kept there, not in a shared cloud database of a third company.", "bid": "kns6w" },
     { "kind": "text-h2", "text": "What is processed and why", "bid": "pv2wh" },
     { "kind": "text-list", "items": [

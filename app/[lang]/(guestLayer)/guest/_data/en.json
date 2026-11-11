@@ -6,14 +6,14 @@
     "signingIn": "Creating a guest account…",
     "failed": "The guest account could not be created: the sign-in service did not return a session. The page does not retry by itself, so that no extra records are created."
   },
-  "blocks": [
+  "body": [
     {
       "kind": "text-p",
       "text": "We have created an anonymous guest account for you in our database. We did not ask for your name, email or phone, and we do not link this account to you as a person. It simply lets the site remember what you do here in this browser — a filled cart, an order in progress, a conversation.",
       "bid": "zytcl"
     },
     {
-      "kind": "block-section-head",
+      "kind": "section-head",
       "id": "why",
       "title": "Why we do this",
       "bid": "tiexd"
@@ -29,7 +29,7 @@
       "bid": "c5wch"
     },
     {
-      "kind": "block-warning-card",
+      "kind": "section-warning-card",
       "title": "We recommend a full registration",
       "text": "With a full registration you can sign in from any device and use everything we offer. It takes a minute.",
       "bid": "o14e4"

@@ -293,7 +293,7 @@ if (existsSync(robotsBody)) {
     const d = (line.match(/^\s*disallow:\s*(\S+)/i) ?? [])[1]
     const seg = d?.replace(/\*$/, "").replace(/\/$/, "").split("/")
     if (seg && seg.length === 2 && LANGS.includes(seg[1])) {
-      fail("robots.txt", "robots-blocks-language", `robots.txt запрещает язык целиком (${d}) — его noindex не прочтётся`)
+      fail("robots.txt", "robots-closes-language", `robots.txt запрещает язык целиком (${d}) — его noindex не прочтётся`)
     }
   }
 }

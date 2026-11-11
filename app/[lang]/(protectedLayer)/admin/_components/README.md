@@ -11,7 +11,7 @@ the lock screen of the branch. `page.tsx` stays thin and re-exports from here.
 - **Server by default.** A file is a server component unless it needs the browser; a browser piece is named `*.client.tsx`
   and stays an island inside a server component, so the page is still prerendered and readable without JavaScript.
 - **Not here:** something two branches use — it goes to `components/` at the root (shadcn primitives in `components/ui/`);
-  a block shown on a page — that is a widget (`../_widgets/`) or a catalog block; logic without markup — `../_libs/`.
+  a piece shown on a page — that is a widget (`../_widgets/`) or a section of this element (`components/sections/`); logic without markup — `../_libs/`.
 
 ## Rule of thumb
 

@@ -4,7 +4,7 @@
   "entry": "own",
   "port": {
     "desired": 24694,
-    "note": "A wish, not a decision. The node assigns the actual port from the block 24680-25679. Ask the node, never remember."
+    "note": "A wish, not a decision. The node assigns the actual port from the range 24680-25679. Ask the node, never remember."
   },
   "env": {
     "file": ".env.local",

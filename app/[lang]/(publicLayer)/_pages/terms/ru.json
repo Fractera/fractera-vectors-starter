@@ -2,9 +2,9 @@
   "title": "Условия использования",
   "description": "Правила использования этого сайта и его сервисов.",
   "keywords": "условия использования, пользовательское соглашение",
-  "blocks": [
+  "body": [
     {
-      "kind": "block-section-head",
+      "kind": "section-head",
       "id": "terms-h1",
       "title": "Что здесь должно быть",
       "bid": "xwas3"

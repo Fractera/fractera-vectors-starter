@@ -22,7 +22,7 @@ import { dataJson } from "./data-service";
 export type KnowledgeAnswer = {
   available: boolean;
   answer: string | null;
-  /** The engine's own reference block, when it returned one. */
+  /** The engine's own reference passage, when it returned one. */
   raw?: unknown;
 };
 

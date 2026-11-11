@@ -1,7 +1,7 @@
 // Author identity of THIS project — the person a post is attributed to.
 //
 // Used twice, and the two uses must never disagree: the visible byline under a
-// quote block, and the `author` (Person) node of the article's structured data.
+// quote item, and the `author` (Person) node of the article's structured data.
 // Search engines consolidate a person into ONE entity through `sameAs`; two
 // different spellings of the same author split that entity in half.
 //

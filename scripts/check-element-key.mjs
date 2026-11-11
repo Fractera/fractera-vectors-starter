@@ -10,7 +10,7 @@ const ok = (cond, what) => { if (!cond) fails.push(what) }
 
 ok(elementKeyOf('root', SECRET) === ROOT, 'the test vector changed (root)')
 ok(elementOf(ROOT, SECRET) === 'root', 'a good key is not read')
-ok(elementOf(`blocks.${ROOT.slice('root.'.length)}`, SECRET) === null, 'a key with a swapped id passes')
+ok(elementOf(`body.${ROOT.slice('root.'.length)}`, SECRET) === null, 'a key with a swapped id passes')
 ok(elementOf(ROOT.slice(0, -1), SECRET) === null, 'a key with a cut mac passes')
 ok(elementOf(ROOT, '') === null && elementOf(ROOT, undefined) === null, 'a key passes with no node secret')
 ok(elementOf(ROOT, 'another-node-secret') === null, 'a key of another node passes')

@@ -18,8 +18,8 @@ function phrase(skill: string, input: Json, result: Json, lang: Lang): string {
     if (!query) return ru ? `В каталоге разделов: ${sections}; показываю единиц: ${n}.` : `The catalogue has ${sections} sections; showing ${n} units.`
     if (n === 0) {
       return ru
-        ? `По запросу «${query}» в каталоге ничего нет. Можно сделать такой блок и передать мне на сохранение.`
-        : `Nothing for «${query}» in the catalogue. You can build such a block and hand it to me to keep.`
+        ? `По запросу «${query}» в каталоге ничего нет. Можно сделать такую секцию и передать мне на сохранение.`
+        : `Nothing for «${query}» in the catalogue. You can build such a section and hand it to me to keep.`
     }
     return ru ? `По запросу «${query}» нашлось: ${n}.` : `Found ${n} for «${query}».`
   }

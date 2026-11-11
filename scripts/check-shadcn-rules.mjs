@@ -19,7 +19,7 @@ import fs from "node:fs"
 import path from "node:path"
 
 const ROOT = process.cwd()
-// 314-2: `sections/` удалён из шаблона — блоки «Блоков» лежат в `components/blocks/`.
+// 314-2: `sections/` удалён из шаблона — секции элемента лежат в `components/sections/`.
 // 425 (владелец 2026-10-07: «ни при каких обстоятельствах для виджетов, инструментов или блоков не использовать самописный
 // инструмент»): виджеты живут в `app/**/_widgets/`, инструменты — в `_tools/`; оба теперь под сторожем.
 const AREAS = ["components", "_tools", "app"]
@@ -91,9 +91,9 @@ const EXEMPT = [
     why: "AI Elements (Vercel, реестр @ai-elements, шаг 333-12): чужой исходник shadcn-формата, ставится `shadcn add`; наши правки в нём — только облегчение (без streamdown и shiki) и цвет текста",
   },
   {
-    file: "lib/blocks/tone.ts",
+    file: "lib/content/tone.ts",
     rule: "no-literal-colour",
-    why: "карта тонов блока «Блоков» ПЕРЕЧИСЛЯЕТ классы намеренно — именно так класс попадает в сборку Tailwind (урок шага 54)",
+    why: "карта тонов ярлыков ПЕРЕЧИСЛЯЕТ классы намеренно — именно так класс попадает в сборку Tailwind (урок шага 54)",
   },
 ]
 
@@ -156,7 +156,7 @@ for (const f of files.sort()) {
   }
 }
 
-const kinds = files.filter(f => /sections[\\/]blocks[\\/].*\.server\.tsx$/.test(f)).length
+const kinds = files.filter(f => /sections[\\/]body[\\/].*\.server\.tsx$/.test(f)).length
 console.log(`\n  просмотрено файлов: ${files.length} (рендерреров видов среди них: ${kinds})`)
 for (const e of EXEMPT) console.log(`  · исключение ${e.file} [${e.rule}]: ${e.why}`)
 

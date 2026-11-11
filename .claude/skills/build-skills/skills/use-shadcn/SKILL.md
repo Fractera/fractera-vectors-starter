@@ -1,7 +1,7 @@
 ---
 name: use-shadcn
 description: >
-  Builder skill. The gatekeeper of the vendored `shadcn` skill in this Fractera element: every widget, tool and block is built
+  Builder skill. The gatekeeper of the vendored `shadcn` skill in this Fractera element: every widget, tool and section is built
   only from shadcn components (`components/ui`) — nothing hand-made — and where our law is louder than the shadcn skill.
   Load it before writing any button, input, select, textarea, table, tabs, dialog, toast, form or card; before adding a shadcn
   component; whenever the person asks for "a form", "a table", "a modal", "a notification", "a toggle", "make it look like …";
@@ -17,14 +17,14 @@ description: >
 > Informational, not binding: know a better way for the case in front of you — do it your way and say so. The one thing that
 
 **Process: build** — this skill changes the element as a thing: code, commit, rebuild; confirm with the three lines of `.claude/modes/build.md` («Confirm the request first»).
-> is not optional: no hand-made control in a widget, a tool or a block.
+> is not optional: no hand-made control in a widget, a tool or a section.
 
 The vendored `shadcn` skill (`.claude/skills/shadcn/`, provenance in its `SOURCE.md`) owns **how** its components compose — use
 it for that. This skill owns **what is allowed** in this element.
 
 ## The law
 
-Widgets (`<branch>/_widgets/`), tools (`_tools/`), blocks (`components/blocks/`) and every component they import are built
+Widgets (`<branch>/_widgets/`), tools (`_tools/`), sections (`components/sections/`) and every component they import are built
 from `components/ui` and the typography primitives. A control the folder does not have is added, never written by hand:
 
 ```

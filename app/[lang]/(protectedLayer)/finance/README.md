@@ -49,8 +49,8 @@ app/[lang]/(protectedLayer)/finance/_pages/<slug>/en.json
   "title": "How to plant a watermelon",
   "description": "Planting, the first weeks and watering.",
   "keywords": "",
-  "blocks": [
-    { "kind": "block-section-head", "id": "planting", "title": "Planting" },
+  "body": [
+    { "kind": "section-head", "id": "planting", "title": "Planting" },
     { "kind": "text-p", "text": "Water the seedlings once, right after planting." }
   ]
 }
@@ -59,13 +59,13 @@ app/[lang]/(protectedLayer)/finance/_pages/<slug>/ru.json
 {
   "title": "Как посадить арбуз",
   "description": "Посадка, первые недели и полив.",
-  "blocks": [
-    { "kind": "block-section-head", "id": "planting", "title": "Посадка" },
+  "body": [
+    { "kind": "section-head", "id": "planting", "title": "Посадка" },
     { "kind": "text-p", "text": "Полейте рассаду один раз, сразу после высадки." }
   ]
 }
 ```
 
-The page answers at `/<lang>/finance/<slug>`. Block kinds — `lib/content/blocks/types.ts`; a missing kind is written in this element by its design pass
-(`components/blocks/README.md`).
+The page answers at `/<lang>/finance/<slug>`. The kinds — `lib/content/page-items.ts` and the sections `components/sections/index.ts`; a missing kind is written in this element by its design pass
+(`components/sections/README.md`).
 `roles` puts a second lock on the page on top of the branch lock; `{roles}` in a paragraph prints the same list. The architect always passes.

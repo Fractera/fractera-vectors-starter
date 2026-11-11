@@ -21,7 +21,7 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 
 const ROOT = process.cwd();
-// 314-2: `sections/` и `_tools/` удалены из шаблона — блоки приходят из «Блоков» в `components/blocks/`.
+// 314-2: `sections/` и `_tools/` удалены из шаблона — секции элемента живут в `components/sections/`.
 const SCAN = ["app", "components", "services", "lib"];
 
 // Разрешено ровно двум: примитиву shadcn и общей обёртке над ним. Всё остальное
@@ -69,7 +69,7 @@ const SCRIM = /\b(?:fixed|absolute)\b[^"'`]*\binset-0\b[^"'`]*\bbg-(?:black|fore
 const PORTAL = /\bcreatePortal\s*\(/;
 
 // ✗ ТРЕТЬЕ ПРАВИЛО ОПЛАЧЕНО СОБСТВЕННЫМ ОБХОДОМ (2026-08-30, нашёл владелец).
-// Агент, писавший окно заявки в каталоге блоков, импортировал `DialogContent`
+// Агент, писавший окно заявки в каталоге секций, импортировал `DialogContent`
 // напрямую — и получил окно БЕЗ предела высоты и БЕЗ прокручиваемого тела:
 // длинная форма выросла за нижний край экрана вместе с кнопкой «Отправить».
 // Владелец: «ты не добавил вертикальный скролл в модальное окно».

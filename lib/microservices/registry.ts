@@ -59,7 +59,7 @@ export function listServices(): RegistryEntry[] {
   return read().services
 }
 
-/** Строка реестра по имени блока, или `null`, если такого блока в узле нет. */
+/** Строка реестра по имени элемента, или `null`, если такого элемента в узле нет. */
 export function getService(id: string): RegistryEntry | null {
   return read().services.find((s) => s.id === id) ?? null
 }

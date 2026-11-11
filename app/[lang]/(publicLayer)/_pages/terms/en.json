@@ -2,9 +2,9 @@
   "title": "Terms of Service",
   "description": "The rules for using this site and its services.",
   "keywords": "terms of service, terms and conditions",
-  "blocks": [
+  "body": [
     {
-      "kind": "block-section-head",
+      "kind": "section-head",
       "id": "terms-h1",
       "title": "What belongs here",
       "bid": "xwas3"

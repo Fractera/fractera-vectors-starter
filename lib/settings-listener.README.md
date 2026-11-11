@@ -38,7 +38,7 @@ export async function register() {
   const { pullProjectSettings } = await import("./lib/project-settings")
   await pullProjectSettings()
   const { subscribeToConfig } = await import("./lib/settings-listener")
-  await subscribeToConfig("blocks")
+  await subscribeToConfig("shop")
 }
 ```
 
