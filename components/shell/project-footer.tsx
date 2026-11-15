@@ -87,6 +87,21 @@ export function ProjectFooter({ data, surface = {} }: { data: ShellData; surface
           </div>
         </div>
       </div>
+
+      {/* «Powered by Fractera» — the second footer of every page of the core and of every element (node step 753, the owner
+          2026-11-15): 8 px letters in a 10 px strip, the hairline included; no background of its own; the text colour by token —
+          black in the light theme, white in the dark; the link leads to the node's repository. A mark, English in every language.
+          It stays the last line of the page and is never moved up (CLAUDE.md of the core, «Laws everywhere»). */}
+      <div className="h-[10px] border-t border-border flex items-center justify-center" data-project-footer-mark>
+        <a
+          href="https://github.com/Fractera/web4-node-starter-kit"
+          target="_blank"
+          rel="noopener"
+          className="text-[8px] leading-[9px] font-medium tracking-wide text-foreground hover:text-primary transition-colors"
+        >
+          Powered by Fractera
+        </a>
+      </div>
     </footer>
   )
 }
