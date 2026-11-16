@@ -41,3 +41,14 @@ Words for the person that the person is not reading from you right now — first
 language>"`. The core's main agent tells the architect where they read it, naming you; `===TELL_CORE_OK===` — done. Without `--alarm`
 (your own initiative, rare) the node first asks the person whether to turn the main agent on. Never another agent's bot or door:
 only agents talk to agents (`CLAUDE.md`, section 7).
+
+## The person's hands (`ask-person`, core step 761-16d)
+
+A step only your person may do — a password, a sign-in, a code, a /start, an irreversible click — is never a line in your chat: `npm run
+ask-person -- "<what to do, in the person's language>" --href <the page or https address> --why "<why only they can>" --hint "<what may
+pop up on the way and what to press>"`. The core shows an orange window at the bottom of every page of the node's panel, naming you,
+until the person presses «Готово»; the press wakes you with `⟦node · person-done · <you> · HH:MM⟧` — check the result yourself, then go
+on (the owner of the node, 2026-11-16: «уведомление на экране которое невозможно пропустить … и подтвердить о его завершении»).
+`npm run ask-person -- list` — your open requests; `-- drop <id>` — take one back. Chrome's own windows («Открыть приложение
+"Telegram"?», a file save) are invisible to the browser extension: never open a `t.me` address in the person's tab
+(`https://web.telegram.org/k/#@<name>` instead), and name such a window in `--hint` with the button to press.

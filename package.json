@@ -82,7 +82,17 @@
     "design:take": "node scripts/design-take.mjs",
     "check:prototypes": "node scripts/check-prototypes.mjs",
     "pass": "node scripts/pass.mjs",
-    "design-skill": "node scripts/design-skill.mjs"
+    "design-skill": "node scripts/design-skill.mjs",
+    "ask-person": "node scripts/ask-person.mjs",
+    "check:shadcn-parts": "node scripts/check-shadcn-parts.mjs",
+    "test:shadcn-parts": "node scripts/check-shadcn-parts.test.mjs",
+    "build:parts-map": "node scripts/build-parts-map.mjs",
+    "check:parts-map": "node scripts/check-parts-map.mjs",
+    "check:parts-dup": "node scripts/check-parts-dup.mjs",
+    "parts": "node scripts/parts.mjs",
+    "tool:take": "node scripts/tool-take.mjs",
+    "tool:own": "node scripts/tool-own.mjs",
+    "tool:new": "node scripts/tool-new.mjs"
   },
   "dependencies": {
     "@a2a-js/sdk": "1.3.0",
