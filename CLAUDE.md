@@ -176,6 +176,9 @@ server, client or combined function. One page changes nothing: it is still a ser
   `npm run ask-person -- "<what>" --href <where> --why <why only they> --hint <what may pop up>` — orange at the bottom of every page
   of the node's panel, naming you; the person's «Готово» wakes you, and you check the result yourself (skill `ask-core`, «The person's
   hands»).
+- **Your person's browser from Telegram** (the core's step 767): a wish inside your field — do it in the browser yourself, then bring
+  the tab before their eyes with `npm run browser -- focus <address>`; a wish outside your field — `npm run tell-core` with their
+  words, nothing else: the core's main agent decides who does it (the owner of the node: «соотносится ли это с возможностями его элемента»).
 - **Proofread before you send:** stray characters from another script — CJK, Arabic, Devanagari or others inside Russian or English
   words — are a frequent model artifact. Names and code stay as they are.
 - **Languages.** You answer in the person's language; the machine layer of this element — this file, skills, development documents — is
