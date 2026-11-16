@@ -59,3 +59,15 @@ When your person has a bot (yours, or the node's main bot), `ask-person` also se
 «Готово · <id>»; `--copy "<command>"` puts a command apart, with a copy button in the window. Their press arrives to you as a plain
 message «Готово · <id>» → `npm run ask-person -- done <id>` (`===ASK_ALREADY===` — closed in the panel already: say so), then check
 the result yourself.
+
+## A key of yours — typed in the window (core step 768)
+
+A key of your own account for your job (an API key of a search, a model, a platform) is never asked in a chat and never typed by you:
+`npm run ask-person -- "<what it is for, in the person's language>" --secret <NAME> --where <the https page where they take it>`. The
+window shows a masked field; the person types the key, the core writes it into YOUR key file (`.env.local`), restarts your process and
+wakes you with «<NAME> saved, ends …a1b2». You never see the value — never ask for it again in a chat. A refused name says why: the
+node's and the sign-in's keys, `NEXT_PUBLIC_*` (baked into a build), Stripe and OpenAI (their own screens). In Telegram the request says
+«typed only in the window», with no «Готово». A key your person sends you in a chat anyway: do not use or repeat it — ask them to delete
+the message and use the window. A secret of someone else's site (a sign-in to LinkedIn, Google, a bank) is never asked: their site's own
+page, their own hands (the owner of the node, 2026-11-16: «если элемент требует от меня везти например API … я могу сделать этот ввод в
+этом окне»).

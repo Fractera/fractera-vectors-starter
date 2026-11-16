@@ -4,6 +4,8 @@
 //   npm run ask-person -- drop <id>   take your request back
 //   npm run ask-person -- done <id>   your person answered «Готово · <id>» in Telegram (it came to you as their message): close it
 //   [--copy "<a command they paste>"]  the window and the Telegram message show it apart, with a copy button (core 761-16b, 764-a)
+//   [--secret <NAME> --where <https://…>]  a key of your own account: a masked field in the window, the core writes it into your key file
+//                                          and restarts you; you get «saved, ends …a1b2», never the value (core step 768)
 // The core shows it as an orange window at the bottom of every page of the node's panel, naming this element, until the person
 // presses «Готово»; that press wakes YOU with `⟦node · person-done · <this element> · HH:MM⟧`: check the result yourself, then go on.
 // The owner, 2026-11-16: «уведомление на экране которое невозможно пропустить … и подтвердить о его завершении»; «лучше показывать
@@ -61,9 +63,11 @@ else if (args[0] === 'drop') body = { from: id, drop: args[1] ?? '' }
 else if (args[0] === 'done') body = { from: id, done: (/([a-f0-9]{8})\b/.exec(args.slice(1).join(' '))?.[1]) ?? '' }
 else {
   const href = flag('--href'); const why = flag('--why'); const hint = flag('--hint'); const copy = flag('--copy')
+  // core step 768: a key of your own account — the person types it in the window's masked field; it goes straight into your key file
+  const secretName = flag('--secret'); const where = flag('--where')
   const text = args.join(' ').replace(/\s+/g, ' ').trim()
   if (!text) fail('ask-person -- "<what to do, in the person\'s language>" [--href …] [--why …] [--hint …]')
-  body = { from: id, text, href, why, hint, copy }
+  body = { from: id, text, href, why, hint, copy, ...(secretName ? { secret: { name: secretName, ...(where ? { where } : {}) } } : {}) }
 }
 try {
   const r = await fetch(`${core}/api/node/person-asks`, {
@@ -77,6 +81,7 @@ try {
   if (body.list) console.log(b.asks?.length ? b.asks.map((a) => `${a.id} · ${String(a.at).slice(11, 16)} UTC · ${a.text}`).join('\n') : 'no open requests')
   else if (body.drop !== undefined) console.log(`===ASK_DROPPED=== ${body.drop}`)
   else if (body.done !== undefined) console.log(b.done ? `===ASK_DONE=== ${body.done} — closed; check the result yourself, then go on` : `===ASK_ALREADY=== ${body.done} was closed in the panel already — tell your person it was done`)
+  else if (body.secret) console.log(`===ASK_PUT=== ${b.id} — a window with a masked field for ${body.secret.name}, naming this element; the person's «Сохранить» writes it into your key file, restarts you and wakes you (person-done) — you never see the value.${b.telegram ? ' Telegram got a note that it is typed only in the window.' : ''} Say one line to your person that the window waits for them.`)
   else console.log(`===ASK_PUT=== ${b.id} — an orange window at the bottom of every panel page, naming this element, until «Готово»; the press wakes you (person-done).${b.telegram ? ` Also sent to Telegram: their reply «Готово · ${b.id}» comes to you as a message — then npm run ask-person -- done ${b.id}.` : ''} Say one line to your person that the window waits for them.`)
 } catch (e) {
   fail(`the core did not answer at ${core} — ${e instanceof Error ? e.message : e}`)
