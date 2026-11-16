@@ -52,3 +52,10 @@ on (the owner of the node, 2026-11-16: «уведомление на экран�
 `npm run ask-person -- list` — your open requests; `-- drop <id>` — take one back. Chrome's own windows («Открыть приложение
 "Telegram"?», a file save) are invisible to the browser extension: never open a `t.me` address in the person's tab
 (`https://web.telegram.org/k/#@<name>` instead), and name such a window in `--hint` with the button to press.
+
+## The person's hands in Telegram (core step 761-16b)
+
+When your person has a bot (yours, or the node's main bot), `ask-person` also sends them ONE message there with a reply button
+«Готово · <id>»; `--copy "<command>"` puts a command apart, with a copy button in the window. Their press arrives to you as a plain
+message «Готово · <id>» → `npm run ask-person -- done <id>` (`===ASK_ALREADY===` — closed in the panel already: say so), then check
+the result yourself.

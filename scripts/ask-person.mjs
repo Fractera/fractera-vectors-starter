@@ -2,6 +2,8 @@
 //   npm run ask-person -- "<what to do, in the person's language>" [--href </ru/…|https://…>] [--why "<why only they>"] [--hint "<what may pop up and what to press>"]
 //   npm run ask-person -- list        your open requests
 //   npm run ask-person -- drop <id>   take your request back
+//   npm run ask-person -- done <id>   your person answered «Готово · <id>» in Telegram (it came to you as their message): close it
+//   [--copy "<a command they paste>"]  the window and the Telegram message show it apart, with a copy button (core 761-16b, 764-a)
 // The core shows it as an orange window at the bottom of every page of the node's panel, naming this element, until the person
 // presses «Готово»; that press wakes YOU with `⟦node · person-done · <this element> · HH:MM⟧`: check the result yourself, then go on.
 // The owner, 2026-11-16: «уведомление на экране которое невозможно пропустить … и подтвердить о его завершении»; «лучше показывать
@@ -56,11 +58,12 @@ if (!core || !key) fail('the core is unknown here (NODE_DOMAIN_FILE → logs/run
 let body
 if (args[0] === 'list') body = { from: id, list: true }
 else if (args[0] === 'drop') body = { from: id, drop: args[1] ?? '' }
+else if (args[0] === 'done') body = { from: id, done: (/([a-f0-9]{8})\b/.exec(args.slice(1).join(' '))?.[1]) ?? '' }
 else {
-  const href = flag('--href'); const why = flag('--why'); const hint = flag('--hint')
+  const href = flag('--href'); const why = flag('--why'); const hint = flag('--hint'); const copy = flag('--copy')
   const text = args.join(' ').replace(/\s+/g, ' ').trim()
   if (!text) fail('ask-person -- "<what to do, in the person\'s language>" [--href …] [--why …] [--hint …]')
-  body = { from: id, text, href, why, hint }
+  body = { from: id, text, href, why, hint, copy }
 }
 try {
   const r = await fetch(`${core}/api/node/person-asks`, {
@@ -73,7 +76,8 @@ try {
   if (!b.ok) fail(`the core answered ${r.status}: ${b.reason ?? 'no reason'}`)
   if (body.list) console.log(b.asks?.length ? b.asks.map((a) => `${a.id} · ${String(a.at).slice(11, 16)} UTC · ${a.text}`).join('\n') : 'no open requests')
   else if (body.drop !== undefined) console.log(`===ASK_DROPPED=== ${body.drop}`)
-  else console.log(`===ASK_PUT=== ${b.id} — an orange window at the bottom of every panel page, naming this element, until «Готово»; the press wakes you (person-done). Say one line to your person that the window waits for them.`)
+  else if (body.done !== undefined) console.log(b.done ? `===ASK_DONE=== ${body.done} — closed; check the result yourself, then go on` : `===ASK_ALREADY=== ${body.done} was closed in the panel already — tell your person it was done`)
+  else console.log(`===ASK_PUT=== ${b.id} — an orange window at the bottom of every panel page, naming this element, until «Готово»; the press wakes you (person-done).${b.telegram ? ` Also sent to Telegram: their reply «Готово · ${b.id}» comes to you as a message — then npm run ask-person -- done ${b.id}.` : ''} Say one line to your person that the window waits for them.`)
 } catch (e) {
   fail(`the core did not answer at ${core} — ${e instanceof Error ? e.message : e}`)
 }
