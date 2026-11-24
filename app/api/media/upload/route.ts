@@ -1,5 +1,6 @@
 import { dataUrl as nodeDataUrl, isRemoteData } from "@/lib/microservices/urls"
 // @api upload a file into the platform media store
+import { storeHeaders } from "@/lib/fractera/data-service"
 import { NextRequest, NextResponse } from "next/server"
 
 const DATA_URL    = nodeDataUrl() ?? ""
@@ -10,20 +11,15 @@ const DATA_URL    = nodeDataUrl() ?? ""
 // изображение из хранилища никогда не было видно публике; не всплывало это лишь
 // потому, что показывали статические файлы из public/.
 // Оба имени приняты: старое могло попасть в чьё-то окружение.
-const DATA_SECRET = process.env.DATA_SECRET || process.env.DATA_API_KEY || ""
+// 857: the store key is the node's DATA_SECRET, or ELEMENT_KEY for a native born on the node (`storeHeaders`, store-key.mjs); the storage gives it its own
+// files and the node's public ones, an upload with it is its own (public unless the form says visibility=private); a visitor's cookie is never passed to a store.
 const IS_REMOTE   = isRemoteData()
 
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData()
 
-    const headers: Record<string, string> = {}
-    if (DATA_SECRET) {
-      headers["X-Data-Secret"] = DATA_SECRET
-    } else {
-      const cookie = req.headers.get("cookie") ?? ""
-      if (cookie) headers["Cookie"] = cookie
-    }
+    const headers: Record<string, string> = storeHeaders()
 
     const res = await fetch(`${DATA_URL}/media/upload`, {
       method: "POST",

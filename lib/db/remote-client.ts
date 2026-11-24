@@ -17,12 +17,13 @@
 import { dataService } from '@/lib/fractera/data-service'
 
 async function migrate(sql: string, params: unknown[] = []) {
-  const { url, key } = dataService()
+  // 654-6: the element's own key opens its own database file (data element, 654-1); the headers come from the one resolver.
+  const { url, headers } = dataService()
   const res = await fetch(`${url}/db/migrate`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-Data-Secret': key,
+      ...headers,
     },
     body: JSON.stringify({ sql, params }),
   })

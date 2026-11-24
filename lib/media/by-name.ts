@@ -1,4 +1,5 @@
 import { dataUrl as nodeDataUrl, isRemoteData } from "@/lib/microservices/urls"
+import { storeHeaders } from "@/lib/fractera/data-service"
 // Поиск картинки в хранилище ПО ИМЕНИ (шаг 506.3, требование владельца 2026-08-13).
 //
 // 🔒 ЗАЧЕМ ИМЯ, А НЕ ИДЕНТИФИКАТОР. Идентификатор записи рождается в момент
@@ -17,7 +18,8 @@ import { dataUrl as nodeDataUrl, isRemoteData } from "@/lib/microservices/urls"
 import { unstable_cache } from "next/cache"
 
 const DATA_URL = nodeDataUrl() ?? ""
-const DATA_SECRET = process.env.DATA_SECRET || process.env.DATA_API_KEY || ""
+// 654-6: with this element's own key the storage lists its own files and the node's public ones (seeds, CONFIG images); a name of its
+// own comes after the node's in the list and wins in the index below.
 
 export type MediaRow = {
   id: string
@@ -42,7 +44,7 @@ const loadIndex = unstable_cache(
   async (): Promise<Record<string, MediaRow>> => {
     try {
       const res = await fetch(`${DATA_URL}/media`, {
-        headers: DATA_SECRET ? { "X-Data-Secret": DATA_SECRET } : {},
+        headers: storeHeaders(),
         cache: "no-store",
       })
       if (!res.ok) return {}

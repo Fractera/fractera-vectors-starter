@@ -1,9 +1,12 @@
 import { dataUrl as nodeDataUrl, isRemoteData } from "@/lib/microservices/urls"
+import { storeHeaders } from "./store-key.mjs"
 // One place that answers "where is the data layer, and what proves me to it".
 //
 // The same code runs in two places and must not care which:
 //   • On the server, next to the data service — the address is loopback and the
-//     secret is DATA_SECRET, written by the installer.
+//     key is the node's DATA_SECRET for a native element preinstalled with the
+//     node, or this element's own ELEMENT_KEY for one born on the node (node step
+//     857: the installer withholds DATA_SECRET from it — store-key.mjs).
 //   • On a developer's machine — the address and key come from the file the
 //     admin panel generates (Env Variables → download), where they are called
 //     REMOTE_DATA_URL and DATA_API_KEY.
@@ -13,12 +16,16 @@ import { dataUrl as nodeDataUrl, isRemoteData } from "@/lib/microservices/urls"
 // the repository carries code, the server keeps the data, and a laptop reads the
 // server's data rather than an empty copy of its own.
 
-export type DataService = { url: string; key: string };
+export type DataService = { url: string; key: string; headers: Record<string, string> };
+
+/** The headers that open the stores for this element — the node's key, else its own (`store-key.mjs`, node step 857). */
+export { storeHeaders };
 
 export function dataService(): DataService {
   const url = nodeDataUrl() ?? "";
-  const key = process.env.DATA_API_KEY || process.env.DATA_SECRET || "";
-  return { url, key };
+  const headers: Record<string, string> = storeHeaders();
+  const key = headers["X-Element-Key"] ?? headers["X-Data-Secret"] ?? "";
+  return { url, key, headers };
 }
 
 /** True when this process can actually reach the data layer with credentials. */
@@ -28,17 +35,17 @@ export function dataServiceReady(): boolean {
 }
 
 export async function dataFetch(path: string, init: RequestInit = {}): Promise<Response> {
-  const { url, key } = dataService();
+  const { url, key, headers } = dataService();
   if (!key) {
     throw new Error(
-      "No data-service key. On the server this is DATA_SECRET; on your machine, download .env.local from Admin → Env Variables.",
+      "No store key. On the server it is DATA_SECRET or ELEMENT_KEY, written by the node installer; on your machine, download .env.local from Admin → Env Variables.",
     );
   }
   return fetch(`${url}${path}`, {
     ...init,
     headers: {
       "Content-Type": "application/json",
-      "X-Data-Secret": key,
+      ...headers,
       ...(init.headers ?? {}),
     },
     cache: "no-store",

@@ -23,6 +23,7 @@
 // процесса, который висит на сервере до перезагрузки.
 
 import { serviceUrlFor } from "../lib/microservices/urls.mjs";
+import { storeHeaders } from "../lib/fractera/store-key.mjs";
 import { spawn } from "node:child_process";
 import { readFileSync } from "node:fs";
 import path from "node:path";
@@ -30,11 +31,12 @@ import path from "node:path";
 const ROOT = path.resolve(import.meta.dirname, "..");
 const DATA_URL = serviceUrlFor("data") ?? "";
 
-function secret() {
-  if (process.env.DATA_SECRET) return process.env.DATA_SECRET;
+// 857: the node's data key where it is (a preinstalled native element), else the element's own ELEMENT_KEY (store-key.mjs).
+function fromEnvLocal(name) {
+  if (process.env[name]) return process.env[name];
   try {
     const text = readFileSync(path.join(ROOT, ".env.local"), "utf8");
-    const line = text.split("\n").find(l => l.trim().startsWith("DATA_SECRET="));
+    const line = text.split("\n").find(l => l.trim().startsWith(`${name}=`));
     return line ? line.slice(line.indexOf("=") + 1).trim() : "";
   } catch {
     return "";
@@ -56,12 +58,12 @@ if (!process.env.FRACTERA_SEED_CHILD) {
 // ── Дальше выполняется уже открепившийся потомок ─────────────────────────────
 
 const DEADLINE = Date.now() + 3 * 60_000;
-const KEY = secret();
+const HEADERS = storeHeaders({ ELEMENT_KEY: fromEnvLocal("ELEMENT_KEY"), DATA_SECRET: fromEnvLocal("DATA_SECRET") });
 
 async function dataLayerReady() {
   try {
     const res = await fetch(`${DATA_URL}/media`, {
-      headers: KEY ? { "X-Data-Secret": KEY } : {},
+      headers: HEADERS,
       signal: AbortSignal.timeout(4000),
     });
     return res.ok;

@@ -34,6 +34,7 @@
 // Поэтому каждая загрузка под своей защитой, а код выхода всегда нулевой.
 
 import { serviceUrlFor } from "../lib/microservices/urls.mjs";
+import { storeHeaders } from "../lib/fractera/store-key.mjs";
 import { readFileSync } from "node:fs";
 import sharp from "sharp";
 
@@ -43,7 +44,12 @@ const DATA_URL = serviceUrlFor("data") ?? "";
 // которое встречается в прокси приложения, но в окружении сервера его нет. Слой
 // данных сверяет заголовок `x-data-secret` с `DATA_SECRET`, и это единственное
 // имя, у которого здесь есть право быть.
-const DATA_SECRET = process.env.DATA_SECRET ?? readEnvLocal("DATA_SECRET");
+// 857: the node's data key for a preinstalled native element; ELEMENT_KEY (its own files and the node's public ones) for one born on
+// the node, which has no node key (store-key.mjs).
+const STORE_HEADERS = storeHeaders({
+  ELEMENT_KEY: process.env.ELEMENT_KEY ?? readEnvLocal("ELEMENT_KEY"),
+  DATA_SECRET: process.env.DATA_SECRET ?? readEnvLocal("DATA_SECRET"),
+});
 
 /** Скрипт запускают напрямую (`npm run seed:media`), вне окружения Next, поэтому
  *  `.env.local` никто за нас не прочитает. */
@@ -87,7 +93,7 @@ function fruitSvg({ body, stem, leaf }) {
 
 function headers() {
   const h = {};
-  if (DATA_SECRET) h["X-Data-Secret"] = DATA_SECRET;
+  Object.assign(h, STORE_HEADERS);
   return h;
 }
 

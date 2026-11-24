@@ -2,7 +2,7 @@ import { isRemoteData } from "@/lib/microservices/urls"
 import type Database from "better-sqlite3"
 import { isShowcaseBuild } from "@/lib/showcase.server"
 import { slugify } from "@/lib/ids"
-import { mkdirSync } from "fs"
+import { copyFileSync, existsSync, mkdirSync } from "fs"
 import { join, dirname } from "path"
 import { remoteDb } from "./remote-client"
 import { dataService } from "@/lib/fractera/data-service"
@@ -584,6 +584,22 @@ async function seedProductsRemote() {
   }
 }
 
+// 🔒 NODE STEP 857 (Roma 2026-11-24, the fractera.ai server: «a local-road database sits inside a build folder the next deploy
+// replaces»). A live element runs from `.next-a|b/standalone`, so `process.cwd()/data/app.db` was a file of ONE build — lost at the
+// second deploy. The local file lives in the element's own data folder (`SERVICE_DATA_DIR`, absolute, outside every build); a laptop
+// without it keeps `data/app.db` in the project. A file left by an older build is carried over once, never overwritten.
+// On a node (`REMOTE_DATA_URL` set) the local road is reached only when the store key is missing — said aloud, never a quiet file.
+function localDbPath(): string {
+  if (process.env.APP_DB_PATH) return process.env.APP_DB_PATH
+  const project = join(process.cwd(), "data", "app.db")
+  const own = process.env.SERVICE_DATA_DIR ? join(process.env.SERVICE_DATA_DIR, "app.db") : null
+  if (!own) return project
+  if (!existsSync(own) && existsSync(project)) {
+    try { mkdirSync(dirname(own), { recursive: true }); copyFileSync(project, own) } catch { /* the new file starts empty */ }
+  }
+  return own
+}
+
 function makeLocalDb() {
   // 🔒 ДРАЙВЕР ГРУЗИТСЯ ЗДЕСЬ, А НЕ ПЕРВОЙ СТРОКОЙ ФАЙЛА (2026-08-19).
   //
@@ -598,7 +614,7 @@ function makeLocalDb() {
   // требуется только на локальной дороге, то есть ровно тогда, когда он нужен.
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const SqliteDatabase: typeof Database = require("better-sqlite3")
-  const dbPath = process.env.APP_DB_PATH ?? join(process.cwd(), "data", "app.db")
+  const dbPath = localDbPath()
   mkdirSync(dirname(dbPath), { recursive: true })
   const sqlite = new SqliteDatabase(dbPath)
   sqlite.exec(SCHEMA)
@@ -784,5 +800,8 @@ export const db = readOnlyOnShowcase(
         // без этой строки причина пустой витрины не называется нигде.
         console.error("[db] Схема в слое данных не подготовлена:", err)
       }))
-    : makeLocalDb(),
+    : (isRemoteData()
+        // 857: the node's data layer exists and this element holds no key for it — a loud line, never a silent local file.
+        ? (console.error("[db] remote key missing: the data layer is set (REMOTE_DATA_URL) but no DATA_SECRET or ELEMENT_KEY — local file", localDbPath()), makeLocalDb())
+        : makeLocalDb()),
 )

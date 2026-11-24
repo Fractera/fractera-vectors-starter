@@ -1,5 +1,6 @@
 import { dataUrl as nodeDataUrl, isRemoteData } from "@/lib/microservices/urls"
 // @api stream one stored media file to the visitor
+import { storeHeaders } from "@/lib/fractera/data-service"
 import { NextRequest, NextResponse } from "next/server"
 
 const DATA_URL    = nodeDataUrl() ?? ""
@@ -10,7 +11,8 @@ const DATA_URL    = nodeDataUrl() ?? ""
 // изображение из хранилища никогда не было видно публике; не всплывало это лишь
 // потому, что показывали статические файлы из public/.
 // Оба имени приняты: старое могло попасть в чьё-то окружение.
-const DATA_SECRET = process.env.DATA_SECRET || process.env.DATA_API_KEY || ""
+// 857: the store key is the node's DATA_SECRET, or ELEMENT_KEY for a native born on the node (`storeHeaders`, store-key.mjs); the storage gives it its own
+// files and the node's public ones, never a private file through a page; a visitor's cookie is never passed to a store.
 
 export async function GET(
   req: NextRequest,
@@ -18,13 +20,7 @@ export async function GET(
 ) {
   const { id } = await params
 
-  const headers: Record<string, string> = {}
-  if (DATA_SECRET) {
-    headers["X-Data-Secret"] = DATA_SECRET
-  } else {
-    const cookie = req.headers.get("cookie") ?? ""
-    if (cookie) headers["Cookie"] = cookie
-  }
+  const headers: Record<string, string> = storeHeaders()
 
   try {
     const res = await fetch(`${DATA_URL}/media/${id}/file`, { headers })
